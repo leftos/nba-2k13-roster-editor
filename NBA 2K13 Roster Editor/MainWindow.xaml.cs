@@ -169,7 +169,7 @@ namespace NBA_2K13_Roster_Editor
                 long curOffset = br.BaseStream.Position;
                 int curOffsetBit = br.InBytePosition;
 
-                PopulateRosterRow(15, dr);
+                PopulateRosterRow(18, dr);
                 br.BaseStream.Position = curOffset;
                 br.InBytePosition = curOffsetBit;
             }
@@ -600,7 +600,7 @@ namespace NBA_2K13_Roster_Editor
                 long curOffset = br.BaseStream.Position;
                 int curOffsetBit = br.InBytePosition;
 
-                WriteRosterRow(i, 15);
+                WriteRosterRow(i, 18);
                 br.BaseStream.Position = curOffset;
                 br.InBytePosition = curOffsetBit;
             }

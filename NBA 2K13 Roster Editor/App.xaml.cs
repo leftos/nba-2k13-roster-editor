@@ -32,7 +32,7 @@ namespace NBA_2K13_Roster_Editor
                 MessageBox.Show("Can't create errorlog!\n\n" + ex + "\n\n" + ex.InnerException);
             }
 
-            MessageBox.Show("Hex on Steroids encountered a critical error and will be terminated.\n\nAn Error Log has been saved at " +
+            MessageBox.Show("NBA 2K13 Roster Editor encountered a critical error and will be terminated.\n\nAn Error Log has been saved at " +
                             NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
             try
             {

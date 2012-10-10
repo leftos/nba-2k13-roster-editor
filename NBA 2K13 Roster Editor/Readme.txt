@@ -24,6 +24,9 @@
 
 
 	Version History
+		v0.4.1
+			- (Experimental) The tool will now read and write 18 roster entries instead of 15 for every team.
+
 		v0.4
 			- Added roster editing for all 30 current teams and the FA pool
 
