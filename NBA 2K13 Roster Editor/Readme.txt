@@ -24,8 +24,11 @@
 
 
 	Version History
+		v0.4.1.1
+			- Fixed bug that would substitute the FA pool with the Bobcats players on save
+
 		v0.4.1
-			- (Experimental) The tool will now read and write 18 roster entries instead of 15 for every team.
+			- (Experimental) The tool will now read and write 18 roster entries instead of 15 for every team
 
 		v0.4
 			- Added roster editing for all 30 current teams and the FA pool
@@ -33,7 +36,7 @@
 		v0.3.3
 			- Fixed player entry reading after Player ID 1365 in X360 rosters
 			- Known Issue: (X360) Editing Signature Skills of Jamaal Magloire on Player ID 1364 doesn't work for now
-			- If you have a "names.txt" file in your "My Documents\NBA 2K13 Roster Editor" with tab-separated Player IDs and names, the tool will now show you the name of the player you're editing.
+			- If you have a "names.txt" file in your "My Documents\NBA 2K13 Roster Editor" with tab-separated Player IDs and names, the tool will now show you the name of the player you're editing
 
 		v0.3.2.3
 			- Tool no longer crashes when Search by CF doesn't find a player with that CF ID

@@ -606,13 +606,14 @@ namespace NBA_2K13_Roster_Editor
             }
 
             // Free Agents
+            int faRow = 30;
             br.BaseStream.Position = 853505;
             br.InBytePosition = 6;
 
             if (mode == Mode.X360)
                 br.BaseStream.Position = 923137;
 
-            WriteRosterRow(1, 256, true);
+            WriteRosterRow(faRow, 256, true);
             //
 
             if (doCRC)
