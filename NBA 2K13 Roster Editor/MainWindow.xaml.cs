@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using LeftosCommonLibrary;
@@ -22,17 +24,19 @@ namespace NBA_2K13_Roster_Editor
                                                 @"\2K Sports\NBA 2K13\Saves";
 
         private NonByteAlignedBinaryReader br;
-        private int firstSSOffset;
-        private int firstSSOffsetBit;
         private string currentFile;
         private bool doCRC;
         private Mode mode;
-        private Dictionary<int, string> names = new Dictionary<int, string>(); 
+        private Dictionary<int, string> names;
 
         public static string DocsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NBA 2K13 Roster Editor";
         private DataTable dt;
 
         private DispatcherTimer timer;
+
+        private ObservableCollection<PlayerEntry> playersList { get; set; }
+        private ObservableCollection<Option> optionsList { get; set; }
+        private ObservableCollection<TeamEntry> teamsList { get; set; } 
 
         public MainWindow()
         {
@@ -43,10 +47,8 @@ namespace NBA_2K13_Roster_Editor
                 Directory.CreateDirectory(DocsPath);
             }
 
-            firstSSOffset = GetRegistrySetting("FirstSSOffset", 40916);
-            firstSSOffsetBit = GetRegistrySetting("FirstSSOffsetBIt", 2);
-            txtFirstSSOffset.Text = firstSSOffset.ToString();
-            txtFirstSSOffsetBit.Text = firstSSOffsetBit.ToString();
+            ReloadOptions();
+            dgOptions.ItemsSource = optionsList;
 
             doCRC = (GetRegistrySetting("CRC", 1) == 1);
             chkRecalculateCRC.IsChecked = doCRC;
@@ -57,7 +59,69 @@ namespace NBA_2K13_Roster_Editor
             else
                 btnMode360.IsChecked = true;
 
-            string file = DocsPath + @"\names.txt";
+            for (int i = 0; i < 37; i++)
+            {
+                dgPlayers.Columns.Add(new DataGridTextColumn
+                {
+                    Header = string.Format("Rtg{0}", (i + 1)),
+                    Binding =
+                        new Binding { Path = new PropertyPath(string.Format("Ratings[{0}]", i)), Mode = BindingMode.TwoWay }
+                });
+            }
+
+            for (int i = 0; i < 69; i++)
+            {
+                dgPlayers.Columns.Add(new DataGridTextColumn
+                {
+                    Header = string.Format("Tnd{0}", (i + 1)),
+                    Binding =
+                        new Binding { Path = new PropertyPath(string.Format("Tendencies[{0}]", i)), Mode = BindingMode.TwoWay }
+                });
+            }
+            
+            for (int i = 0; i < 25; i++)
+            {
+                dgPlayers.Columns.Add(new DataGridTextColumn
+                {
+                    Header = string.Format("HS{0}", (i + 1)),
+                    Binding =
+                        new Binding { Path = new PropertyPath(string.Format("HotSpots[{0}]", i)), Mode = BindingMode.TwoWay }
+                });
+            }
+            
+            playersList = new ObservableCollection<PlayerEntry>();
+            dgPlayers.ItemsSource = playersList;
+
+            dgTeams.Columns.Clear();
+            dgTeams.Columns.Add(new DataGridTextColumn
+                                  {Header = "ID", Binding = new Binding {Path = new PropertyPath("ID"), Mode = BindingMode.TwoWay}});
+            dgTeams.Columns.Add(new DataGridTextColumn
+                                  {Header = "Name", Binding = new Binding {Path = new PropertyPath("Name"), Mode = BindingMode.TwoWay}});
+            dgTeams.Columns.Add(new DataGridTextColumn
+                                  {Header = "PlNum", Binding = new Binding {Path = new PropertyPath("PlNum"), Mode = BindingMode.TwoWay}});
+            for (int i = 0; i < 256; i++)
+            {
+                dgTeams.Columns.Add(new DataGridTextColumn
+                                      {
+                                          Header = string.Format("R{0}", (i + 1)),
+                                          Binding =
+                                              new Binding
+                                              {Path = new PropertyPath(string.Format("RosterSpots[{0}]", i)), Mode = BindingMode.TwoWay}
+                                      });
+            }
+
+            teamsList = new ObservableCollection<TeamEntry>();
+            dgTeams.ItemsSource = teamsList;
+
+            timer = new DispatcherTimer();
+            timer.Tick += timer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 3);
+        }
+
+        private void PopulateNamesDictionary()
+        {
+            names = new Dictionary<int, string>();
+            string file = DocsPath + "\\" + GetOption("NamesFile");
             if (File.Exists(file))
             {
                 string[] lines = File.ReadAllLines(file);
@@ -74,10 +138,18 @@ namespace NBA_2K13_Roster_Editor
                     }
                 }
             }
+        }
 
-            timer = new DispatcherTimer();
-            timer.Tick += timer_Tick;
-            timer.Interval = new TimeSpan(0, 0, 3);
+        private void ReloadOptions()
+        {
+            optionsList = new ObservableCollection<Option>();
+            optionsList.Add(new Option {Setting = "FirstSSOffset", Value = GetRegistrySetting("FirstSSOffset", 40916)});
+            optionsList.Add(new Option {Setting = "FirstSSOffsetBit", Value = GetRegistrySetting("FirstSSOffsetBIt", 2)});
+            optionsList.Add(new Option {Setting = "LastPlayerID", Value = GetRegistrySetting("LastPlayerID", 1500)});
+            optionsList.Add(new Option {Setting = "NamesFile", Value = GetRegistrySetting("NamesFile", "names.txt")});
+
+            PopulateNamesDictionary();
+            dgOptions.ItemsSource = optionsList;
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -141,15 +213,94 @@ namespace NBA_2K13_Roster_Editor
             txtFile.Text = Path.GetFileName(ofd.FileName);
             currentFile = ofd.FileName;
             br = new NonByteAlignedBinaryReader(File.Open(currentFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-            
-            dt = new DataTable();
-            dt.Columns.Add("Team");
-            dt.Columns.Add("PlNum");
-            for (int i = 0; i < 256;i++)
+
+            PopulateTeamsTab();
+
+            PopulatePlayersTab();
+
+            updateStatus("Roster loaded.");
+        }
+
+        private object GetOption(string setting)
+        {
+            return optionsList.First(o => o.Setting == setting).Value;
+        }
+
+        private void PopulatePlayersTab()
+        {
+            playersList = new ObservableCollection<PlayerEntry>();
+            for (int i = 0; i <= Convert.ToInt32(GetOption("LastPlayerID")); i++)
             {
-                dt.Columns.Add("R" + (i + 1).ToString());
+                PlayerEntry pe = new PlayerEntry();
+                MoveStreamToFirstSS(i);
+                Dictionary<string, string> info = ReadInfo(i);
+                pe.ID = i;
+                pe.CFID = Convert.ToInt32(info["CFID"]);
+                pe.PortraitID = Convert.ToInt32(info["PortraitID"]);
+                pe.GenericF = info["GenericF"] == "1";
+                pe.PlType = Convert.ToInt32(info["PlType"]);
+                pe.Name = FindPlayerName(i);
+                pe.SSList = ReadSignatureSkills(i);
+                pe.Ratings = ReadRatings(i);
+                pe.Tendencies = ReadTendencies(i);
+                pe.HotSpots = ReadHotSpots(i);
+                playersList.Add(pe);
             }
-            
+            dgPlayers.ItemsSource = playersList;
+        }
+
+        private List<byte> ReadRatings(int playerID)
+        {
+            var ratings = new List<byte>();
+
+            MoveStreamToFirstSS(playerID);
+            br.MoveStreamPosition(14, 3);
+
+            for (int i = 0; i < 37;i++)
+            {
+                byte b = br.ReadNonByteAlignedByte();
+                byte realRating = (byte) (b/3 + 25);
+                ratings.Add(realRating);
+            }
+
+            return ratings;
+        }
+
+        private List<byte> ReadTendencies(int playerID)
+        {
+            var tend = new List<byte>();
+
+            MoveStreamToFirstSS(playerID);
+            br.MoveStreamPosition(51, 3);
+
+            for (int i = 0; i < 69; i++)
+            {
+                byte b = br.ReadNonByteAlignedByte();
+                tend.Add(b);
+            }
+
+            return tend;
+        }
+
+        private List<byte> ReadHotSpots(int playerID)
+        {
+            var hs = new List<byte>();
+
+            MoveStreamToFirstSS(playerID);
+            br.MoveStreamPosition(120, 3);
+
+            for (int i = 0; i <25;i++)
+            {
+                byte b = br.ReadNonByteAlignedByte();
+                hs.Add(b);
+            }
+
+            return hs;
+        }
+
+        private void PopulateTeamsTab()
+        {
+            teamsList = new ObservableCollection<TeamEntry>();
             long firstRosterOffset = 862911 - 720;
             int firstRosterOffsetBit = 6 - 2;
             br.BaseStream.Position = firstRosterOffset;
@@ -158,25 +309,26 @@ namespace NBA_2K13_Roster_Editor
             if (mode == Mode.X360)
                 br.BaseStream.Position += 69632;
 
-
-            DataRow dr;
-            for (int i = 0; i<30;i++)
+            TeamEntry te;
+            for (int i = 0; i < 30; i++)
             {
-                dr = dt.NewRow();
-                dr["Team"] = teams[i];
-
+                te = new TeamEntry();
+                te.ID = i;
+                te.Name = teams[i];
+                
                 br.MoveStreamPosition(720, 2);
                 long curOffset = br.BaseStream.Position;
                 int curOffsetBit = br.InBytePosition;
 
-                PopulateRosterRow(18, dr);
+                PopulateRosterRow(18, ref te);
                 br.BaseStream.Position = curOffset;
                 br.InBytePosition = curOffsetBit;
             }
 
             // Free Agents
-            dr = dt.NewRow();
-            dr["Team"] = "Free Agents";
+            te = new TeamEntry();
+            te.ID = 999;
+            te.Name = "Free Agents";
 
             br.BaseStream.Position = 853505;
             br.InBytePosition = 6;
@@ -184,27 +336,20 @@ namespace NBA_2K13_Roster_Editor
             if (mode == Mode.X360)
                 br.BaseStream.Position += 69632;
 
-            PopulateRosterRow(256, dr, true);
+            PopulateRosterRow(256, ref te, true);
             //
 
-            RelinkDataGrid();
-
-            br.BaseStream.Position = firstSSOffset;
-            br.InBytePosition = firstSSOffsetBit;
-
-            txtPlayerID.Text = "0";
-
-            btnRefresh_Click(null, null);
+            RelinkTeamsDataGrid();
         }
 
-        private void PopulateRosterRow(int countToRead, DataRow dr, bool isFArow = false)
+        private void PopulateRosterRow(int countToRead, ref TeamEntry te, bool isFArow = false)
         {
             var startOfRoster = br.BaseStream.Position;
             var startOfRosterBit = br.InBytePosition;
 
             for (int i = 0; i < countToRead; i++)
             {
-                dr["R" + (i + 1).ToString()] = ReadRosterSpot();
+                te.RosterSpots.Add(Convert.ToInt32(ReadRosterSpot()));
             }
 
             br.BaseStream.Position = startOfRoster;
@@ -215,18 +360,14 @@ namespace NBA_2K13_Roster_Editor
             else
                 br.MoveStreamPosition(4001, 0);
 
-            dr["PlNum"] = br.ReadNonByteAlignedByte().ToString();
-            dt.Rows.Add(dr);
+            te.PlNum = Convert.ToInt32(br.ReadNonByteAlignedByte().ToString());
+            teamsList.Add(te);
         }
 
-        private void RelinkDataGrid()
+        private void RelinkTeamsDataGrid()
         {
-            DataView dv = dt.DefaultView;
-            dv.AllowEdit = true;
-            dv.AllowNew = false;
-            dv.AllowDelete = false;
-
-            dgRosters.DataContext = dv;
+            dgTeams.ItemsSource = null;
+            dgTeams.ItemsSource = teamsList;
         }
 
         private string ReadRosterSpot()
@@ -239,64 +380,42 @@ namespace NBA_2K13_Roster_Editor
             return Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(b), 2).ToString();
         }
 
-        private void ReadSignatureSkills()
+        private List<SignatureSkill> ReadSignatureSkills(int playerID)
         {
+            MoveStreamToFirstSS(playerID);
+
+            List<SignatureSkill> ssList = new List<SignatureSkill>();
+
             byte b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            cmbSS1.SelectedItem = Enum.IsDefined(typeof (SignatureSkills), b) ? ((SignatureSkills) b) : (SignatureSkills) 0;
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            cmbSS2.SelectedItem = Enum.IsDefined(typeof (SignatureSkills), b) ? ((SignatureSkills) b) : (SignatureSkills) 0;
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             br.ReadNonByteAlignedBits(14);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            cmbSS3.SelectedItem = Enum.IsDefined(typeof (SignatureSkills), b) ? ((SignatureSkills) b) : (SignatureSkills) 0;
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            cmbSS4.SelectedItem = Enum.IsDefined(typeof (SignatureSkills), b) ? ((SignatureSkills) b) : (SignatureSkills) 0;
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            cmbSS5.SelectedItem = Enum.IsDefined(typeof (SignatureSkills), b) ? ((SignatureSkills) b) : (SignatureSkills) 0;
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
+
+            return ssList;
         }
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        private string FindPlayerName(int playerID)
         {
-            try
+            if (names.ContainsKey(playerID))
             {
-                br.Close();
-            }
-            catch
-            {
-
-            }
-            br = new NonByteAlignedBinaryReader(File.Open(currentFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-
-            MoveStreamToSpecifiedPlayerSignatureSkills();
-
-            lblOffset.Content = "SS1 Offset: " + br.BaseStream.Position + " + " + br.InBytePosition + " bits";
-
-            Dictionary<string, string> appearance = ReadInfo();
-
-            txtCFID.Text = appearance["CFID"];
-            txtPortraitID.Text = appearance["PortraitID"];
-            chkGenericF.IsChecked = appearance["GenericF"] == "1";
-            txtPlType.Text = appearance["PlType"];
-
-            ReadSignatureSkills();
-
-            FindPlayerName();
-        }
-
-        private void FindPlayerName()
-        {
-            int id = Convert.ToInt32(txtPlayerID.Text);
-            if (names.ContainsKey(id))
-            {
-                lblPlayerName.Content = names[id];
+                return names[playerID];
             }
             else
             {
-                lblPlayerName.Content = "";
+                return "";
             }
         }
 
-        private Dictionary<string, string> ReadInfo()
+        private Dictionary<string, string> ReadInfo(int playerID)
         {
+            MoveStreamToFirstSS(playerID);
             long prevPos = br.BaseStream.Position;
             int prevPosIn = br.InBytePosition;
 
@@ -333,17 +452,11 @@ namespace NBA_2K13_Roster_Editor
             ret["PlType"] = plType;
             return ret;
         }
-
-        private void MoveStreamToSpecifiedPlayerSignatureSkills()
-        {
-            int id = Convert.ToInt32(txtPlayerID.Text);
-            MoveStreamToFirstSS(id);
-        }
-
+        
         private void MoveStreamToFirstSS(int playerID)
         {
-            br.BaseStream.Position = firstSSOffset;
-            br.InBytePosition = firstSSOffsetBit;
+            br.BaseStream.Position = Convert.ToInt64(GetOption("FirstSSOffset"));
+            br.InBytePosition = Convert.ToInt32(GetOption("FirstSSOffsetBit"));
 
             if (playerID >= 1365 && mode == Mode.X360)
             {
@@ -436,95 +549,153 @@ namespace NBA_2K13_Roster_Editor
 
             return settingValue;
         }
-
-        private void btnSaveOffsets_Click(object sender, RoutedEventArgs e)
+        
+        private void btnSavePlayers_Click(object sender, RoutedEventArgs e)
         {
-            SetRegistrySetting("FirstSSOffset", txtFirstSSOffset.Text);
-            SetRegistrySetting("FirstSSOffsetBit", txtFirstSSOffsetBit.Text);
-            firstSSOffset = GetRegistrySetting("FirstSSOffset", 40916);
-            firstSSOffsetBit = GetRegistrySetting("FirstSSOffsetBIt", 2);
-            btnRefresh_Click(null, null);
-        }
+            NonByteAlignedBinaryWriter bw;
+            using (bw = new NonByteAlignedBinaryWriter(File.Open(currentFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite)))
+            {
+                for (int i = 0; i < playersList.Count; i++)
+                {
+                    PlayerEntry pe = playersList[i];
+                    MoveStreamToFirstSS(pe.ID);
+                    bw.BaseStream.Position = br.BaseStream.Position;
+                    bw.InBytePosition = br.InBytePosition;
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            NonByteAlignedBinaryWriter bw =
-                new NonByteAlignedBinaryWriter(File.Open(currentFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite));
-            MoveStreamToSpecifiedPlayerSignatureSkills();
-            bw.BaseStream.Position = br.BaseStream.Position;
-            bw.InBytePosition = br.InBytePosition;
+                    // Appearance
+                    long prevPos = br.BaseStream.Position;
+                    int prevPosIn = br.InBytePosition;
 
-            // Appearance
-            long prevPos = br.BaseStream.Position;
-            int prevPosIn = br.InBytePosition;
+                    br.MoveStreamPosition(-300, -2);
 
-            br.MoveStreamPosition(-300, -2);
-
-            Write2ByteStringToRoster(txtPortraitID.Text, bw);
-
-            
-            // PlType
-            br.MoveStreamPosition(2, 6);
-            SyncBWwithBR(ref bw);
-
-            bw.WriteNonByteAlignedBits(Convert.ToString(Convert.ToByte(txtPlType.Text), 2).PadLeft(3, '0'), br.ReadBytes(2));
-
-            SyncBRwithBW(ref bw);
-            br.MoveStreamPosition(-3, -1);
-            //
+                    Write2ByteStringToRoster(pe.PortraitID.ToString(), bw);
 
 
-            br.MoveStreamPosition(28, 0);
+                    // PlType
+                    br.MoveStreamPosition(2, 6);
+                    SyncBWwithBR(ref bw);
 
-            Write2ByteStringToRoster(txtCFID.Text, bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(Convert.ToByte(pe.PlType.ToString()), 2).PadLeft(3, '0'), br.ReadBytes(2));
 
-            br.MoveStreamPosition(94, 1);
+                    SyncBRwithBW(ref bw);
+                    br.MoveStreamPosition(-3, -1);
+                    //
 
-            SyncBWwithBR(ref bw);
-            byte b = br.ReadByte();
-            bw.WriteNonByteAlignedBits(chkGenericF.IsChecked.GetValueOrDefault() ? "1" : "0", new byte[]{b});
 
-            br.BaseStream.Position = prevPos;
-            br.InBytePosition = prevPosIn;
-            SyncBWwithBR(ref bw);
-            //
-            
-            byte[] original = br.ReadBytes(2);
-            string s = cmbSS1.SelectedItem.ToString();
-            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-            SyncBRwithBW(ref bw);
+                    br.MoveStreamPosition(28, 0);
 
-            original = br.ReadBytes(2);
-            s = cmbSS2.SelectedItem.ToString();
-            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-            SyncBRwithBW(ref bw);
+                    Write2ByteStringToRoster(pe.CFID.ToString(), bw);
 
-            br.MoveStreamPosition(0, 14);
-            bw.MoveStreamPosition(0, 14);
+                    br.MoveStreamPosition(94, 1);
 
-            original = br.ReadBytes(2);
-            s = cmbSS3.SelectedItem.ToString();
-            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-            SyncBRwithBW(ref bw);
+                    SyncBWwithBR(ref bw);
+                    byte b = br.ReadByte();
+                    bw.WriteNonByteAlignedBits(pe.GenericF ? "1" : "0", new byte[] {b});
 
-            original = br.ReadBytes(2);
-            s = cmbSS4.SelectedItem.ToString();
-            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-            SyncBRwithBW(ref bw);
+                    br.BaseStream.Position = prevPos;
+                    br.InBytePosition = prevPosIn;
+                    SyncBWwithBR(ref bw);
+                    //
 
-            original = br.ReadBytes(2);
-            s = cmbSS5.SelectedItem.ToString();
-            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-            SyncBRwithBW(ref bw);
-            
-            bw.Close();
+                    byte[] original = br.ReadBytes(2);
+                    string s = pe.SSList[0].ToString();
+                    bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                    SyncBRwithBW(ref bw);
+
+                    original = br.ReadBytes(2);
+                    s = pe.SSList[1].ToString();
+                    bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                    SyncBRwithBW(ref bw);
+
+                    br.MoveStreamPosition(0, 14);
+                    bw.MoveStreamPosition(0, 14);
+
+                    original = br.ReadBytes(2);
+                    s = pe.SSList[2].ToString();
+                    bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                    SyncBRwithBW(ref bw);
+
+                    original = br.ReadBytes(2);
+                    s = pe.SSList[3].ToString();
+                    bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                    SyncBRwithBW(ref bw);
+
+                    original = br.ReadBytes(2);
+                    s = pe.SSList[4].ToString();
+                    bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                    SyncBRwithBW(ref bw);
+
+
+                    //Ratings
+                    MoveStreamToFirstSS(i);
+                    br.MoveStreamPosition(14, 3);
+                    SyncBWwithBR(ref bw);
+                    for (int j = 0; j<37;j++)
+                    {
+                        byte byteToWrite;
+                        try
+                        {
+                            byteToWrite = (byte) ((pe.Ratings[j] - 25)*3);
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show("Problem with Player ID " + pe.ID + ", Rating " + j + "\nWill try to continue.");
+                            continue;
+                        }
+                        bw.WriteNonByteAlignedByte(byteToWrite, br.ReadBytes(2));
+                        SyncBRwithBW(ref bw);
+                    }
+
+                    //Tendencies
+                    MoveStreamToFirstSS(i);
+                    br.MoveStreamPosition(51, 3);
+                    SyncBWwithBR(ref bw);
+                    for (int j = 0; j < 69; j++)
+                    {
+                        byte byteToWrite;
+                        try
+                        {
+                            byteToWrite = pe.Tendencies[j];
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Problem with Player ID " + pe.ID + ", Tendency " + j + "\nWill try to continue.");
+                            continue;
+                        }
+                        bw.WriteNonByteAlignedByte(byteToWrite, br.ReadBytes(2));
+                        SyncBRwithBW(ref bw);
+                    }
+
+                    //Hot Spots
+                    MoveStreamToFirstSS(i);
+                    br.MoveStreamPosition(120, 3);
+                    SyncBWwithBR(ref bw);
+                    for (int j = 0; j < 25; j++)
+                    {
+                        byte byteToWrite;
+                        try
+                        {
+                            byteToWrite = pe.HotSpots[j];
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Problem with Player ID " + pe.ID + ", Hot Spot " + j + "\nWill try to continue.");
+                            continue;
+                        }
+                        bw.WriteNonByteAlignedByte(byteToWrite, br.ReadBytes(2));
+                        SyncBRwithBW(ref bw);
+                    }
+                }
+
+                bw.Close();
+            }
 
             if (doCRC)
             {
                 RecalculateCRC();
             }
 
-            updateStatus("Player saved.");
+            updateStatus("Players saved.");
         }
 
         private void SyncBRwithBW(ref NonByteAlignedBinaryWriter bw)
@@ -553,7 +724,7 @@ namespace NBA_2K13_Roster_Editor
 
         private string ConvertSignatureSkillToBinary(string signatureSkill)
         {
-            return Convert.ToString((byte) Enum.Parse(typeof (SignatureSkills), signatureSkill), 2).PadLeft(6, '0');
+            return Convert.ToString((byte) Enum.Parse(typeof (SignatureSkill), signatureSkill), 2).PadLeft(6, '0');
         }
 
         private void chkRecalculateCRC_Checked(object sender, RoutedEventArgs e)
@@ -567,25 +738,11 @@ namespace NBA_2K13_Roster_Editor
             SetRegistrySetting("CRC", 0);
             doCRC = false;
         }
-
-        private void btnPrevPlayer_Click(object sender, RoutedEventArgs e)
-        {
-            int id = Convert.ToInt32(txtPlayerID.Text);
-            if (id > 0)
-            {
-                txtPlayerID.Text = (id-1).ToString();
-                btnRefresh_Click(null, null);
-            }
-        }
-
-        private void btnNextPlayer_Click(object sender, RoutedEventArgs e)
-        {
-            txtPlayerID.Text = (Convert.ToInt32(txtPlayerID.Text) + 1).ToString();
-            btnRefresh_Click(null, null);
-        }
         
-        private void btnSaveTest_Click(object sender, RoutedEventArgs e)
+        private void btnSaveTeams_Click(object sender, RoutedEventArgs e)
         {
+            FixPlNumAndOrder();
+
             long firstRosterOffset = 862911 - 720;
             int firstRosterOffsetBit = 6 - 2;
             br.BaseStream.Position = firstRosterOffset;
@@ -594,7 +751,7 @@ namespace NBA_2K13_Roster_Editor
             if (mode == Mode.X360)
                 br.BaseStream.Position += 69632;
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < teamsList.Count - 1; i++)
             {
                 br.MoveStreamPosition(720, 2);
                 long curOffset = br.BaseStream.Position;
@@ -606,7 +763,7 @@ namespace NBA_2K13_Roster_Editor
             }
 
             // Free Agents
-            int faRow = 30;
+            int faRow = 999;
             br.BaseStream.Position = 853505;
             br.InBytePosition = 6;
 
@@ -621,10 +778,10 @@ namespace NBA_2K13_Roster_Editor
                 RecalculateCRC();
             }
 
-            updateStatus("Rosters saved.");
+            updateStatus("Teams saved.");
         }
 
-        private void WriteRosterRow(int row, int spotsToWrite, bool isFArow = false)
+        private void WriteRosterRow(int teamID, int spotsToWrite, bool isFArow = false)
         {
             NonByteAlignedBinaryWriter bw = new NonByteAlignedBinaryWriter(new FileStream(currentFile, FileMode.Open));
 
@@ -632,10 +789,12 @@ namespace NBA_2K13_Roster_Editor
             int startOfRosterBit = br.InBytePosition;
             SyncBWwithBR(ref bw);
 
-            int plNum = Convert.ToInt32(myCell(row, 1));
+            TeamEntry te = teamsList.Single(t => t.ID == teamID);
+
+            int plNum = te.PlNum;
             for (int i = 0; i < spotsToWrite; i++)
             {
-                WriteRosterSpot(myCell(row, i + 2).ToString(), bw, i, plNum);
+                WriteRosterSpot(te.RosterSpots[i].ToString(), bw, i, plNum);
             }
 
             br.BaseStream.Position = startOfRoster;
@@ -665,7 +824,7 @@ namespace NBA_2K13_Roster_Editor
 
         private object myCell2(int row, int col)
         {
-            return GetCellValue(dgRosters, row, col);
+            return GetCellValue(dgTeams, row, col);
         }
 
         private object myCell(int row, int col)
@@ -727,7 +886,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 dt.Rows[0][i + 2] = ++id;
             }
-            RelinkDataGrid();
+            RelinkTeamsDataGrid();
         }
 
         private void btnModePC_Checked(object sender, RoutedEventArgs e)
@@ -738,18 +897,21 @@ namespace NBA_2K13_Roster_Editor
             
             SetRegistrySetting("FirstSSOffset", 40916);
             SetRegistrySetting("FirstSSOffsetBit", 2);
-            firstSSOffset = GetRegistrySetting("FirstSSOffset", 40916);
-            firstSSOffsetBit = GetRegistrySetting("FirstSSOffsetBIt", 2);
-            txtFirstSSOffset.Text = firstSSOffset.ToString();
-            txtFirstSSOffsetBit.Text = firstSSOffsetBit.ToString();
             try
             {
-                btnRefresh_Click(null, null);
+                ReloadEverything();
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }
+        }
+
+        private void ReloadEverything()
+        {
+            ReloadOptions();
+            PopulatePlayersTab();
+            PopulateTeamsTab();
         }
 
         private void btnMode360_Checked(object sender, RoutedEventArgs e)
@@ -760,13 +922,9 @@ namespace NBA_2K13_Roster_Editor
 
             SetRegistrySetting("FirstSSOffset", 94164);
             SetRegistrySetting("FirstSSOffsetBit", 2);
-            firstSSOffset = GetRegistrySetting("FirstSSOffset", 40916);
-            firstSSOffsetBit = GetRegistrySetting("FirstSSOffsetBIt", 2);
-            txtFirstSSOffset.Text = firstSSOffset.ToString();
-            txtFirstSSOffsetBit.Text = firstSSOffsetBit.ToString();
             try
             {
-                btnRefresh_Click(null, null);
+                ReloadEverything();
             }
             catch (Exception exception)
             {
@@ -774,63 +932,24 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
-        private void btnSearchByCF_Click(object sender, RoutedEventArgs e)
-        {
-            string idToFind = txtPlayerID.Text;
-
-            ushort id = 0;
-            MoveStreamToFirstSS(id);
-            var dict = ReadInfo();
-
-            bool found = false;
-            while (true)
-            {
-                if (idToFind == dict["CFID"])
-                {
-                    found = true;
-                    break;
-                }
-                MoveStreamToFirstSS(++id);
-                if (br.BaseStream.Length - br.BaseStream.Position >= 477 && br.InBytePosition <= 3)
-                {
-                    dict = ReadInfo();
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            if (found)
-            {
-                txtPlayerID.Text = id.ToString();
-                btnRefresh_Click(null, null);
-            }
-            else
-            {
-                MessageBox.Show("No player found with that CF ID.");
-                txtPlayerID.Text = "";
-            }
-        }
-
-        private void dgRosters_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void dgTeams_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.V && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
                 string[] lines = Tools.SplitLinesToArray(Clipboard.GetText());
                 lines = lines.TakeWhile(s => !String.IsNullOrWhiteSpace(s)).ToArray();
 
-                int row = dgRosters.Items.IndexOf(dgRosters.CurrentCell.Item);
-                int col = dgRosters.CurrentCell.Column.DisplayIndex;
+                int row = dgTeams.Items.IndexOf(dgTeams.CurrentCell.Item);
+                int col = dgTeams.CurrentCell.Column.DisplayIndex;
 
-                if (row + lines.Length > dgRosters.Items.Count)
+                if (row + lines.Length > dgTeams.Items.Count)
                 {
                     MessageBox.Show(
                         "You're trying to paste more rows than currently available. Make sure you're not selecting the shader/range names when copying data.");
                     return;
                 }
 
-                DataTable dt = ((DataView)dgRosters.DataContext).Table;
+                DataTable dt = ((DataView)dgTeams.DataContext).Table;
 
                 int length = lines[0].Split('\t').Length;
                 for (int i = 0; i < lines.Length; i++)
@@ -846,36 +965,36 @@ namespace NBA_2K13_Roster_Editor
                     }
                 }
 
-                RelinkDataGrid();
+                RelinkTeamsDataGrid();
             }
         }
 
-        private void btnFix_Click(object sender, RoutedEventArgs e)
+        private void FixPlNumAndOrder()
         {
-            
-            for (int i = 0; i< dt.Rows.Count; i++)
+            for (int i = 0; i< teamsList.Count; i++)
             {
-                for (int j = 2; j < 258; j++)
+                int spotsCount = teamsList[i].RosterSpots.Count;
+                for (int j = 0; j < spotsCount; j++)
                 {
-                    string curCell = dt.Rows[i][j].ToString();
-                    if (curCell == "-1" || String.IsNullOrWhiteSpace(curCell))
+                    int curCell = teamsList[i].RosterSpots[j];
+                    if (curCell == -1)// || String.IsNullOrWhiteSpace(curCell))
                     {
-                        for (int k = 257; k > j; k--)
+                        for (int k = spotsCount-1; k > j; k--)
                         {
-                            string subCell = myCell(i, k).ToString();
-                            if (!(subCell == "-1" || String.IsNullOrWhiteSpace(subCell)))
+                            int subCell = teamsList[i].RosterSpots[k];
+                            if (subCell != -1)// || String.IsNullOrWhiteSpace(subCell)))
                             {
-                                dt.Rows[i][j] = subCell;
-                                dt.Rows[i][k] = "-1";
+                                teamsList[i].RosterSpots[j] = subCell;
+                                teamsList[i].RosterSpots[k] = -1;
                             }
                         }
                     }
                 }
                 int count = 0;
-                for (int j = 2; j < 258; j++)
+                for (int j = 0; j < spotsCount; j++)
                 {
-                    string curCell = dt.Rows[i][j].ToString();
-                    if (curCell != "-1" && !String.IsNullOrWhiteSpace(curCell))
+                    int curCell = teamsList[i].RosterSpots[j];
+                    if (curCell != -1)// || String.IsNullOrWhiteSpace(curCell))
                     {
                         count++;
                     }
@@ -884,10 +1003,76 @@ namespace NBA_2K13_Roster_Editor
                         break;
                     }
                 }
-                dt.Rows[i][1] = count.ToString();
+                teamsList[i].PlNum = count;
             }
 
             updateStatus("Player order and PlNum entries fixed.");
+        }
+
+        private void btnSaveOptions_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var o in optionsList)
+            {
+                SetRegistrySetting(o.Setting, o.Value);
+            }
+            ReloadEverything();
+
+            updateStatus("Options saved.");
+        }
+
+        private void dgPlayers_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.V && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+            {
+                string[] lines = Tools.SplitLinesToArray(Clipboard.GetText());
+                if (lines[0].Contains("ID") == false)
+                {
+                    MessageBox.Show("The pasted date must have the column headers in the first row.");
+                    return;
+                }
+                List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
+
+                foreach (var dict in dictList)
+                {
+                    int ID;
+                    try
+                    {
+                        ID = Convert.ToInt32(dict["ID"]);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Couldn't detect a player's ID in the pasted data. " +
+                                        "\nUse a copy of this table as a base by copying it and pasting it into a spreadsheet and making changes there.");
+                        return;
+                    }
+                    for (int i = 0; i < playersList.Count; i++)
+                    {
+                        if (playersList[i].ID == ID)
+                        {
+                            PlayerEntry pe = playersList[i];
+                            TryParseDictionaryList(ref pe, dict);
+                            playersList[i] = pe;
+                            break;
+                        }
+                    }
+                }
+
+                dgPlayers.ItemsSource = null;
+                dgPlayers.ItemsSource = playersList;
+            }
+        }
+
+        private void TryParseDictionaryList(ref PlayerEntry pe, Dictionary<string, string> dict)
+        {
+            pe.CFID = pe.CFID.TrySetValue(dict, "CF ID");
+            pe.PlType = pe.PlType.TrySetValue(dict, "PlType");
+            pe.GenericF = pe.GenericF.TrySetValue(dict, "GenericF");
+            pe.PortraitID = pe.PortraitID.TrySetValue(dict, "PortraitID");
+            pe.SSList[0] = pe.SSList[0].TrySetValue(dict, "SS1");
+            pe.SSList[1] = pe.SSList[1].TrySetValue(dict, "SS2");
+            pe.SSList[2] = pe.SSList[2].TrySetValue(dict, "SS3");
+            pe.SSList[3] = pe.SSList[3].TrySetValue(dict, "SS4");
+            pe.SSList[4] = pe.SSList[4].TrySetValue(dict, "SS5");
         }
     }
 
@@ -896,7 +1081,7 @@ namespace NBA_2K13_Roster_Editor
         PC, X360
     }
 
-    internal enum SignatureSkills : byte
+    internal enum SignatureSkill : byte
     {
         None = 0,
         Posterizer = 1,
@@ -932,5 +1117,13 @@ namespace NBA_2K13_Roster_Editor
         DefensiveAnchor = 31,
         GatoradePrimePack = 32,
         OnCourtCoach = 33
+    }
+
+    internal enum HotZone
+    {
+        Cold = 0,
+        Neutral = 1,
+        Hot = 2,
+        Burned = 3
     }
 }

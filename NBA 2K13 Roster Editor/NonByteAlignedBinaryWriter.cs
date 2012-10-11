@@ -78,8 +78,8 @@ namespace NBA_2K13_Roster_Editor
             }
             var ba = BitStringToByteArray(new string(rca));
             Write(ba);
-            ba.ToList().ForEach(b => Console.WriteLine(b));
-            Console.WriteLine();
+            //ba.ToList().ForEach(b => Console.WriteLine(b));
+            //Console.WriteLine();
 
             //BaseStream.Position -= ((rca.Length + _inBytePosition) / 8) + 1;
             BaseStream.Position -= (rca.Length/8) - ((s.Length + _inBytePosition)/8);

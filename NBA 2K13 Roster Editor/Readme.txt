@@ -24,6 +24,12 @@
 
 
 	Version History
+		v0.5
+			- Players and Options tab are now spreadsheet like as well
+			- Ratings, Tendencies and Hot Spots added to Players
+			- Teams' PlNum and Player Order will automatically be fixed on save
+			- Now the user can change the name of the file to load Player names from, to allow for multiple files
+
 		v0.4.1.1
 			- Fixed bug that would substitute the FA pool with the Bobcats players on save
 
