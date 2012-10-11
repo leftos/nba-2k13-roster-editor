@@ -4,9 +4,9 @@
         Width="902" Closing="Window_Closing_1" Icon="pack://siteoforigin:,,,/NLSC.ico">
     <Window.Resources>
         <ObjectDataProvider x:Key="SignatureSkillsList" MethodName="GetValues"
-                            ObjectType="{x:Type NBA_2K13_Roster_Editor:SignatureSkill}">
+                            ObjectType="{x:Type NBA_2K13_Roster_Editor:SignatureSkills}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="NBA_2K13_Roster_Editor:SignatureSkill" />
+                <x:Type TypeName="NBA_2K13_Roster_Editor:SignatureSkills" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>

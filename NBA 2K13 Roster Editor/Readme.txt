@@ -11,19 +11,34 @@
 
 	Features
 		- Player Editing
-			- Signature Skills
+			- Signature Skills, Ratings, Tendencies, Hot Spots
 			- Appearance: CF, Portrait, GenericF
 			- PlType
 		- Team Editing
 			- Basic roster editing (30 current teams and FA pool)
 			- Fix roster order and PlNum automatically for all teams
-
-
+			
+	
 	Known Issues
 		- (X360) Editing Signature Skills of Jamaal Magloire on Player ID 1364 doesn't work for now
 
 
+	Credits
+	    - JaoSming, for helping with researching the roster format
+		- HyperBaller21, for helping with making the editor compatible with 360 files
+		- Solovoy, for helping with researching the roster format
+		- Vlad Zola Jr., for his work on REDitor all these years and his invaluable research and tools
+		- All of the NLSC and OS community, especially the roster modders, who are the ones I'm doing this for. They make the game better and have supported me since Day 1.
+
+
 	Version History
+		v0.5.1.1
+			- Fixed various bugs that would cause the tool to crash or misinterpret data when pasting into the Players and Teams tables
+
+		v0.5.1
+			- Ratings, Tendencies and Hot Spots columns now are named
+			- Copy-pasting for the Players table should work completely
+
 		v0.5
 			- Players and Options tab are now spreadsheet like as well
 			- Ratings, Tendencies and Hot Spots added to Players

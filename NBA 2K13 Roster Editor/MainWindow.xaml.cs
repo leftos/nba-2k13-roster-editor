@@ -63,7 +63,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 dgPlayers.Columns.Add(new DataGridTextColumn
                 {
-                    Header = string.Format("Rtg{0}", (i + 1)),
+                    Header = string.Format("R{0}", Enum.GetName(typeof (Ratings), i)),
                     Binding =
                         new Binding { Path = new PropertyPath(string.Format("Ratings[{0}]", i)), Mode = BindingMode.TwoWay }
                 });
@@ -73,7 +73,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 dgPlayers.Columns.Add(new DataGridTextColumn
                 {
-                    Header = string.Format("Tnd{0}", (i + 1)),
+                    Header = string.Format("T{0}", Enum.GetName(typeof (Tendencies), i)),
                     Binding =
                         new Binding { Path = new PropertyPath(string.Format("Tendencies[{0}]", i)), Mode = BindingMode.TwoWay }
                 });
@@ -83,7 +83,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 dgPlayers.Columns.Add(new DataGridTextColumn
                 {
-                    Header = string.Format("HS{0}", (i + 1)),
+                    Header = string.Format("HS{0}", Enum.GetName(typeof (HotSpots), i)),
                     Binding =
                         new Binding { Path = new PropertyPath(string.Format("HotSpots[{0}]", i)), Mode = BindingMode.TwoWay }
                 });
@@ -380,23 +380,23 @@ namespace NBA_2K13_Roster_Editor
             return Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(b), 2).ToString();
         }
 
-        private List<SignatureSkill> ReadSignatureSkills(int playerID)
+        private List<SignatureSkills> ReadSignatureSkills(int playerID)
         {
             MoveStreamToFirstSS(playerID);
 
-            List<SignatureSkill> ssList = new List<SignatureSkill>();
+            List<SignatureSkills> ssList = new List<SignatureSkills>();
 
             byte b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
             br.ReadNonByteAlignedBits(14);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
 
             return ssList;
         }
@@ -724,7 +724,7 @@ namespace NBA_2K13_Roster_Editor
 
         private string ConvertSignatureSkillToBinary(string signatureSkill)
         {
-            return Convert.ToString((byte) Enum.Parse(typeof (SignatureSkill), signatureSkill), 2).PadLeft(6, '0');
+            return Convert.ToString((byte) Enum.Parse(typeof (SignatureSkills), signatureSkill), 2).PadLeft(6, '0');
         }
 
         private void chkRecalculateCRC_Checked(object sender, RoutedEventArgs e)
@@ -949,8 +949,6 @@ namespace NBA_2K13_Roster_Editor
                     return;
                 }
 
-                DataTable dt = ((DataView)dgTeams.DataContext).Table;
-
                 int length = lines[0].Split('\t').Length;
                 for (int i = 0; i < lines.Length; i++)
                 {
@@ -960,12 +958,23 @@ namespace NBA_2K13_Roster_Editor
                     {
                         for (int j = 0; j < parts.Length; j++)
                         {
-                            dt.Rows[row + i][col + j] = (!String.IsNullOrWhiteSpace(parts[j])) ? (object)parts[j] : DBNull.Value;
+                            if (col + j > 2 && col + j < teamsList[row+i].RosterSpots.Count)
+                            {
+                                teamsList[row + i].RosterSpots[col + j - 3] = (!String.IsNullOrWhiteSpace(parts[j]))
+                                                                              ? Convert.ToInt32(parts[j])
+                                                                              : -1;
+                            }
+                            else if (col + j == 2)
+                            {
+                                teamsList[row + i].PlNum = Convert.ToInt32(parts[j]);
+                            }
                         }
                     }
                 }
 
                 RelinkTeamsDataGrid();
+
+                updateStatus("Data pasted into Teams table successfully.");
             }
         }
 
@@ -1059,6 +1068,8 @@ namespace NBA_2K13_Roster_Editor
 
                 dgPlayers.ItemsSource = null;
                 dgPlayers.ItemsSource = playersList;
+
+                updateStatus("Data pasted into Players table successfully.");
             }
         }
 
@@ -1067,63 +1078,38 @@ namespace NBA_2K13_Roster_Editor
             pe.CFID = pe.CFID.TrySetValue(dict, "CF ID");
             pe.PlType = pe.PlType.TrySetValue(dict, "PlType");
             pe.GenericF = pe.GenericF.TrySetValue(dict, "GenericF");
-            pe.PortraitID = pe.PortraitID.TrySetValue(dict, "PortraitID");
+            pe.PortraitID = pe.PortraitID.TrySetValue(dict, "Portrait ID");
             pe.SSList[0] = pe.SSList[0].TrySetValue(dict, "SS1");
             pe.SSList[1] = pe.SSList[1].TrySetValue(dict, "SS2");
             pe.SSList[2] = pe.SSList[2].TrySetValue(dict, "SS3");
             pe.SSList[3] = pe.SSList[3].TrySetValue(dict, "SS4");
             pe.SSList[4] = pe.SSList[4].TrySetValue(dict, "SS5");
+
+            var rtNames = Enum.GetNames(typeof (Ratings));
+            foreach (string rtName in rtNames)
+            {
+                int curInd = (int) Enum.Parse(typeof (Ratings), rtName);
+                pe.Ratings[curInd] = pe.Ratings[curInd].TrySetValue(dict, "R" + rtName);
+            }
+
+            var tNames = Enum.GetNames(typeof(Tendencies));
+            foreach (string tName in tNames)
+            {
+                int curInd = (int)Enum.Parse(typeof(Tendencies), tName);
+                pe.Tendencies[curInd] = pe.Tendencies[curInd].TrySetValue(dict, "T" + tName);
+            }
+
+            var hsNames = Enum.GetNames(typeof(HotSpots));
+            foreach (string hsName in hsNames)
+            {
+                int curInd = (int)Enum.Parse(typeof(HotSpots), hsName);
+                pe.Tendencies[curInd] = pe.Tendencies[curInd].TrySetValue(dict, "HS" + hsName);
+            }
         }
     }
 
     internal enum Mode
     {
         PC, X360
-    }
-
-    internal enum SignatureSkill : byte
-    {
-        None = 0,
-        Posterizer = 1,
-        HighlightFilm = 2,
-        Finisher = 3,
-        Acrobat = 4,
-        SpotUpShooter = 5,
-        ShotCreator = 6,
-        Deadeye = 7,
-        CornerSpecialist = 8,
-        PostProficiency = 9,
-        AnkleBreaker = 10,
-        PostPlaymaker = 11,
-        Dimer = 12,
-        BreakStarter = 13,
-        AlleyOoper = 14,
-        BrickWall = 15,
-        LockdownDefender = 16,
-        ChargeCard = 17,
-        Interceptor = 18,
-        PickPocket = 19,
-        ActiveHands = 20,
-        Eraser = 21,
-        ChasedownArtist = 22,
-        Bruiser = 23,
-        HustlePoints = 24,
-        Scraper = 25,
-        AntiFreeze = 26,
-        Microwave = 27,
-        HeatRetention = 28,
-        Closer = 29,
-        FloorGeneral = 30,
-        DefensiveAnchor = 31,
-        GatoradePrimePack = 32,
-        OnCourtCoach = 33
-    }
-
-    internal enum HotZone
-    {
-        Cold = 0,
-        Neutral = 1,
-        Hot = 2,
-        Burned = 3
     }
 }
