@@ -1086,36 +1086,36 @@ namespace NBA_2K13_Roster_Editor
 
         private void TryParseDictionaryList(ref PlayerEntry pe, Dictionary<string, string> dict)
         {
-            pe.CFID = pe.CFID.TrySetValue(dict, "CF ID");
-            pe.PlType = pe.PlType.TrySetValue(dict, "PlType");
-            pe.GenericF = pe.GenericF.TrySetValue(dict, "GenericF");
-            pe.PortraitID = pe.PortraitID.TrySetValue(dict, "Portrait ID");
-            pe.AudioID = pe.AudioID.TrySetValue(dict, "Audio ID");
-            pe.SSList[0] = pe.SSList[0].TrySetValue(dict, "SS1");
-            pe.SSList[1] = pe.SSList[1].TrySetValue(dict, "SS2");
-            pe.SSList[2] = pe.SSList[2].TrySetValue(dict, "SS3");
-            pe.SSList[3] = pe.SSList[3].TrySetValue(dict, "SS4");
-            pe.SSList[4] = pe.SSList[4].TrySetValue(dict, "SS5");
+            pe.CFID = pe.CFID.TrySetValue(dict, "CF ID", true);
+            pe.PlType = pe.PlType.TrySetValue(dict, "PlType", true);
+            pe.GenericF = pe.GenericF.TrySetValue(dict, "GenericF", true);
+            pe.PortraitID = pe.PortraitID.TrySetValue(dict, "Portrait ID", true);
+            pe.AudioID = pe.AudioID.TrySetValue(dict, "Audio ID", true);
+            pe.SSList[0] = pe.SSList[0].TrySetValue(dict, "SS1", true);
+            pe.SSList[1] = pe.SSList[1].TrySetValue(dict, "SS2", true);
+            pe.SSList[2] = pe.SSList[2].TrySetValue(dict, "SS3", true);
+            pe.SSList[3] = pe.SSList[3].TrySetValue(dict, "SS4", true);
+            pe.SSList[4] = pe.SSList[4].TrySetValue(dict, "SS5", true);
 
             var rtNames = Enum.GetNames(typeof (Ratings));
             foreach (string rtName in rtNames)
             {
                 int curInd = (int) Enum.Parse(typeof (Ratings), rtName);
-                pe.Ratings[curInd] = pe.Ratings[curInd].TrySetValue(dict, "R" + rtName);
+                pe.Ratings[curInd] = pe.Ratings[curInd].TrySetValue(dict, "R" + rtName, true);
             }
 
             var tNames = Enum.GetNames(typeof(Tendencies));
             foreach (string tName in tNames)
             {
                 int curInd = (int)Enum.Parse(typeof(Tendencies), tName);
-                pe.Tendencies[curInd] = pe.Tendencies[curInd].TrySetValue(dict, "T" + tName);
+                pe.Tendencies[curInd] = pe.Tendencies[curInd].TrySetValue(dict, "T" + tName, true);
             }
 
             var hsNames = Enum.GetNames(typeof(HotSpots));
             foreach (string hsName in hsNames)
             {
                 int curInd = (int)Enum.Parse(typeof(HotSpots), hsName);
-                pe.HotSpots[curInd] = pe.HotSpots[curInd].TrySetValue(dict, "HS" + hsName);
+                pe.HotSpots[curInd] = pe.HotSpots[curInd].TrySetValue(dict, "HS" + hsName, true);
             }
         }
     }

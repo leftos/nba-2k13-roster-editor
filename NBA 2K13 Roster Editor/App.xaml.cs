@@ -48,5 +48,27 @@ namespace NBA_2K13_Roster_Editor
 
             Environment.Exit(-1);
         }
+
+        [STAThread()]
+        static void Main()
+        {
+            App app = new App();
+            app.InitializeComponent();
+
+            Trace.Listeners.Clear();
+
+            var twtl = new TextWriterTraceListener(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\tracelog.txt");
+            twtl.Name = "TextLogger";
+            twtl.TraceOutputOptions = TraceOptions.ThreadId | TraceOptions.DateTime;
+
+            var ctl = new ConsoleTraceListener(false);
+            ctl.TraceOutputOptions = TraceOptions.DateTime;
+
+            Trace.Listeners.Add(twtl);
+            Trace.Listeners.Add(ctl);
+            Trace.AutoFlush = true;
+
+            app.Run();
+        }
     }
 }

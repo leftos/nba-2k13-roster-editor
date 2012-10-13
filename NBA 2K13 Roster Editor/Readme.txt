@@ -32,6 +32,13 @@
 
 
 	Version History
+		v0.5.2.3
+			- Fixed bug introduced in 0.5.2.2 that caused tool to crash when pasted data lacked one or more columns
+
+		v0.5.2.2
+			- When pasting, erroneous data in a certain column will not change the value at all
+			- Silent errors will now be logged in the "tracelog.txt" file under "My Documents\NBA 2K13 Roster Editor"
+
 		v0.5.2.1
 			- Fixed pasting Audio ID
 
