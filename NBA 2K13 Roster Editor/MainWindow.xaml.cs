@@ -1103,7 +1103,7 @@ namespace NBA_2K13_Roster_Editor
             foreach (string hsName in hsNames)
             {
                 int curInd = (int)Enum.Parse(typeof(HotSpots), hsName);
-                pe.Tendencies[curInd] = pe.Tendencies[curInd].TrySetValue(dict, "HS" + hsName);
+                pe.HotSpots[curInd] = pe.HotSpots[curInd].TrySetValue(dict, "HS" + hsName);
             }
         }
     }

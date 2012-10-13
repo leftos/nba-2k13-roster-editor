@@ -32,6 +32,9 @@
 
 
 	Version History
+		v0.5.1.2
+			- Fixed Hot Spots overwriting Tendencies when pasting to the Players table
+
 		v0.5.1.1
 			- Fixed various bugs that would cause the tool to crash or misinterpret data when pasting into the Players and Teams tables
 

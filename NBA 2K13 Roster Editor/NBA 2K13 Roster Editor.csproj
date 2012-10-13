@@ -38,10 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LeftosCommonLibrary">
-      <HintPath>..\..\NBA Stats Tracker\LeftosCommonLibrary\bin\Release\LeftosCommonLibrary.dll</HintPath>
+      <HintPath>.\LeftosCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="LumenWorks.Framework.IO">
-      <HintPath>..\..\NBA Stats Tracker\LeftosCommonLibrary\bin\Release\LumenWorks.Framework.IO.dll</HintPath>
+      <HintPath>.\LumenWorks.Framework.IO.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
