@@ -237,6 +237,7 @@ namespace NBA_2K13_Roster_Editor
                 pe.ID = i;
                 pe.CFID = Convert.ToInt32(info["CFID"]);
                 pe.PortraitID = Convert.ToInt32(info["PortraitID"]);
+                pe.AudioID = Convert.ToInt32(info["AudioID"]);
                 pe.GenericF = info["GenericF"] == "1";
                 pe.PlType = Convert.ToInt32(info["PlType"]);
                 pe.Name = FindPlayerName(i);
@@ -441,6 +442,10 @@ namespace NBA_2K13_Roster_Editor
 
             //string hello = NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2));
             string genericF = br.ReadNonByteAlignedBits(1);
+
+            br.MoveStreamPosition(137, 6);
+
+            byte[] audio = br.ReadNonByteAlignedBytes(2);
             
             br.BaseStream.Position = prevPos;
             br.InBytePosition = prevPosIn;
@@ -448,6 +453,7 @@ namespace NBA_2K13_Roster_Editor
             var ret = new Dictionary<string, string>();
             ret["CFID"] = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(cf), 2).ToString();
             ret["PortraitID"] = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(por), 2).ToString();
+            ret["AudioID"] = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(audio), 2).ToString();
             ret["GenericF"] = genericF;
             ret["PlType"] = plType;
             return ret;
@@ -590,7 +596,12 @@ namespace NBA_2K13_Roster_Editor
 
                     SyncBWwithBR(ref bw);
                     byte b = br.ReadByte();
-                    bw.WriteNonByteAlignedBits(pe.GenericF ? "1" : "0", new byte[] {b});
+                    bw.WriteNonByteAlignedBits(pe.GenericF ? "1" : "0", new byte[] { b });
+                    SyncBRwithBW(ref bw);
+
+                    br.MoveStreamPosition(137, 6);
+
+                    Write2ByteStringToRoster(pe.AudioID.ToString(), bw);
 
                     br.BaseStream.Position = prevPos;
                     br.InBytePosition = prevPosIn;
@@ -1079,6 +1090,7 @@ namespace NBA_2K13_Roster_Editor
             pe.PlType = pe.PlType.TrySetValue(dict, "PlType");
             pe.GenericF = pe.GenericF.TrySetValue(dict, "GenericF");
             pe.PortraitID = pe.PortraitID.TrySetValue(dict, "Portrait ID");
+            pe.AudioID = pe.AudioID.TrySetValue(dict, "Audio ID");
             pe.SSList[0] = pe.SSList[0].TrySetValue(dict, "SS1");
             pe.SSList[1] = pe.SSList[1].TrySetValue(dict, "SS2");
             pe.SSList[2] = pe.SSList[2].TrySetValue(dict, "SS3");

@@ -32,6 +32,12 @@
 
 
 	Version History
+		v0.5.2.1
+			- Fixed pasting Audio ID
+
+		v0.5.2
+			- (Experimental) Audio ID(?) added to Players table
+
 		v0.5.1.2
 			- Fixed Hot Spots overwriting Tendencies when pasting to the Players table
 

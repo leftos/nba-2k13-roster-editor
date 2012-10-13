@@ -29,6 +29,7 @@
                             <DataGridTextColumn Header="CF ID" Binding="{Binding CFID, Mode=TwoWay}" />
                             <DataGridCheckBoxColumn Header="GenericF" Binding="{Binding GenericF, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Portrait ID" Binding="{Binding PortraitID, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="Audio ID" Binding="{Binding AudioID, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="SS1" SelectedValueBinding="{Binding SSList[0]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
                             <DataGridComboBoxColumn Header="SS2" SelectedValueBinding="{Binding SSList[1]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
                             <DataGridComboBoxColumn Header="SS3" SelectedValueBinding="{Binding SSList[2]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />

@@ -8,6 +8,12 @@ namespace NBA_2K13_Roster_Editor
 {
     internal class PlayerEntry : INotifyPropertyChanged
     {
+        // IMPORTANT NOTE
+        // When adding a property to a Player Entry, you should take care of:
+        // - Loading it via PopulatePlayersTab
+        // - Saving it via btnSavePlayers_Click
+        // - Making it pasteable via dgPlayers_PreviewKeyDown
+
         private string _name;
         private int _id;
         private int _cfid;
@@ -19,6 +25,7 @@ namespace NBA_2K13_Roster_Editor
         private List<byte> _tendencies;
         private List<byte> _hotSpots;
         private List<HotZones> _hotZones;
+        private int _audioId;
 
         public string Name
         {
@@ -78,6 +85,12 @@ namespace NBA_2K13_Roster_Editor
                 _portraitID = value;
                 OnPropertyChanged("PortraitID");
             }
+        }
+
+        public int AudioID
+        {
+            get { return _audioId; }
+            set { _audioId = value; OnPropertyChanged("AudioID"); }
         }
 
         public List<SignatureSkills> SSList
