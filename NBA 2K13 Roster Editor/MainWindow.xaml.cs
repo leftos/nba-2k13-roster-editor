@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -1052,8 +1053,9 @@ namespace NBA_2K13_Roster_Editor
                 }
                 List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
 
-                foreach (var dict in dictList)
+                for (int index = 0; index < dictList.Count; index++)
                 {
+                    var dict = dictList[index];
                     int ID;
                     try
                     {
@@ -1061,9 +1063,8 @@ namespace NBA_2K13_Roster_Editor
                     }
                     catch (Exception)
                     {
-                        MessageBox.Show("Couldn't detect a player's ID in the pasted data. " +
-                                        "\nUse a copy of this table as a base by copying it and pasting it into a spreadsheet and making changes there.");
-                        return;
+                        Trace.WriteLine(string.Format("{0}: Couldn't parse Player ID on line {1}. Skipping.", DateTime.Now, (index + 2)));
+                        continue;
                     }
                     for (int i = 0; i < playersList.Count; i++)
                     {

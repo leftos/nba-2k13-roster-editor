@@ -13,14 +13,14 @@
 		- Player Editing
 			- Signature Skills, Ratings, Tendencies, Hot Spots
 			- Appearance: CF, Portrait, GenericF
-			- PlType
+			- PlType, Audio ID
 		- Team Editing
 			- Basic roster editing (30 current teams and FA pool)
 			- Fix roster order and PlNum automatically for all teams
 			
 	
 	Known Issues
-		- (X360) Editing Signature Skills of Jamaal Magloire on Player ID 1364 doesn't work for now
+		- (X360) Editing Signature Skills of player with Player ID 1364 doesn't work for now
 
 
 	Credits
@@ -28,10 +28,15 @@
 		- HyperBaller21, for helping with making the editor compatible with 360 files
 		- Solovoy, for helping with researching the roster format
 		- Vlad Zola Jr., for his work on REDitor all these years and his invaluable research and tools
+		- slimm44, for his extensive bug reports
+		- poster, for his extensive bug reports
 		- All of the NLSC and OS community, especially the roster modders, who are the ones I'm doing this for. They make the game better and have supported me since Day 1.
 
 
 	Version History
+		v0.5.2.4
+			- Tool will now skip any pasted rows that have Player IDs that can't be parsed (e.g. rows with no Player ID set, empty rows, etc), instead of stopping the paste; all such errors will be silently logged to "tracelog.txt" as well
+
 		v0.5.2.3
 			- Fixed bug introduced in 0.5.2.2 that caused tool to crash when pasted data lacked one or more columns
 
@@ -43,7 +48,7 @@
 			- Fixed pasting Audio ID
 
 		v0.5.2
-			- (Experimental) Audio ID(?) added to Players table
+			- Audio ID added to Players table
 
 		v0.5.1.2
 			- Fixed Hot Spots overwriting Tendencies when pasting to the Players table
