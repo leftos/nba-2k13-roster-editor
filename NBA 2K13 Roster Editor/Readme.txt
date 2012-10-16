@@ -34,6 +34,9 @@
 
 
 	Version History
+		v0.6
+			- (Very Experimental) Support for Association saves (*.FXG)
+
 		v0.5.2.4
 			- Tool will now skip any pasted rows that have Player IDs that can't be parsed (e.g. rows with no Player ID set, empty rows, etc), instead of stopping the paste; all such errors will be silently logged to "tracelog.txt" as well
 
@@ -70,7 +73,7 @@
 			- Fixed bug that would substitute the FA pool with the Bobcats players on save
 
 		v0.4.1
-			- (Experimental) The tool will now read and write 18 roster entries instead of 15 for every team
+			- The tool will now read and write 18 roster entries instead of 15 for every team
 
 		v0.4
 			- Added roster editing for all 30 current teams and the FA pool

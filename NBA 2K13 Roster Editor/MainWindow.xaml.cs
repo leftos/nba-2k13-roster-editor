@@ -37,7 +37,9 @@ namespace NBA_2K13_Roster_Editor
 
         private ObservableCollection<PlayerEntry> playersList { get; set; }
         private ObservableCollection<Option> optionsList { get; set; }
-        private ObservableCollection<TeamEntry> teamsList { get; set; } 
+        private ObservableCollection<TeamEntry> teamsList { get; set; }
+
+        private SaveType saveType;
 
         public MainWindow()
         {
@@ -204,7 +206,10 @@ namespace NBA_2K13_Roster_Editor
         {
             var ofd = new OpenFileDialog();
             ofd.InitialDirectory = NBA2K13SavesPath;
-            ofd.Filter = "Roster files (*.ROS)|*.ROS|All files (*.*)|*.*";
+            ofd.Filter = "All compatible NBA 2K13 files (*.ROS; *.FXG)|*.ROS;*.FXG|" +
+                         "Roster files (*.ROS)|*.ROS|" +
+                         "Association files (*.FXG)|*.FXG|" +
+                         "All files (*.*)|*.*";
             ofd.DefaultExt = ".ROS";
             ofd.ShowDialog();
 
@@ -214,6 +219,17 @@ namespace NBA_2K13_Roster_Editor
             txtFile.Text = Path.GetFileName(ofd.FileName);
             currentFile = ofd.FileName;
             br = new NonByteAlignedBinaryReader(File.Open(currentFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+            string ext = Path.GetExtension(currentFile);
+            switch (ext)
+            {
+                case ".ROS":
+                    saveType = SaveType.Roster;
+                    break;
+                case ".FXG":
+                    saveType = SaveType.Association;
+                    break;
+            }
 
             PopulateTeamsTab();
 
@@ -303,13 +319,7 @@ namespace NBA_2K13_Roster_Editor
         private void PopulateTeamsTab()
         {
             teamsList = new ObservableCollection<TeamEntry>();
-            long firstRosterOffset = 862911 - 720;
-            int firstRosterOffsetBit = 6 - 2;
-            br.BaseStream.Position = firstRosterOffset;
-            br.InBytePosition = firstRosterOffsetBit;
-
-            if (mode == Mode.X360)
-                br.BaseStream.Position += 69632;
+            MoveStreamBeforeFirstRoster();
 
             TeamEntry te;
             for (int i = 0; i < 30; i++)
@@ -338,10 +348,25 @@ namespace NBA_2K13_Roster_Editor
             if (mode == Mode.X360)
                 br.BaseStream.Position += 69632;
 
+            MoveStreamForSaveType();
+
             PopulateRosterRow(256, ref te, true);
             //
 
             RelinkTeamsDataGrid();
+        }
+
+        private void MoveStreamBeforeFirstRoster()
+        {
+            long firstRosterOffset = 862911 - 720;
+            int firstRosterOffsetBit = 6 - 2;
+            br.BaseStream.Position = firstRosterOffset;
+            br.InBytePosition = firstRosterOffsetBit;
+
+            if (mode == Mode.X360)
+                br.BaseStream.Position += 69632;
+
+            MoveStreamForSaveType();
         }
 
         private void PopulateRosterRow(int countToRead, ref TeamEntry te, bool isFArow = false)
@@ -465,6 +490,8 @@ namespace NBA_2K13_Roster_Editor
             br.BaseStream.Position = Convert.ToInt64(GetOption("FirstSSOffset"));
             br.InBytePosition = Convert.ToInt32(GetOption("FirstSSOffsetBit"));
 
+            MoveStreamForSaveType();
+
             if (playerID >= 1365 && mode == Mode.X360)
             {
                 br.BaseStream.Position += 16384;
@@ -473,6 +500,14 @@ namespace NBA_2K13_Roster_Editor
             int playerBits = 477 * 8 + 5;
             int totalBits = playerBits * playerID;
             br.MoveStreamPosition(totalBits / 8, totalBits % 8);
+        }
+
+        private void MoveStreamForSaveType()
+        {
+            if (saveType == SaveType.Association)
+            {
+                br.MoveStreamPosition(8, 0);
+            }
         }
 
         private void Window_Closing_1(object sender, CancelEventArgs e)
@@ -754,14 +789,7 @@ namespace NBA_2K13_Roster_Editor
         private void btnSaveTeams_Click(object sender, RoutedEventArgs e)
         {
             FixPlNumAndOrder();
-
-            long firstRosterOffset = 862911 - 720;
-            int firstRosterOffsetBit = 6 - 2;
-            br.BaseStream.Position = firstRosterOffset;
-            br.InBytePosition = firstRosterOffsetBit;
-
-            if (mode == Mode.X360)
-                br.BaseStream.Position += 69632;
+            MoveStreamBeforeFirstRoster();
 
             for (int i = 0; i < teamsList.Count - 1; i++)
             {
@@ -781,6 +809,8 @@ namespace NBA_2K13_Roster_Editor
 
             if (mode == Mode.X360)
                 br.BaseStream.Position = 923137;
+
+            MoveStreamForSaveType();
 
             WriteRosterRow(faRow, 256, true);
             //
@@ -1124,5 +1154,10 @@ namespace NBA_2K13_Roster_Editor
     internal enum Mode
     {
         PC, X360
+    }
+
+    internal enum SaveType
+    {
+        Roster, Association
     }
 }
