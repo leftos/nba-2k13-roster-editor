@@ -34,8 +34,11 @@
 
 
 	Version History
+		v0.6.1
+			- Support for MyCareer saves (*.CMG)
+
 		v0.6
-			- (Very Experimental) Support for Association saves (*.FXG)
+			- Support for Association saves (*.FXG)
 
 		v0.5.2.4
 			- Tool will now skip any pasted rows that have Player IDs that can't be parsed (e.g. rows with no Player ID set, empty rows, etc), instead of stopping the paste; all such errors will be silently logged to "tracelog.txt" as well

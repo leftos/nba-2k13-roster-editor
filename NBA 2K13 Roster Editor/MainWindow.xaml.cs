@@ -206,9 +206,10 @@ namespace NBA_2K13_Roster_Editor
         {
             var ofd = new OpenFileDialog();
             ofd.InitialDirectory = NBA2K13SavesPath;
-            ofd.Filter = "All compatible NBA 2K13 files (*.ROS; *.FXG)|*.ROS;*.FXG|" +
+            ofd.Filter = "All compatible NBA 2K13 files (*.ROS; *.FXG; *.CMG)|*.ROS;*.FXG;*.CMG|" +
                          "Roster files (*.ROS)|*.ROS|" +
                          "Association files (*.FXG)|*.FXG|" +
+                         "MyCareer files (*.CMG)|*.CMG|" +
                          "All files (*.*)|*.*";
             ofd.DefaultExt = ".ROS";
             ofd.ShowDialog();
@@ -223,11 +224,14 @@ namespace NBA_2K13_Roster_Editor
             string ext = Path.GetExtension(currentFile);
             switch (ext)
             {
-                case ".ROS":
-                    saveType = SaveType.Roster;
+                case ".CMG":
+                    saveType = SaveType.MyCareer;
                     break;
                 case ".FXG":
                     saveType = SaveType.Association;
+                    break;
+                default:
+                    saveType = SaveType.Roster;
                     break;
             }
 
@@ -507,6 +511,10 @@ namespace NBA_2K13_Roster_Editor
             if (saveType == SaveType.Association)
             {
                 br.MoveStreamPosition(8, 0);
+            }
+            else if (saveType == SaveType.MyCareer)
+            {
+                br.MoveStreamPosition(2190248, 0);
             }
         }
 
@@ -1158,6 +1166,7 @@ namespace NBA_2K13_Roster_Editor
 
     internal enum SaveType
     {
-        Roster, Association
+        Roster, Association,
+        MyCareer
     }
 }
