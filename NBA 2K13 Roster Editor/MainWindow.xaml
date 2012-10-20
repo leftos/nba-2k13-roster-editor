@@ -4,9 +4,39 @@
         Width="902" Closing="Window_Closing_1" Icon="pack://siteoforigin:,,,/NLSC.ico">
     <Window.Resources>
         <ObjectDataProvider x:Key="SignatureSkillsList" MethodName="GetValues"
-                            ObjectType="{x:Type NBA_2K13_Roster_Editor:SignatureSkills}">
+                            ObjectType="{x:Type NBA_2K13_Roster_Editor:SignatureSkill}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="NBA_2K13_Roster_Editor:SignatureSkills" />
+                <x:Type TypeName="NBA_2K13_Roster_Editor:SignatureSkill" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="ShoeBrandsList" MethodName="GetValues"
+                            ObjectType="{x:Type NBA_2K13_Roster_Editor:ShoeBrand}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="NBA_2K13_Roster_Editor:ShoeBrand" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="CAPHairTypesList" MethodName="GetValues"
+                            ObjectType="{x:Type NBA_2K13_Roster_Editor:CAPHairType}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="NBA_2K13_Roster_Editor:CAPHairType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="EyeColorsList" MethodName="GetValues"
+                            ObjectType="{x:Type NBA_2K13_Roster_Editor:EyeColor}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="NBA_2K13_Roster_Editor:EyeColor" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="MuscleTonesList" MethodName="GetValues"
+                            ObjectType="{x:Type NBA_2K13_Roster_Editor:MuscleTone}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="NBA_2K13_Roster_Editor:MuscleTone" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="BodyTypesList" MethodName="GetValues"
+                            ObjectType="{x:Type NBA_2K13_Roster_Editor:BodyType}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="NBA_2K13_Roster_Editor:BodyType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
@@ -29,12 +59,19 @@
                             <DataGridTextColumn Header="CF ID" Binding="{Binding CFID, Mode=TwoWay}" />
                             <DataGridCheckBoxColumn Header="GenericF" Binding="{Binding GenericF, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Portrait ID" Binding="{Binding PortraitID, Mode=TwoWay}" />
-                            <DataGridTextColumn Header="Audio ID" Binding="{Binding AudioID, Mode=TwoWay}" />
-                            <DataGridComboBoxColumn Header="SS1" SelectedValueBinding="{Binding SSList[0]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
-                            <DataGridComboBoxColumn Header="SS2" SelectedValueBinding="{Binding SSList[1]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
-                            <DataGridComboBoxColumn Header="SS3" SelectedValueBinding="{Binding SSList[2]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
-                            <DataGridComboBoxColumn Header="SS4" SelectedValueBinding="{Binding SSList[3]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
-                            <DataGridComboBoxColumn Header="SS5" SelectedValueBinding="{Binding SSList[4]}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
+                            <DataGridTextColumn Header="ASA ID" Binding="{Binding ASAID, Mode=TwoWay}" />
+                            <DataGridComboBoxColumn Header="Shoe Brand" SelectedValueBinding="{Binding ShoeBrand, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource ShoeBrandsList}}" />
+                            <DataGridTextColumn Header="Shoe Model" Binding="{Binding ShoeModel, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="Number" Binding="{Binding JerseyNumber, Mode=TwoWay}" />
+                            <DataGridComboBoxColumn Header="CAP Hair Type" SelectedValueBinding="{Binding CAPHairType, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource CAPHairTypesList}}" />
+                            <DataGridComboBoxColumn Header="Eye Color" SelectedValueBinding="{Binding EyeColor, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource EyeColorsList}}" />
+                            <DataGridComboBoxColumn Header="Muscle Tone" SelectedValueBinding="{Binding MuscleTone, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource MuscleTonesList}}" />
+                            <DataGridComboBoxColumn Header="Body Type" SelectedValueBinding="{Binding BodyType, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource BodyTypesList}}" />
+                            <DataGridComboBoxColumn Header="SS1" SelectedValueBinding="{Binding SSList[0], Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
+                            <DataGridComboBoxColumn Header="SS2" SelectedValueBinding="{Binding SSList[1], Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
+                            <DataGridComboBoxColumn Header="SS3" SelectedValueBinding="{Binding SSList[2], Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
+                            <DataGridComboBoxColumn Header="SS4" SelectedValueBinding="{Binding SSList[3], Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
+                            <DataGridComboBoxColumn Header="SS5" SelectedValueBinding="{Binding SSList[4], Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnSave" Content="Save Players" Margin="0,10,10,0" HorizontalAlignment="Right"

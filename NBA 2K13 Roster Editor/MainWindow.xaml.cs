@@ -66,7 +66,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 dgPlayers.Columns.Add(new DataGridTextColumn
                 {
-                    Header = string.Format("R{0}", Enum.GetName(typeof (Ratings), i)),
+                    Header = string.Format("R{0}", Enum.GetName(typeof (Rating), i)),
                     Binding =
                         new Binding { Path = new PropertyPath(string.Format("Ratings[{0}]", i)), Mode = BindingMode.TwoWay }
                 });
@@ -76,7 +76,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 dgPlayers.Columns.Add(new DataGridTextColumn
                 {
-                    Header = string.Format("T{0}", Enum.GetName(typeof (Tendencies), i)),
+                    Header = string.Format("T{0}", Enum.GetName(typeof (Tendency), i)),
                     Binding =
                         new Binding { Path = new PropertyPath(string.Format("Tendencies[{0}]", i)), Mode = BindingMode.TwoWay }
                 });
@@ -86,7 +86,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 dgPlayers.Columns.Add(new DataGridTextColumn
                 {
-                    Header = string.Format("HS{0}", Enum.GetName(typeof (HotSpots), i)),
+                    Header = string.Format("HS{0}", Enum.GetName(typeof (HotSpot), i)),
                     Binding =
                         new Binding { Path = new PropertyPath(string.Format("HotSpots[{0}]", i)), Mode = BindingMode.TwoWay }
                 });
@@ -128,15 +128,26 @@ namespace NBA_2K13_Roster_Editor
             if (File.Exists(file))
             {
                 string[] lines = File.ReadAllLines(file);
-                foreach (string line in lines)
+                for (int index = 0; index < lines.Length; index++)
                 {
+                    string line = lines[index];
                     string[] parts = line.Split(new char[] {'\t'}, 2);
                     if (parts.Length == 2)
                     {
-                        int id = Convert.ToInt32(parts[0]);
-                        if (names.ContainsKey(id) == false)
+                        try
                         {
-                            names.Add(id, parts[1]);
+                            int id = Convert.ToInt32(parts[0]);
+                            if (names.ContainsKey(id) == false)
+                            {
+                                names.Add(id, parts[1]);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Trace.WriteLine(
+                                string.Format("{0}: Couldn't convert line {1}'s ID while parsing {2}, value is '{3}'",
+                                              DateTime.Now.ToString(), (index + 1), Path.GetFileName(file), parts[0]));
+                            continue;
                         }
                     }
                 }
@@ -254,13 +265,8 @@ namespace NBA_2K13_Roster_Editor
             {
                 PlayerEntry pe = new PlayerEntry();
                 MoveStreamToFirstSS(i);
-                Dictionary<string, string> info = ReadInfo(i);
                 pe.ID = i;
-                pe.CFID = Convert.ToInt32(info["CFID"]);
-                pe.PortraitID = Convert.ToInt32(info["PortraitID"]);
-                pe.AudioID = Convert.ToInt32(info["AudioID"]);
-                pe.GenericF = info["GenericF"] == "1";
-                pe.PlType = Convert.ToInt32(info["PlType"]);
+                ReadInfo(ref pe);
                 pe.Name = FindPlayerName(i);
                 pe.SSList = ReadSignatureSkills(i);
                 pe.Ratings = ReadRatings(i);
@@ -411,23 +417,23 @@ namespace NBA_2K13_Roster_Editor
             return Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(b), 2).ToString();
         }
 
-        private List<SignatureSkills> ReadSignatureSkills(int playerID)
+        private List<SignatureSkill> ReadSignatureSkills(int playerID)
         {
             MoveStreamToFirstSS(playerID);
 
-            List<SignatureSkills> ssList = new List<SignatureSkills>();
+            List<SignatureSkill> ssList = new List<SignatureSkill>();
 
             byte b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             br.ReadNonByteAlignedBits(14);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
             b = NonByteAlignedBinaryReader.BitStringToByte(br.ReadNonByteAlignedBits(6));
-            ssList.Add(Enum.IsDefined(typeof(SignatureSkills), b) ? ((SignatureSkills)b) : (SignatureSkills)0);
+            ssList.Add(Enum.IsDefined(typeof(SignatureSkill), b) ? ((SignatureSkill)b) : (SignatureSkill)0);
 
             return ssList;
         }
@@ -444,13 +450,11 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
-        private Dictionary<string, string> ReadInfo(int playerID)
+        private void ReadInfo(ref PlayerEntry pe)
         {
-            MoveStreamToFirstSS(playerID);
-            long prevPos = br.BaseStream.Position;
-            int prevPosIn = br.InBytePosition;
+            int playerID = pe.ID;
 
-            br.MoveStreamPosition(-300, -2);
+            MoveStreamToCFID(playerID);
 
             byte[] por = br.ReadNonByteAlignedBytes(2);
 
@@ -458,7 +462,7 @@ namespace NBA_2K13_Roster_Editor
             // PlType
             br.MoveStreamPosition(2, 6);
 
-            string plType = Convert.ToByte(br.ReadNonByteAlignedBits(3),2).ToString();
+            byte plType = Convert.ToByte(br.ReadNonByteAlignedBits(3),2);
 
             br.MoveStreamPosition(-3, -1);
             //
@@ -470,25 +474,78 @@ namespace NBA_2K13_Roster_Editor
 
             br.MoveStreamPosition(94, 1);
 
-            //string hello = NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2));
-            string genericF = br.ReadNonByteAlignedBits(1);
+            bool genericF = br.ReadNonByteAlignedBits(1) == "1";
 
             br.MoveStreamPosition(137, 6);
 
             byte[] audio = br.ReadNonByteAlignedBytes(2);
-            
-            br.BaseStream.Position = prevPos;
-            br.InBytePosition = prevPosIn;
 
-            var ret = new Dictionary<string, string>();
-            ret["CFID"] = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(cf), 2).ToString();
-            ret["PortraitID"] = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(por), 2).ToString();
-            ret["AudioID"] = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(audio), 2).ToString();
-            ret["GenericF"] = genericF;
-            ret["PlType"] = plType;
-            return ret;
+
+            //Shoe
+            MoveStreamToCFID(playerID);
+
+            br.MoveStreamPosition(122, 0);
+            int shoeModel = Convert.ToInt32(br.ReadNonByteAlignedBits(12), 2);
+
+            ShoeBrand shoeBrand =
+                (ShoeBrand) Enum.Parse(typeof (ShoeBrand), Convert.ToByte(br.ReadNonByteAlignedBits(3), 2).ToString());
+            //
+
+            //Hair
+            MoveStreamToCFID(playerID);
+            br.MoveStreamPosition(127, 1);
+            var capHair =
+                (CAPHairType)
+                Enum.Parse(typeof (CAPHairType), Convert.ToByte(br.ReadNonByteAlignedBits(6), 2).ToString());
+            //
+
+            //
+            MoveStreamToCFID(playerID);
+            br.MoveStreamPosition(5, 4);
+            var number = br.ReadNonByteAlignedByte();
+            //
+
+            //
+            MoveStreamToCFID(playerID);
+            br.MoveStreamPosition(126, 3);
+            var muscleType =
+                (MuscleTone)
+                Enum.Parse(typeof(MuscleTone), Convert.ToByte(br.ReadNonByteAlignedBits(1), 2).ToString());
+
+            var bodyType =
+                (BodyType) Enum.Parse(typeof (BodyType), Convert.ToByte(br.ReadNonByteAlignedBits(2), 2).ToString());
+
+            MoveStreamToCFID(playerID);
+            br.MoveStreamPosition(128, 3);
+            var eyes =
+                (EyeColor)
+                Enum.Parse(typeof(EyeColor), Convert.ToByte(br.ReadNonByteAlignedBits(3), 2).ToString());
+            //
+
+
+
+            MoveStreamToFirstSS(playerID);
+
+            pe.CFID = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(cf), 2);
+            pe.PortraitID = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(por), 2);
+            pe.ASAID = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(audio), 2);
+            pe.GenericF = genericF;
+            pe.PlType = plType;
+            pe.ShoeBrand = shoeBrand;
+            pe.ShoeModel = shoeModel;
+            pe.CAPHairType = capHair;
+            pe.JerseyNumber = number;
+            pe.MuscleTone = muscleType;
+            pe.BodyType = bodyType;
+            pe.EyeColor = eyes;
         }
-        
+
+        private void MoveStreamToCFID(int playerID)
+        {
+            MoveStreamToFirstSS(playerID);
+            br.MoveStreamPosition(-300, -2);
+        }
+
         private void MoveStreamToFirstSS(int playerID)
         {
             br.BaseStream.Position = Convert.ToInt64(GetOption("FirstSSOffset"));
@@ -627,7 +684,7 @@ namespace NBA_2K13_Roster_Editor
 
                     bw.WriteNonByteAlignedBits(Convert.ToString(Convert.ToByte(pe.PlType.ToString()), 2).PadLeft(3, '0'), br.ReadBytes(2));
 
-                    SyncBRwithBW(ref bw);
+                    SyncBRwithBW(bw);
                     br.MoveStreamPosition(-3, -1);
                     //
 
@@ -641,26 +698,80 @@ namespace NBA_2K13_Roster_Editor
                     SyncBWwithBR(ref bw);
                     byte b = br.ReadByte();
                     bw.WriteNonByteAlignedBits(pe.GenericF ? "1" : "0", new byte[] { b });
-                    SyncBRwithBW(ref bw);
+                    SyncBRwithBW(bw);
 
                     br.MoveStreamPosition(137, 6);
 
-                    Write2ByteStringToRoster(pe.AudioID.ToString(), bw);
+                    Write2ByteStringToRoster(pe.ASAID.ToString(), bw);
+
+                    // Shoes
+                    MoveStreamToCFID(pe.ID);
+                    br.MoveStreamPosition(122, 0);
+                    SyncBWwithBR(ref bw);
+                    byte[] original = br.ReadBytes(3);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.ShoeModel, 2).PadLeft(12, '0'), original);
+                    SyncBRwithBW(bw);
+
+                    original = br.ReadBytes(2);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte) Enum.Parse(typeof (ShoeBrand), pe.ShoeBrand.ToString()), 2).PadLeft(
+                            3, '0'), original);
+                    SyncBRwithBW(bw);
+                    //
+
+
+                    //Hair
+                    MoveStreamToCFID(pe.ID);
+                    br.MoveStreamPosition(127, 1);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte) Enum.Parse(typeof (CAPHairType), pe.CAPHairType.ToString()), 2).PadLeft(
+                            6, '0'), br.ReadBytes(2));
+                    //
+
+                    //
+                    MoveStreamToCFID(pe.ID);
+                    br.MoveStreamPosition(5, 4);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedByte(pe.JerseyNumber, br.ReadBytes(2));
+                    //
+
+                    //
+                    MoveStreamToCFID(pe.ID);
+                    br.MoveStreamPosition(126, 3);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte) Enum.Parse(typeof (MuscleTone), pe.MuscleTone.ToString()), 2).PadLeft(
+                            1, '0'), br.ReadBytes(1));
+
+                    SyncBRwithBW(bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString((byte)Enum.Parse(typeof(BodyType), pe.BodyType.ToString()), 2).PadLeft(
+                            2, '0'), br.ReadBytes(2));
+                    
+
+                    MoveStreamToCFID(pe.ID);
+                    br.MoveStreamPosition(128, 3);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString((byte)Enum.Parse(typeof(EyeColor), pe.EyeColor.ToString()), 2).PadLeft(
+                            3, '0'), br.ReadBytes(2));
+                    //
+
+
 
                     br.BaseStream.Position = prevPos;
                     br.InBytePosition = prevPosIn;
                     SyncBWwithBR(ref bw);
                     //
 
-                    byte[] original = br.ReadBytes(2);
+                    original = br.ReadBytes(2);
                     string s = pe.SSList[0].ToString();
                     bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                    SyncBRwithBW(ref bw);
+                    SyncBRwithBW(bw);
 
                     original = br.ReadBytes(2);
                     s = pe.SSList[1].ToString();
                     bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                    SyncBRwithBW(ref bw);
+                    SyncBRwithBW(bw);
 
                     br.MoveStreamPosition(0, 14);
                     bw.MoveStreamPosition(0, 14);
@@ -668,17 +779,17 @@ namespace NBA_2K13_Roster_Editor
                     original = br.ReadBytes(2);
                     s = pe.SSList[2].ToString();
                     bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                    SyncBRwithBW(ref bw);
+                    SyncBRwithBW(bw);
 
                     original = br.ReadBytes(2);
                     s = pe.SSList[3].ToString();
                     bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                    SyncBRwithBW(ref bw);
+                    SyncBRwithBW(bw);
 
                     original = br.ReadBytes(2);
                     s = pe.SSList[4].ToString();
                     bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                    SyncBRwithBW(ref bw);
+                    SyncBRwithBW(bw);
 
 
                     //Ratings
@@ -698,7 +809,7 @@ namespace NBA_2K13_Roster_Editor
                             continue;
                         }
                         bw.WriteNonByteAlignedByte(byteToWrite, br.ReadBytes(2));
-                        SyncBRwithBW(ref bw);
+                        SyncBRwithBW(bw);
                     }
 
                     //Tendencies
@@ -718,7 +829,7 @@ namespace NBA_2K13_Roster_Editor
                             continue;
                         }
                         bw.WriteNonByteAlignedByte(byteToWrite, br.ReadBytes(2));
-                        SyncBRwithBW(ref bw);
+                        SyncBRwithBW(bw);
                     }
 
                     //Hot Spots
@@ -738,7 +849,7 @@ namespace NBA_2K13_Roster_Editor
                             continue;
                         }
                         bw.WriteNonByteAlignedByte(byteToWrite, br.ReadBytes(2));
-                        SyncBRwithBW(ref bw);
+                        SyncBRwithBW(bw);
                     }
                 }
 
@@ -753,7 +864,7 @@ namespace NBA_2K13_Roster_Editor
             updateStatus("Players saved.");
         }
 
-        private void SyncBRwithBW(ref NonByteAlignedBinaryWriter bw)
+        private void SyncBRwithBW(NonByteAlignedBinaryWriter bw)
         {
             br.BaseStream.Position = bw.BaseStream.Position;
             br.InBytePosition = bw.InBytePosition;
@@ -779,7 +890,7 @@ namespace NBA_2K13_Roster_Editor
 
         private string ConvertSignatureSkillToBinary(string signatureSkill)
         {
-            return Convert.ToString((byte) Enum.Parse(typeof (SignatureSkills), signatureSkill), 2).PadLeft(6, '0');
+            return Convert.ToString((byte) Enum.Parse(typeof (SignatureSkill), signatureSkill), 2).PadLeft(6, '0');
         }
 
         private void chkRecalculateCRC_Checked(object sender, RoutedEventArgs e)
@@ -857,7 +968,7 @@ namespace NBA_2K13_Roster_Editor
 
             SyncBWwithBR(ref bw);
             byte[] original = br.ReadBytes(2);
-            SyncBRwithBW(ref bw);
+            SyncBRwithBW(bw);
             bw.WriteNonByteAlignedByte(Convert.ToByte(plNum.ToString()), original);
 
             bw.Close();
@@ -1109,7 +1220,7 @@ namespace NBA_2K13_Roster_Editor
                         if (playersList[i].ID == ID)
                         {
                             PlayerEntry pe = playersList[i];
-                            TryParseDictionaryList(ref pe, dict);
+                            TryParsePlayerDictionaryList(ref pe, dict);
                             playersList[i] = pe;
                             break;
                         }
@@ -1123,37 +1234,44 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
-        private void TryParseDictionaryList(ref PlayerEntry pe, Dictionary<string, string> dict)
+        private void TryParsePlayerDictionaryList(ref PlayerEntry pe, Dictionary<string, string> dict)
         {
             pe.CFID = pe.CFID.TrySetValue(dict, "CF ID", true);
             pe.PlType = pe.PlType.TrySetValue(dict, "PlType", true);
             pe.GenericF = pe.GenericF.TrySetValue(dict, "GenericF", true);
             pe.PortraitID = pe.PortraitID.TrySetValue(dict, "Portrait ID", true);
-            pe.AudioID = pe.AudioID.TrySetValue(dict, "Audio ID", true);
+            pe.ASAID = pe.ASAID.TrySetValue(dict, "Audio ID", true);
+            pe.ShoeBrand = pe.ShoeBrand.TrySetValue(dict, "Shoe Brand", true);
+            pe.ShoeModel = pe.ShoeModel.TrySetValue(dict, "Shoe Model", true);
+            pe.JerseyNumber = pe.JerseyNumber.TrySetValue(dict, "Number", true);
+            pe.EyeColor = pe.EyeColor.TrySetValue(dict, "Eye Color", true);
+            pe.CAPHairType = pe.CAPHairType.TrySetValue(dict, "CAP Hair Type", true);
+            pe.BodyType = pe.BodyType.TrySetValue(dict, "Body Type", true);
+            pe.MuscleTone = pe.MuscleTone.TrySetValue(dict, "Muscle Tone", true);
             pe.SSList[0] = pe.SSList[0].TrySetValue(dict, "SS1", true);
             pe.SSList[1] = pe.SSList[1].TrySetValue(dict, "SS2", true);
             pe.SSList[2] = pe.SSList[2].TrySetValue(dict, "SS3", true);
             pe.SSList[3] = pe.SSList[3].TrySetValue(dict, "SS4", true);
             pe.SSList[4] = pe.SSList[4].TrySetValue(dict, "SS5", true);
 
-            var rtNames = Enum.GetNames(typeof (Ratings));
+            var rtNames = Enum.GetNames(typeof (Rating));
             foreach (string rtName in rtNames)
             {
-                int curInd = (int) Enum.Parse(typeof (Ratings), rtName);
+                int curInd = (int) Enum.Parse(typeof (Rating), rtName);
                 pe.Ratings[curInd] = pe.Ratings[curInd].TrySetValue(dict, "R" + rtName, true);
             }
 
-            var tNames = Enum.GetNames(typeof(Tendencies));
+            var tNames = Enum.GetNames(typeof(Tendency));
             foreach (string tName in tNames)
             {
-                int curInd = (int)Enum.Parse(typeof(Tendencies), tName);
+                int curInd = (int)Enum.Parse(typeof(Tendency), tName);
                 pe.Tendencies[curInd] = pe.Tendencies[curInd].TrySetValue(dict, "T" + tName, true);
             }
 
-            var hsNames = Enum.GetNames(typeof(HotSpots));
+            var hsNames = Enum.GetNames(typeof(HotSpot));
             foreach (string hsName in hsNames)
             {
-                int curInd = (int)Enum.Parse(typeof(HotSpots), hsName);
+                int curInd = (int)Enum.Parse(typeof(HotSpot), hsName);
                 pe.HotSpots[curInd] = pe.HotSpots[curInd].TrySetValue(dict, "HS" + hsName, true);
             }
         }

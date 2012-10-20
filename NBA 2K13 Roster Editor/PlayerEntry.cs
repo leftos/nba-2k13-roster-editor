@@ -20,12 +20,19 @@ namespace NBA_2K13_Roster_Editor
         private int _plType;
         private bool _genericF;
         private int _portraitID;
-        private List<SignatureSkills> _ssList;
+        private List<SignatureSkill> _ssList;
         private List<byte> _ratings;
         private List<byte> _tendencies;
         private List<byte> _hotSpots;
-        private List<HotZones> _hotZones;
-        private int _audioId;
+        private List<HotZone> _hotZones;
+        private int _asaID;
+        private ShoeBrand _shoeBrand;
+        private int _shoeModel;
+        private CAPHairType _capHairType;
+        private byte _jerseyNumber;
+        private MuscleTone _muscleTone;
+        private BodyType _bodyType;
+        private EyeColor _eyeColor;
 
         public string Name
         {
@@ -87,13 +94,27 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
-        public int AudioID
+        public int ASAID
         {
-            get { return _audioId; }
-            set { _audioId = value; OnPropertyChanged("AudioID"); }
+            get { return _asaID; }
+            set { _asaID = value; OnPropertyChanged("ASAID"); }
         }
 
-        public List<SignatureSkills> SSList
+        public ShoeBrand ShoeBrand
+        {
+            get { return _shoeBrand; }
+            set { _shoeBrand = value;
+                OnPropertyChanged("ShoeBrand");
+            }
+        }
+
+        public int ShoeModel
+        {
+            get { return _shoeModel; }
+            set { _shoeModel = value; OnPropertyChanged("ShoeModel"); }
+        }
+
+        public List<SignatureSkill> SSList
         {
             get { return _ssList; }
             set
@@ -133,7 +154,7 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
-        public List<HotZones> HotZones
+        public List<HotZone> HotZones
         {
             get { return _hotZones; }
             set
@@ -143,13 +164,45 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
+        public CAPHairType CAPHairType
+        {
+            get { return _capHairType; }
+            set { _capHairType = value;
+                OnPropertyChanged("CAPHairType");
+            }
+        }
+
+        public byte JerseyNumber
+        {
+            get { return _jerseyNumber; }
+            set { _jerseyNumber = value; OnPropertyChanged("JerseyNumber"); }
+        }
+
+        public MuscleTone MuscleTone
+        {
+            get { return _muscleTone; }
+            set { _muscleTone = value; OnPropertyChanged("MuscleTone"); }
+        }
+
+        public BodyType BodyType
+        {
+            get { return _bodyType; }
+            set { _bodyType = value; OnPropertyChanged("BodyType"); }
+        }
+
+        public EyeColor EyeColor
+        {
+            get { return _eyeColor; }
+            set { _eyeColor = value; OnPropertyChanged("EyeColor"); }
+        }
+
         public PlayerEntry()
         {
-            SSList = new List<SignatureSkills>();
+            SSList = new List<SignatureSkill>();
             Ratings = new List<byte>();
             Tendencies = new List<byte>();
             HotSpots = new List<byte>();
-            HotZones = new List<HotZones>();
+            HotZones = new List<HotZone>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -162,7 +215,7 @@ namespace NBA_2K13_Roster_Editor
         }
     }
 
-    internal enum SignatureSkills : byte
+    internal enum SignatureSkill : byte
     {
         None = 0,
         Posterizer = 1,
@@ -200,7 +253,7 @@ namespace NBA_2K13_Roster_Editor
         OnCourtCoach = 33
     }
 
-    internal enum HotZones
+    internal enum HotZone
     {
         Cold = 0,
         Neutral = 1,
@@ -208,7 +261,7 @@ namespace NBA_2K13_Roster_Editor
         Burned = 3
     }
 
-    internal enum Ratings : int
+    internal enum Rating : int
     {
         ShotIns = 0,
         ShotCls = 1,
@@ -249,7 +302,7 @@ namespace NBA_2K13_Roster_Editor
         LowPstHook = 36
     }
 
-    internal enum Tendencies : int
+    internal enum Tendency : int
     {
         ShotTnd = 0,
         InsShot = 1,
@@ -322,7 +375,7 @@ namespace NBA_2K13_Roster_Editor
         GiveNGo = 68
     }
 
-    internal enum HotSpots : int
+    internal enum HotSpot : int
     {
         Iso3L = 0,
         Iso3C = 1,
@@ -349,5 +402,86 @@ namespace NBA_2K13_Roster_Editor
         PstRL = 22,
         PstLH = 23,
         PstLL = 24
+    }
+
+    internal enum ShoeBrand : byte
+    {
+        Generic = 0,
+        Nike = 1,
+        Adidas = 2,
+        Jordan = 3,
+        Converse = 4,
+        Reebok = 5,
+        UnderArmour = 6,
+        Spalding = 7
+    }
+
+    internal enum EyeColor : byte
+    {
+        Blue = 0,
+        Brown = 1,
+        Green = 2,
+        Hazel = 3,
+        Amber = 4,
+        Gray = 5
+    }
+
+    internal enum MuscleTone : byte
+    {
+        Buff = 0,
+        Ripped = 1
+    }
+
+    internal enum BodyType: byte
+    {
+        Slim = 0,
+        Normal = 1,
+        Fat = 2,
+        Athletic = 3
+    }
+
+    internal enum CAPHairType: byte
+    {
+        NoHair = 0,
+        ShortStubble = 1,
+        MediumStubble = 2,
+        DarkStubble = 3,
+        DarkRecessedStubble = 4,
+        BaldingStubble = 5,
+        ShortBuzz = 6,
+        Buzz = 7,
+        WidowPeakBuzz = 8,
+        BaldingBuzz = 9,
+        NaturalWaves = 10,
+        NaturalPatches = 11,
+        NaturalPart = 12,
+        NaturalFauxhawk = 13,
+        NaturalBalding = 14,
+        ThickCornrows = 15,
+        ThinCornrows = 16,
+        Afro = 17,
+        Messy = 18,
+        Twisties = 19,
+        ShortDreads = 20,
+        MediumDreads = 21,
+        TiedDreads = 22,
+        DreadsTail = 23,
+        Mop = 24,
+        MopTail = 25,
+        StraightShort = 26,
+        StraightLong = 27,
+        StraightFlat = 28,
+        StraightPart = 29,
+        StraightTail = 30,
+        StraightBalding = 31,
+        Spikey = 32,
+        Curly = 33,
+        BaldingFlat = 34,
+        ShortFlat = 35,
+        MediumFlat = 36,
+        Wavy = 37,
+        Shaggy = 38,
+        Mohawk = 39,
+        ThePatch = 40
     }
 }
