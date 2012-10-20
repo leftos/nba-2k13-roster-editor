@@ -87,7 +87,7 @@
                     <DataGrid x:Name="dgTeams" AutoGenerateColumns="False" Margin="10,10,157,10"
                               CanUserReorderColumns="False" CanUserSortColumns="False" SelectionUnit="Cell" PreviewKeyDown="dgTeams_PreviewKeyDown"
                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" EnableColumnVirtualization="True"
-                              EnableRowVirtualization="True" FrozenColumnCount="2" CanUserAddRows="False" CanUserDeleteRows="False"/>
+                              EnableRowVirtualization="True" FrozenColumnCount="2" CanUserAddRows="False" CanUserDeleteRows="False" ClipboardCopyMode="IncludeHeader"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Options">

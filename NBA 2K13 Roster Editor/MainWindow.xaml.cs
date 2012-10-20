@@ -45,6 +45,8 @@ namespace NBA_2K13_Roster_Editor
         {
             InitializeComponent();
 
+            Title += " v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
             if (Directory.Exists(DocsPath) == false)
             {
                 Directory.CreateDirectory(DocsPath);
@@ -98,8 +100,8 @@ namespace NBA_2K13_Roster_Editor
             dgTeams.Columns.Clear();
             dgTeams.Columns.Add(new DataGridTextColumn
                                   {Header = "ID", Binding = new Binding {Path = new PropertyPath("ID"), Mode = BindingMode.TwoWay}});
-            dgTeams.Columns.Add(new DataGridTextColumn
-                                  {Header = "Name", Binding = new Binding {Path = new PropertyPath("Name"), Mode = BindingMode.TwoWay}});
+            dgTeams.Columns.Add(new DataGridTextColumn { Header = "Name", Binding = new Binding { Path = new PropertyPath("Name"), Mode = BindingMode.TwoWay } });
+            dgTeams.Columns.Add(new DataGridTextColumn { Header = "StAsstCoach", Binding = new Binding { Path = new PropertyPath("StAsstCoach"), Mode = BindingMode.TwoWay } });
             dgTeams.Columns.Add(new DataGridTextColumn
                                   {Header = "PlNum", Binding = new Binding {Path = new PropertyPath("PlNum"), Mode = BindingMode.TwoWay}});
             for (int i = 0; i < 256; i++)
@@ -343,6 +345,21 @@ namespace NBA_2K13_Roster_Editor
                 int curOffsetBit = br.InBytePosition;
 
                 PopulateRosterRow(18, ref te);
+
+                //
+                br.BaseStream.Position = 863081;
+                br.InBytePosition = 6;
+                br.MoveStreamPosition(720 * i, 2 * i);
+
+                if (mode == Mode.X360)
+                    br.BaseStream.Position += 69632;
+
+                MoveStreamForSaveType();
+                
+                te.StAsstCoach =
+                    Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2)), 2);
+                //
+
                 br.BaseStream.Position = curOffset;
                 br.InBytePosition = curOffsetBit;
             }
@@ -917,6 +934,26 @@ namespace NBA_2K13_Roster_Editor
                 int curOffsetBit = br.InBytePosition;
 
                 WriteRosterRow(i, 18);
+
+                //
+                br.BaseStream.Position = 863081;
+                br.InBytePosition = 6;
+                br.MoveStreamPosition(720 * i, 2 * i);
+
+                if (mode == Mode.X360)
+                    br.BaseStream.Position += 69632;
+
+                MoveStreamForSaveType();
+
+                NonByteAlignedBinaryWriter bw = new NonByteAlignedBinaryWriter(new FileStream(currentFile, FileMode.Open));
+                SyncBWwithBR(ref bw);
+
+                int ac = teamsList[i].StAsstCoach;
+                bw.WriteNonByteAlignedBits(Convert.ToString(ac, 2).PadLeft(16, '0'), br.ReadBytes(3));
+
+                bw.Close();
+                //
+
                 br.BaseStream.Position = curOffset;
                 br.InBytePosition = curOffsetBit;
             }
@@ -1042,12 +1079,11 @@ namespace NBA_2K13_Roster_Editor
 
         private void btnFill_Click(object sender, RoutedEventArgs e)
         {
-            int id = Convert.ToUInt16(myCell(0,2).ToString());
-            for (int i = 1; i<Convert.ToInt32(myCell(0,1)); i++)
+            int id = teamsList[0].RosterSpots[0];
+            for (int i = 1; i<teamsList[0].PlNum; i++)
             {
-                dt.Rows[0][i + 2] = ++id;
+                teamsList[0].RosterSpots[i] = ++id;
             }
-            RelinkTeamsDataGrid();
         }
 
         private void btnModePC_Checked(object sender, RoutedEventArgs e)
@@ -1098,45 +1134,55 @@ namespace NBA_2K13_Roster_Editor
             if (e.Key == Key.V && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
                 string[] lines = Tools.SplitLinesToArray(Clipboard.GetText());
-                lines = lines.TakeWhile(s => !String.IsNullOrWhiteSpace(s)).ToArray();
-
-                int row = dgTeams.Items.IndexOf(dgTeams.CurrentCell.Item);
-                int col = dgTeams.CurrentCell.Column.DisplayIndex;
-
-                if (row + lines.Length > dgTeams.Items.Count)
+                if (lines[0].Contains("ID") == false)
                 {
-                    MessageBox.Show(
-                        "You're trying to paste more rows than currently available. Make sure you're not selecting the shader/range names when copying data.");
+                    MessageBox.Show("The pasted date must have the column headers in the first row.");
                     return;
                 }
+                List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
 
-                int length = lines[0].Split('\t').Length;
-                for (int i = 0; i < lines.Length; i++)
+                for (int index = 0; index < dictList.Count; index++)
                 {
-                    string line = lines[i];
-                    string[] parts = line.Split('\t');
-                    if (parts.Length == length)
+                    var dict = dictList[index];
+                    int ID;
+                    try
                     {
-                        for (int j = 0; j < parts.Length; j++)
+                        ID = Convert.ToInt32(dict["ID"]);
+                    }
+                    catch (Exception)
+                    {
+                        Trace.WriteLine(string.Format("{0}: Couldn't parse Team ID on line {1}. Skipping.", DateTime.Now, (index + 2)));
+                        continue;
+                    }
+                    for (int i = 0; i < teamsList.Count; i++)
+                    {
+                        if (teamsList[i].ID == ID)
                         {
-                            if (col + j > 2 && col + j < teamsList[row+i].RosterSpots.Count)
-                            {
-                                teamsList[row + i].RosterSpots[col + j - 3] = (!String.IsNullOrWhiteSpace(parts[j]))
-                                                                              ? Convert.ToInt32(parts[j])
-                                                                              : -1;
-                            }
-                            else if (col + j == 2)
-                            {
-                                teamsList[row + i].PlNum = Convert.ToInt32(parts[j]);
-                            }
+                            TeamEntry te = teamsList[i];
+                            TryParseTeamDictionaryList(ref te, dict);
+                            teamsList[i] = te;
+                            break;
                         }
                     }
                 }
 
-                RelinkTeamsDataGrid();
+                dgTeams.ItemsSource = null;
+                dgTeams.ItemsSource = teamsList;
 
                 updateStatus("Data pasted into Teams table successfully.");
             }
+        }
+
+        private void TryParseTeamDictionaryList(ref TeamEntry te, Dictionary<string, string> dict)
+        {
+            int rCount = teamsList[0].RosterSpots.Count;
+
+            te.PlNum = te.PlNum.TrySetValue(dict, "PlNum", true);
+            for (int i = 0; i<rCount;i++)
+            {
+                te.RosterSpots[i] = te.RosterSpots[i].TrySetValue(dict, "R" + (i + 1).ToString(), true);
+            }
+            te.StAsstCoach = te.StAsstCoach.TrySetValue(dict, "StAsstCoach", true);
         }
 
         private void FixPlNumAndOrder()

@@ -1,48 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace NBA_2K13_Roster_Editor
 {
-    class TeamEntry : INotifyPropertyChanged
+    internal class TeamEntry : INotifyPropertyChanged
     {
-        private int _id;
-        private string _name;
         private int _plNum;
-        private List<int> _rosterSpots;
+        private ObservableCollection<int> _rosterSpots;
+        private short _stAsstCoach;
 
-        public int ID
+        public TeamEntry()
         {
-            get { return _id; }
-            set { _id = value; }
+            RosterSpots = new ObservableCollection<int>();
         }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        public int ID { get; set; }
+
+        public string Name { get; set; }
 
         public int PlNum
         {
             get { return _plNum; }
-            set { _plNum = value; OnPropertyChanged("PlNum");}
+            set
+            {
+                _plNum = value;
+                OnPropertyChanged("PlNum");
+            }
         }
 
-        public List<int> RosterSpots
+        public ObservableCollection<int> RosterSpots
         {
             get { return _rosterSpots; }
-            set { _rosterSpots = value; OnPropertyChanged("RosterSpots"); }
+            set
+            {
+                _rosterSpots = value;
+                OnPropertyChanged("RosterSpots");
+            }
         }
 
-        public TeamEntry()
+        public short StAsstCoach
         {
-            RosterSpots = new List<int>();
+            get { return _stAsstCoach; }
+            set
+            {
+                _stAsstCoach = value;
+                OnPropertyChanged("StAsstCoach");
+            }
         }
+
+        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

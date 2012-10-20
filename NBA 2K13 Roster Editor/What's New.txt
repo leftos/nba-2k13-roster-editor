@@ -1,5 +1,10 @@
 ﻿Version History
 
+		v0.7.2
+			- Added Assistant Coach to Teams tab
+			- Fill with consecutive works for 76ers again
+			- Teams table now parses data automatically when pasting
+
 		v0.7.1
 			- Added CAP Hair Type, Eye Color, Muscle Tone, Body Type, Jersey Number
 			- Shoe Brand and Shoe Model and all parameters added in this release are pastable
