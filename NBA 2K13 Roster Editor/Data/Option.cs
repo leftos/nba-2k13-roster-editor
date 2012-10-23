@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
-namespace NBA_2K13_Roster_Editor
+namespace NBA_2K13_Roster_Editor.Data
 {
-    class Option : INotifyPropertyChanged
+    internal class Option : INotifyPropertyChanged
     {
-        private string _setting;
         private object _value;
 
-        public string Setting
-        {
-            get { return _setting; }
-            set { _setting = value; }
-        }
+        public string Setting { get; set; }
 
         public object Value
         {
             get { return _value; }
-            set { _value = value; OnPropertyChanged("Value");}
+            set
+            {
+                _value = value;
+                OnPropertyChanged("Value");
+            }
         }
 
-        public Option()
-        {
-            
-        }
+        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

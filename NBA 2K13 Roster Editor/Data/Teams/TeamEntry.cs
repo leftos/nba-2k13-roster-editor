@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace NBA_2K13_Roster_Editor
+namespace NBA_2K13_Roster_Editor.Data.Teams
 {
     internal class TeamEntry : INotifyPropertyChanged
     {

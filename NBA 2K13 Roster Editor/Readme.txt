@@ -8,18 +8,7 @@
 
 		Any hex edits that you discover and you want me to implement, post here: http://forums.nba-live.com/viewtopic.php?f=150&t=88190
 
-
-	Features
-		- Player Editing
-			- Signature Skills, Ratings, Tendencies, Hot Spots
-			- Appearance: CF, Portrait, GenericF
-			- Gear: Shoe Brand, Shoe Model
-			- PlType, ASA ID
-		- Team Editing
-			- Basic roster editing (30 current teams and FA pool)
-			- Fix roster order and PlNum automatically for all teams
 			
-	
 	Known Issues
 		- (X360) Editing Signature Skills of player with Player ID 1364 doesn't work for now
 
@@ -31,4 +20,6 @@
 		- Vlad Zola Jr., for his work on REDitor all these years and his invaluable research and tools
 		- slimm44, for his extensive bug reports
 		- poster, for his extensive bug reports
+		- DukeW74, for helping with researching the roster format
+		- seanbarkley, for helping with researching the roster format
 		- All of the NLSC and OS community, especially the roster modders, who are the ones I'm doing this for. They make the game better and have supported me since Day 1.

@@ -32,15 +32,15 @@ namespace NBA_2K13_Roster_Editor
                 MessageBox.Show("Can't create errorlog!\n\n" + ex + "\n\n" + ex.InnerException);
             }
 
-            MessageBox.Show("NBA 2K13 Roster Editor encountered a critical error and will be terminated.\n\nAn Error Log has been saved at " +
-                            NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
+            MessageBox.Show(
+                "NBA 2K13 Roster Editor encountered a critical error and will be terminated.\n\nAn Error Log has been saved at " +
+                NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
             try
             {
                 Process.Start(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
             }
             catch (Exception)
             {
-
             }
 
             // Prevent default unhandled exception processing
@@ -49,10 +49,10 @@ namespace NBA_2K13_Roster_Editor
             Environment.Exit(-1);
         }
 
-        [STAThread()]
-        static void Main()
+        [STAThread]
+        private static void Main()
         {
-            App app = new App();
+            var app = new App();
             app.InitializeComponent();
 
             Trace.Listeners.Clear();

@@ -14,8 +14,7 @@ namespace NBA_2K13_Roster_Editor
         {
         }
 
-        public NonByteAlignedBinaryWriter(Stream stream, Encoding encoding)
-            : base(stream, encoding)
+        public NonByteAlignedBinaryWriter(Stream stream, Encoding encoding) : base(stream, encoding)
         {
         }
 
@@ -76,7 +75,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 rca[i] = oca[i - _inBytePosition];
             }
-            var ba = BitStringToByteArray(new string(rca));
+            byte[] ba = BitStringToByteArray(new string(rca));
             Write(ba);
             //ba.ToList().ForEach(b => Console.WriteLine(b));
             //Console.WriteLine();
@@ -88,8 +87,8 @@ namespace NBA_2K13_Roster_Editor
 
         public static byte[] BitStringToByteArray(string s)
         {
-            int count = s.Length / 8;
-            byte[] ba = new byte[count];
+            int count = s.Length/8;
+            var ba = new byte[count];
             for (int j = 0; j < count; j++)
             {
                 byte b = 0;

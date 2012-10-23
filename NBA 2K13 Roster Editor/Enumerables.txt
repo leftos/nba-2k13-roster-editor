@@ -1,0 +1,142 @@
+Signature Skills
+
+None = 0,
+Posterizer = 1,
+HighlightFilm = 2,
+Finisher = 3,
+Acrobat = 4,
+SpotUpShooter = 5,
+ShotCreator = 6,
+Deadeye = 7,
+CornerSpecialist = 8,
+PostProficiency = 9,
+AnkleBreaker = 10,
+PostPlaymaker = 11,
+Dimer = 12,
+BreakStarter = 13,
+AlleyOoper = 14,
+BrickWall = 15,
+LockdownDefender = 16,
+ChargeCard = 17,
+Interceptor = 18,
+PickPocket = 19,
+ActiveHands = 20,
+Eraser = 21,
+ChasedownArtist = 22,
+Bruiser = 23,
+HustlePoints = 24,
+Scraper = 25,
+AntiFreeze = 26,
+Microwave = 27,
+HeatRetention = 28,
+Closer = 29,
+FloorGeneral = 30,
+DefensiveAnchor = 31,
+GatoradePrimePack = 32,
+OnCourtCoach = 33
+
+=============================================================
+
+Body Type
+
+Slim = 0,
+Normal = 1,
+Fat = 2,
+Athletic = 3
+
+=============================================================
+
+CAP Hair Type
+
+NoHair = 0,
+ShortStubble = 1,
+MediumStubble = 2,
+DarkStubble = 3,
+DarkRecessedStubble = 4,
+BaldingStubble = 5,
+ShortBuzz = 6,
+Buzz = 7,
+WidowPeakBuzz = 8,
+BaldingBuzz = 9,
+NaturalWaves = 10,
+NaturalPatches = 11,
+NaturalPart = 12,
+NaturalFauxhawk = 13,
+NaturalBalding = 14,
+ThickCornrows = 15,
+ThinCornrows = 16,
+Afro = 17,
+Messy = 18,
+Twisties = 19,
+ShortDreads = 20,
+MediumDreads = 21,
+TiedDreads = 22,
+DreadsTail = 23,
+Mop = 24,
+MopTail = 25,
+StraightShort = 26,
+StraightLong = 27,
+StraightFlat = 28,
+StraightPart = 29,
+StraightTail = 30,
+StraightBalding = 31,
+Spikey = 32,
+Curly = 33,
+BaldingFlat = 34,
+ShortFlat = 35,
+MediumFlat = 36,
+Wavy = 37,
+Shaggy = 38,
+Mohawk = 39,
+ThePatch = 40
+
+=============================================================
+
+Contract Option
+
+None = 0,
+Team = 1,
+Player = 2,
+Team2Yr = 3
+
+=============================================================
+
+Eye Color 
+
+Blue = 0,
+Brown = 1,
+Green = 2,
+Hazel = 3,
+Amber = 4,
+Gray = 5
+
+=============================================================
+
+Muscle Tone
+
+Buff = 0,
+Ripped = 1
+
+=============================================================
+
+Position
+
+PG = 0,
+SG = 1,
+SF = 2,
+PF = 3,
+C = 4,
+None = 5
+
+=============================================================
+
+Shoe Brand
+
+Generic = 0,
+Nike = 1,
+Adidas = 2,
+Jordan = 3,
+Converse = 4,
+Reebok = 5,
+UnderArmour = 6,
+Spalding = 7

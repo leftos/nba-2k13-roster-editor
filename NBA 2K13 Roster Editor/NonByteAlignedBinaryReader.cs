@@ -14,8 +14,7 @@ namespace NBA_2K13_Roster_Editor
         {
         }
 
-        public NonByteAlignedBinaryReader(Stream stream, Encoding encoding)
-            : base(stream, encoding)
+        public NonByteAlignedBinaryReader(Stream stream, Encoding encoding) : base(stream, encoding)
         {
         }
 
@@ -137,8 +136,8 @@ namespace NBA_2K13_Roster_Editor
 
         public static byte[] BitStringToByteArray(string s)
         {
-            int count = ((s.Length-1)/8)+1;
-            byte[] ba = new byte[count];
+            int count = ((s.Length - 1)/8) + 1;
+            var ba = new byte[count];
             for (int j = 0; j < count; j++)
             {
                 byte b = 0;
@@ -184,11 +183,11 @@ namespace NBA_2K13_Roster_Editor
         {
             if ((_inBytePosition + bits >= 8))
             {
-                BaseStream.Position += (_inBytePosition + bits) / 8;
+                BaseStream.Position += (_inBytePosition + bits)/8;
             }
             if (_inBytePosition + bits >= 0)
             {
-                _inBytePosition = (_inBytePosition + bits) % 8;
+                _inBytePosition = (_inBytePosition + bits)%8;
             }
             else
             {

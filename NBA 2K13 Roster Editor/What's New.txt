@@ -1,5 +1,36 @@
 ﻿Version History
 
+		v0.10.1
+			- Added "ChooseNameBy" option to allow user to have a "names.txt" with a first column that's not Player ID, but any column of the Players table
+			- Fixed paste crash bug in Players table
+
+		v0.10.0.1
+			- Fixed hang when saving players
+
+		v0.10
+			- Added Height, Weight, Skintone, Hair Color, Eyebrows, Moustache, Facial Hair Color, Beard, Goatee
+			- Added Dunk Packages, Signature Shot Form & Base, Signature Free Throw
+			- Added team names for all 90 entries (courtesy of Hyperballer21)
+			- Fixed Find & Replace ignoring the last player in the Players table
+
+		v0.9.0.1
+			- Fixed checksum not being updated when saving Jerseys in PC mode
+
+		v0.9
+			- Added Find & Replace functionality for Players tab
+			- Added Last Team ID option to force the Teams tab to show more roster entries
+			- Added automatic Check for Updates on start-up
+		
+		v0.8.1
+			- Added Player Contracts
+			- Fixed Jersey editing on the 360
+			- Fixed Muscle Tone and Body Type editing
+			- Fixed a bug that caused hex values of shoe colors not to update in the table after editing
+
+		v0.8
+			- Added Shoe Colors
+			- Added Jersey Colors
+
 		v0.7.2
 			- Added Assistant Coach to Teams tab
 			- Fill with consecutive works for 76ers again

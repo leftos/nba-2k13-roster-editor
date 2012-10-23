@@ -1,0 +1,43 @@
+namespace NBA_2K13_Roster_Editor.Data.Players.Parameters
+{
+    internal enum Rating : byte
+    {
+        ShotIns = 0,
+        ShotCls = 1,
+        ShotMid = 2,
+        BallHnd = 3,
+        Shot3PT = 4,
+        FT = 5,
+        Hidden = 6,
+        Layup = 7,
+        Dunk = 8,
+        StndDnk = 9,
+        ShtInTr = 10,
+        ShtOffDr = 11,
+        Hstl = 12,
+        OffHndDr = 13,
+        BallSec = 14,
+        Pass = 15,
+        LowPstD = 16,
+        LowPstO = 17,
+        Block = 18,
+        Hands = 19,
+        Steal = 20,
+        Speed = 21,
+        Stmn = 22,
+        Emtn = 23,
+        Vert = 24,
+        OffRbd = 25,
+        DefRbd = 26,
+        Drblty = 27,
+        DefAwr = 28,
+        OffAwr = 29,
+        Cnstnc = 30,
+        OnBallD = 31,
+        Quick = 32,
+        Pot = 33,
+        Strng = 34,
+        LowPstFade = 35,
+        LowPstHook = 36
+    }
+}
