@@ -90,6 +90,66 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
+        public int TeamID1
+        {
+            get { return _teamID1; }
+            set
+            {
+                _teamID1 = value;
+                OnPropertyChanged("TeamID1");
+            }
+        }
+
+        private int _teamID1;
+
+        public int TeamID2
+        {
+            get { return _teamID2; }
+            set
+            {
+                _teamID2 = value;
+                OnPropertyChanged("TeamID2");
+            }
+        }
+
+        private int _teamID2;
+
+        public int AssignedTo
+        {
+            get { return _assignedTo; }
+            set
+            {
+                _assignedTo = value;
+                OnPropertyChanged("AssignedTo");
+            }
+        }
+
+        private int _assignedTo;
+
+        public bool IsFA
+        {
+            get { return _isFA; }
+            set
+            {
+                _isFA = value;
+                OnPropertyChanged("IsFA");
+            }
+        }
+
+        private bool _isFA;
+
+        public bool IsHidden
+        {
+            get { return _isHidden; }
+            set
+            {
+                _isHidden = value;
+                OnPropertyChanged("IsHidden");
+            }
+        }
+
+        private bool _isHidden;
+
         public int CFID
         {
             get { return _cfid; }

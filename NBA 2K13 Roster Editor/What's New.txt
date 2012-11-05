@@ -1,5 +1,40 @@
 ﻿Version History
 
+		v0.12.0.3
+			- LastJerseyID will be recalculated each time a roster is loaded
+
+		v0.12.0.2
+			- Fixed pasting functionality for some columns in Players table
+			- Players table filter can be removed by clicking on Filter in the Find & Replace dialog with an empty Find column
+
+		v0.12.0.1
+			- Pasting TeamID1 & TeamID2 now works
+
+		v0.12
+			- Added TeamID1 & TeamID2
+			- Added the following read-only columns to Players table
+				* AssignedTo: Shows you which team this player is assigned to in the Teams table
+				* IsFA: Tells you if the player is in the FA pool
+				* IsHidden: Tells you if the player is in no teams, nor the FA pool
+			- Added Filter feature to Find & Replace dialog which filters the players table according to the specified filters
+
+		v0.11.0.2
+			- Free Agents Pool expanded to 512 spots, since 256 were too few; may need further expansion
+
+		v0.11.0.1
+			- Fixed automatic roster reordering & PlNum correction bug
+
+		v0.11
+			- Added jersey neck & sock color
+			- Added "Apply Replace Filters" feature which applies the replacements based on all the "Find & Replace" filters in a specific folder
+			- Fixed color handling in Jerseys tab, colors should now show and be applied correctly
+			- Fixed a mistake in the order of the Hot Spots
+			- Fixed bug that caused edits to some cells in tables not to save when pressing Tab to switch to the next cell
+			- Fixed color selection dialog showing up on non-related double-clicks on the tables
+
+		v0.10.2
+			- Jersey GID and Names added, courtesy of Hyperballer21
+
 		v0.10.1
 			- Added "ChooseNameBy" option to allow user to have a "names.txt" with a first column that's not Player ID, but any column of the Players table
 			- Fixed paste crash bug in Players table

@@ -24,8 +24,8 @@ namespace NBA_2K13_Roster_Editor.Data.Players.Parameters
         PnRRW = 19,
         PnRRC = 20,
         PstRH = 21,
-        PstRL = 22,
-        PstLH = 23,
+        PstLH = 22,
+        PstRL = 23,
         PstLL = 24
     }
 }

@@ -8,6 +8,8 @@
 
 		Any hex edits that you discover and you want me to implement, post here: http://forums.nba-live.com/viewtopic.php?f=150&t=88190
 
+		If you're having issues with pasting into the tables, read the included "Pasting into the tables Tutorial.pdf" file.
+
 			
 	Known Issues
 		- (X360) Editing Signature Skills of player with Player ID 1364 doesn't work for now

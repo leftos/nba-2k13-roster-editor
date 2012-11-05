@@ -1,4 +1,2 @@
-0.10.1.0
+0.12.0.3
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
-- Added "ChooseNameBy" option to allow user to have a "names.txt" with a first column that's not Player ID, but any column of the Players table
-- Fixed paste crash bug in Players table

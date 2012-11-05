@@ -17,6 +17,7 @@ namespace NBA_2K13_Roster_Editor
         private readonly string folder = MainWindow.DocsPath + @"\Search Filters";
         public List<string> FindFilters = new List<string>();
         public List<string> ReplaceFilters = new List<string>();
+        public List<string> FilterFilters = new List<string>();
 
         public SearchWindow()
         {
@@ -147,7 +148,13 @@ namespace NBA_2K13_Roster_Editor
                 }
             }
 
-            string[] s = File.ReadAllLines(sfd.FileName);
+            string file = sfd.FileName;
+            LoadFilters(file);
+        }
+
+        public void LoadFilters(string file)
+        {
+            string[] s = File.ReadAllLines(file);
             for (int i = 0; i < s.Length; i++)
             {
                 string[] parts = s[i].Split('\t');
@@ -228,8 +235,22 @@ namespace NBA_2K13_Roster_Editor
 
         private void btnReplace_Click(object sender, RoutedEventArgs e)
         {
+            AddFiltersToFields();
+
+            DialogResult = true;
+            Close();
+        }
+
+        public void AddFiltersToFields()
+        {
             FindFilters.AddRange(lstFind.Items.Cast<string>());
             ReplaceFilters.AddRange(lstReplace.Items.Cast<string>());
+        }
+
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            FindFilters.AddRange(lstFind.Items.Cast<string>());
+            FilterFilters.AddRange(lstFind.Items.Cast<string>());
 
             DialogResult = true;
             Close();

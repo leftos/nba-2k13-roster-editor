@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace NBA_2K13_Roster_Editor.Data.Jerseys
@@ -5,7 +6,7 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
     internal class JerseyEntry : INotifyPropertyChanged
     {
         private int _id;
-        private int _jerseyType;
+        private JerseyType _gid;
         private string _teamColor1;
         private string _teamColor2;
         private string _teamColor3;
@@ -23,15 +24,41 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
             }
         }
 
-        public int JerseyType
+        public JerseyType GID
         {
-            get { return _jerseyType; }
+            get { return _gid; }
             set
             {
-                _jerseyType = value;
-                OnPropertyChanged("JerseyType");
+                _gid = value;
+                OnPropertyChanged("GID");
             }
         }
+
+        public NeckType Neck
+        {
+            get { return _neck; }
+            set
+            {
+                _neck = value;
+                OnPropertyChanged("Neck");
+            }
+        }
+
+        private NeckType _neck;
+
+        public SockColor SockClr
+        {
+            get { return _sockClr; }
+            set
+            {
+                _sockClr = value;
+                OnPropertyChanged("SockClr");
+            }
+        }
+
+        private SockColor _sockClr;
+
+
 
         public string TeamColor1
         {
@@ -92,6 +119,86 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
                 OnPropertyChanged("TeamColor6");
             }
         }
+
+        public JerseyName Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+
+        private JerseyName _name;
+
+
+
+        public static readonly Dictionary<string, string> JerseyNames = new Dictionary<string, string>
+                                                                 {
+                                                                     {"Home", "BF4718D0"},
+                                                                     {"Away", "A2B39EF0"},
+                                                                     {"Alternate", "CCBB71E8"},
+                                                                     {"BackInBlack", "AC59B740"},
+                                                                     {"Cavfanatic", "3C9CA188"},
+                                                                     {"Christmas", "A2F5D7D8"},
+                                                                     {"LatinNights", "49F9B0A0"},
+                                                                     {"MardiGras", "51F9A520"},
+                                                                     {"MilitaryNight", "EBDF3AD8"},
+                                                                     {"NBAGreen", "EFDEB770"},
+                                                                     {"Racing", "BE62D5B0"},
+                                                                     {"RipCity", "2351B428"},
+                                                                     {"StPatricks", "CD16A528"},
+                                                                     {"WhiteHot", "F3992170"},
+                                                                     {"ClassicHomeI", "3871FBA0"},
+                                                                     {"ClassicAwayI", "C4BFEE20"},
+                                                                     {"ClassAwayIAlt", "43963E40"},
+                                                                     {"ClassicHomeII", "5EF2F550"},
+                                                                     {"ClassicAwayII", "0703A720"},
+                                                                     {"ClassicAwayIIAlt", "1B04E3B0"},
+                                                                     {"ClassicHomeIII", "54CB88C0"},
+                                                                     {"ClassicAwayIII", "D9B11D28"},
+                                                                     {"ClassicAwayIIIAtl", "7A908530"},
+                                                                     {"ClassicHomeIV", "537E3460"},
+                                                                     {"ClassicAwayIV", "0A8F6610"},
+                                                                     {"ClassicAwayIVAlt", "247053D8"},
+                                                                     {"ClassicHomeV", "35FD3A90"},
+                                                                     {"ClassicAwayV", "C9332F10"},
+                                                                     {"ClassicAwayVAlt", "7CE28E28"},
+                                                                     {"ClassicHomeVI", "CF935678"},
+                                                                     {"ClassicAwayVI", "96620408"},
+                                                                     {"ClassicAwayVIAlt", "E8B072E8"},
+                                                                     {"ClassicHomeVII", "BC9E47D8"},
+                                                                     {"ClassicAwayVII", "31E4D230"},
+                                                                     {"j2012", "3B5EC208"},
+                                                                     {"j2013", "0121C8D0"},
+                                                                     {"Unknown1", "43E04D18"},
+                                                                     {"j1990", "4A5A2B80"},
+                                                                     {"j1991", "5C385408"},
+                                                                     {"NBA2K13", "1BA16098"},
+                                                                     {"j1992", "B341BC50"},
+                                                                     {"j1986", "1DB2C458"},
+                                                                     {"j1995", "882F9C28"},
+                                                                     {"j1996", "125C4998"},
+                                                                     {"j1998", "9B637C18"},
+                                                                     {"j1965", "D8D25368"},
+                                                                     {"j1971", "032B1688"},
+                                                                     {"j1972", "9958C338"},
+                                                                     {"j1985", "87C111E8"},
+                                                                     {"Unknown2", "1764A778"},
+                                                                     {"j1989", "20717B80"},
+                                                                     {"Rookies", "307D6468"},
+                                                                     {"Custom1", "307D646D"},
+                                                                     {"Custom2", "307D646E"},
+                                                                     {"Custom3", "307D646F"},
+                                                                     {"j1993", "3633B018"},
+                                                                     {"j2002", "589A1B50"},
+                                                                     {"j1977", "BD373AB8"},
+                                                                     {"j2001", "C2E9CEE0"},
+                                                                     {"j1987", "EDCAF5F8"},
+                                                                     {"j1994", "F2AC2AD8"},
+                                                                     {"CAT", "00000000"},
+                                                                 };
 
         #region INotifyPropertyChanged Members
 

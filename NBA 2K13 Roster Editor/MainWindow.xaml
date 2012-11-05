@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:NBA_2K13_Roster_Editor="clr-namespace:NBA_2K13_Roster_Editor"
         xmlns:Data="clr-namespace:NBA_2K13_Roster_Editor.Data"
-        xmlns:Parameters="clr-namespace:NBA_2K13_Roster_Editor.Data.Players.Parameters" Title="NBA 2K13 Roster Editor"
+        xmlns:Parameters="clr-namespace:NBA_2K13_Roster_Editor.Data.Players.Parameters"
+        xmlns:Jerseys="clr-namespace:NBA_2K13_Roster_Editor.Data.Jerseys" Title="NBA 2K13 Roster Editor"
         Height="477" Width="902" Closing="Window_Closing_1" Icon="pack://siteoforigin:,,,/NLSC.ico" Loaded="Window_Loaded_1">
     <Window.Resources>
         <ObjectDataProvider x:Key="SignatureSkillsList" MethodName="GetValues"
@@ -47,6 +48,26 @@
                 <x:Type TypeName="Parameters:HairColor" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="JerseyTypesList" MethodName="GetValues" ObjectType="{x:Type Jerseys:JerseyType}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Jerseys:JerseyType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="JerseyNamesList" MethodName="GetValues" ObjectType="{x:Type Jerseys:JerseyName}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Jerseys:JerseyName" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="NeckTypesList" MethodName="GetValues" ObjectType="{x:Type Jerseys:NeckType}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Jerseys:NeckType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="SockColorsList" MethodName="GetValues" ObjectType="{x:Type Jerseys:SockColor}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Jerseys:SockColor" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </Window.Resources>
     <Grid>
         <Button x:Name="btnOpen" Content="Open" Margin="0,10,10,0" HorizontalAlignment="Right" Width="75" Height="22"
@@ -62,7 +83,8 @@
                     <DataGrid x:Name="dgPlayers" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
                               Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True" EnableRowVirtualization="True"
                               PreviewKeyDown="dgPlayers_PreviewKeyDown" ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
-                              MouseDoubleClick="dgPlayers_MouseDoubleClick" SelectedCellsChanged="dgPlayers_SelectedCellsChanged">
+                              MouseDoubleClick="dgPlayers_MouseDoubleClick" SelectedCellsChanged="dgPlayers_SelectedCellsChanged" CellEditEnding="dataGrid_CellEditEnding"
+                              AlternatingRowBackground="#FFE5E5E5">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" />
@@ -75,6 +97,11 @@
                             <DataGridTextColumn Header="CFID" Binding="{Binding CFID, Mode=TwoWay}" />
                             <DataGridCheckBoxColumn Header="GenericF" Binding="{Binding GenericF, Mode=TwoWay}" />
                             <DataGridTextColumn Header="PortraitID" Binding="{Binding PortraitID, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="TeamID1" Binding="{Binding TeamID1, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="TeamID2" Binding="{Binding TeamID2, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="AssignedTo" Binding="{Binding AssignedTo, Mode=TwoWay}" IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Header="IsFA" Binding="{Binding IsFA, Mode=TwoWay}"  IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Header="IsHidden" Binding="{Binding IsHidden, Mode=TwoWay}"  IsReadOnly="True" />
                             <DataGridTextColumn Header="ASAID" Binding="{Binding ASAID, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Height" Binding="{Binding Height, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Weight" Binding="{Binding Weight, Mode=TwoWay}" />
@@ -134,6 +161,10 @@
                             HorizontalAlignment="Right" Width="102" Height="22" VerticalAlignment="Top" Click="btnSearch_Click" />
                     <Button x:Name="btnFindNext" Content="Find Next" Margin="0,105,10,0" HorizontalAlignment="Right"
                             Width="102" Height="22" VerticalAlignment="Top" Click="btnFindNext_Click" />
+                    <Button x:Name="btnBatchEdit" Margin="0,0,10,21"
+                    	HorizontalAlignment="Right" Width="102" Height="41" VerticalAlignment="Bottom" Click="btnBatchEdit_Click">
+                        <TextBlock TextAlignment="Center">Apply Replace<LineBreak/>Filters</TextBlock>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Teams">
@@ -146,7 +177,7 @@
                               CanUserReorderColumns="False" CanUserSortColumns="False" SelectionUnit="Cell" PreviewKeyDown="dgTeams_PreviewKeyDown"
                               HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" EnableColumnVirtualization="True"
                               EnableRowVirtualization="True" FrozenColumnCount="2" CanUserAddRows="False" CanUserDeleteRows="False"
-                              ClipboardCopyMode="IncludeHeader" />
+                              ClipboardCopyMode="IncludeHeader" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Jerseys">
@@ -154,10 +185,21 @@
                     <DataGrid x:Name="dgJerseys" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
                               Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True" EnableRowVirtualization="True"
                               ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell" MouseDoubleClick="dgJerseys_MouseDoubleClick"
-                              PreviewKeyDown="dgJerseys_PreviewKeyDown" SelectedCellsChanged="dgJerseys_SelectedCellsChanged">
+                              PreviewKeyDown="dgJerseys_PreviewKeyDown" SelectedCellsChanged="dgJerseys_SelectedCellsChanged" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
-                            <DataGridTextColumn Header="Type" Binding="{Binding JerseyType, Mode=TwoWay}" />
+                            <DataGridComboBoxColumn Header="GID"
+                                                    SelectedValueBinding="{Binding GID, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource JerseyTypesList}}" />
+                            <DataGridComboBoxColumn Header="Name"
+                                                    SelectedValueBinding="{Binding Name, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource JerseyNamesList}}" />
+                            <DataGridComboBoxColumn Header="Neck"
+                                                    SelectedValueBinding="{Binding Neck, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource NeckTypesList}}" />
+                            <DataGridComboBoxColumn Header="SockClr"
+                                                    SelectedValueBinding="{Binding SockClr, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource SockColorsList}}" />
                             <DataGridTextColumn Header="TeamColor1" Binding="{Binding TeamColor1, Mode=TwoWay}" />
                             <DataGridTextColumn Header="TeamColor2" Binding="{Binding TeamColor2, Mode=TwoWay}" />
                             <DataGridTextColumn Header="TeamColor3" Binding="{Binding TeamColor3, Mode=TwoWay}" />
@@ -177,7 +219,7 @@
             <TabItem Header="Options">
                 <Grid>
                     <DataGrid x:Name="dgOptions" Margin="10,10,112,10" AutoGenerateColumns="False"
-                              CanUserAddRows="False" SelectionUnit="Cell">
+                              CanUserAddRows="False" SelectionUnit="Cell" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Setting" IsReadOnly="True" Binding="{Binding Setting}" />
                             <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
