@@ -1,2 +1,8 @@
-0.12.0.3
+0.13.1.0
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
+
+		v0.13.1
+			- Added Head Coach
+
+		v0.13
+			- Fixed Teams & Jerseys tab compatibility for November(?) PC rosters

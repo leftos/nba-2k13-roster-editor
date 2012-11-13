@@ -1,5 +1,11 @@
 ﻿Version History
 
+		v0.13.1
+			- Added Head Coach
+
+		v0.13
+			- Fixed Teams & Jerseys tab compatibility for November(?) PC rosters
+
 		v0.12.0.3
 			- LastJerseyID will be recalculated each time a roster is loaded
 

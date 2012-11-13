@@ -191,8 +191,10 @@ namespace NBA_2K13_Roster_Editor
             mode = (Mode) Enum.Parse(typeof (Mode), GetRegistrySetting("Mode", "PC"));
             if (mode == Mode.PC)
                 btnModePC.IsChecked = true;
-            else
+            else if (mode == Mode.X360)
                 btnMode360.IsChecked = true;
+            else if (mode == Mode.PCNov)
+                btnModePCNov.IsChecked = true;
 
             PreparePlayersDataGrid();
 
@@ -211,8 +213,8 @@ namespace NBA_2K13_Roster_Editor
             dgTeams.Columns.Clear();
             dgTeams.Columns.Add(new DataGridTextColumn
                                 {Header = "ID", Binding = new Binding {Path = new PropertyPath("ID"), Mode = BindingMode.TwoWay}});
-            dgTeams.Columns.Add(new DataGridTextColumn
-                                {Header = "Name", Binding = new Binding {Path = new PropertyPath("Name"), Mode = BindingMode.TwoWay}});
+            dgTeams.Columns.Add(new DataGridTextColumn { Header = "Name", Binding = new Binding { Path = new PropertyPath("Name"), Mode = BindingMode.TwoWay } });
+            dgTeams.Columns.Add(new DataGridTextColumn { Header = "StHeadCoach", Binding = new Binding { Path = new PropertyPath("StHeadCoach"), Mode = BindingMode.TwoWay } });
             dgTeams.Columns.Add(new DataGridTextColumn
                                 {Header = "StAsstCoach", Binding = new Binding {Path = new PropertyPath("StAsstCoach"), Mode = BindingMode.TwoWay}});
             dgTeams.Columns.Add(new DataGridTextColumn
@@ -510,7 +512,15 @@ namespace NBA_2K13_Roster_Editor
             br.InBytePosition = 0;
 
             if (mode == Mode.X360)
+            {
                 br.MoveStreamPosition(77824, 0);
+            }
+            else if (mode == Mode.PCNov)
+            {
+                //br.MoveStreamPosition(1911, -4);
+                br.BaseStream.Position = 1489588; // 4080
+                br.InBytePosition = 4;
+            }
 
             MoveStreamForSaveType();
         }
@@ -609,7 +619,6 @@ namespace NBA_2K13_Roster_Editor
         private void PopulateTeamsTab()
         {
             teamsList = new ObservableCollection<TeamEntry>();
-            MoveStreamBeforeFirstRoster();
 
             TeamEntry te;
             for (int i = 0; i <= Convert.ToInt32(GetOption("LastTeamID")); i++)
@@ -625,27 +634,20 @@ namespace NBA_2K13_Roster_Editor
                     te.Name = "";
                 }
 
-                br.MoveStreamPosition(720, 2);
-                long curOffset = br.BaseStream.Position;
-                int curOffsetBit = br.InBytePosition;
-
+                MoveStreamToCurrentTeamRoster(i);
                 PopulateRosterRow(18, ref te);
 
                 //
-                br.BaseStream.Position = 863081;
-                br.InBytePosition = 6;
-                br.MoveStreamPosition(720*i, 2*i);
+                MoveStreamToCurrentTeamRoster(i);
+                br.MoveStreamPosition(158, 0);
+                if (saveType == SaveType.Roster)
+                    br.MoveStreamPosition(8, 0);
+                te.StHeadCoach = Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2)), 2);
 
-                if (mode == Mode.X360)
-                    br.BaseStream.Position += 69632;
-
-                MoveStreamForSaveType();
-
+                MoveStreamToCurrentTeamRoster(i);
+                br.MoveStreamPosition(170, 0);
                 te.StAsstCoach = Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2)), 2);
                 //
-
-                br.BaseStream.Position = curOffset;
-                br.InBytePosition = curOffsetBit;
             }
 
             // Free Agents
@@ -657,7 +659,14 @@ namespace NBA_2K13_Roster_Editor
             br.InBytePosition = 6;
 
             if (mode == Mode.X360)
+            {
                 br.BaseStream.Position += 69632;
+            }
+            else if (mode == Mode.PCNov)
+            {
+                br.BaseStream.Position += 1911;
+                br.InBytePosition = 2;
+            }
 
             MoveStreamForSaveType();
 
@@ -667,15 +676,29 @@ namespace NBA_2K13_Roster_Editor
             RelinkTeamsDataGrid();
         }
 
-        private void MoveStreamBeforeFirstRoster()
+        private void MoveStreamToCurrentTeamRoster(int i)
         {
-            long firstRosterOffset = 862911 - 720;
-            int firstRosterOffsetBit = 6 - 2;
+            MoveStreamToFirstRoster();
+            MoveStreamForSaveType();
+            br.MoveStreamPosition(720*i, 2*i);
+        }
+
+        private void MoveStreamToFirstRoster()
+        {
+            long firstRosterOffset = 862911;
+            int firstRosterOffsetBit = 6;
             br.BaseStream.Position = firstRosterOffset;
             br.InBytePosition = firstRosterOffsetBit;
 
             if (mode == Mode.X360)
+            {
                 br.BaseStream.Position += 69632;
+            }
+            else if (mode == Mode.PCNov)
+            {
+                br.BaseStream.Position += 1911;//2119;
+                br.InBytePosition = 2;
+            }
 
             MoveStreamForSaveType();
         }
@@ -963,6 +986,8 @@ namespace NBA_2K13_Roster_Editor
         {
             SetRegistrySetting("Height", Height);
             SetRegistrySetting("Width", Width);
+            SetRegistrySetting("X", Left);
+            SetRegistrySetting("Y", Top);
             try
             {
                 br.Close();
@@ -1443,27 +1468,29 @@ namespace NBA_2K13_Roster_Editor
         private void btnSaveTeams_Click(object sender, RoutedEventArgs e)
         {
             FixPlNumAndOrder();
-            MoveStreamBeforeFirstRoster();
 
             for (int i = 0; i < teamsList.Count - 1; i++)
             {
-                br.MoveStreamPosition(720, 2);
-                long curOffset = br.BaseStream.Position;
-                int curOffsetBit = br.InBytePosition;
-
+                MoveStreamToCurrentTeamRoster(i);
                 WriteRosterRow(i, 18);
 
                 //
-                br.BaseStream.Position = 863081;
-                br.InBytePosition = 6;
-                br.MoveStreamPosition(720*i, 2*i);
-
-                if (mode == Mode.X360)
-                    br.BaseStream.Position += 69632;
-
-                MoveStreamForSaveType();
+                MoveStreamToCurrentTeamRoster(i);
+                br.MoveStreamPosition(158, 0);
+                if (saveType == SaveType.Roster)
+                    br.MoveStreamPosition(8, 0);
 
                 var bw = new NonByteAlignedBinaryWriter(new FileStream(currentFile, FileMode.Open));
+                SyncBWwithBR(ref bw);
+
+                int hc = teamsList[i].StHeadCoach;
+                bw.WriteNonByteAlignedBits(Convert.ToString(hc, 2).PadLeft(16, '0'), br.ReadBytes(3));
+                //
+
+                //
+                MoveStreamToCurrentTeamRoster(i);
+                br.MoveStreamPosition(170, 0);
+
                 SyncBWwithBR(ref bw);
 
                 int ac = teamsList[i].StAsstCoach;
@@ -1471,9 +1498,6 @@ namespace NBA_2K13_Roster_Editor
 
                 bw.Close();
                 //
-
-                br.BaseStream.Position = curOffset;
-                br.InBytePosition = curOffsetBit;
             }
 
             // Free Agents
@@ -1482,7 +1506,14 @@ namespace NBA_2K13_Roster_Editor
             br.InBytePosition = 6;
 
             if (mode == Mode.X360)
+            {
                 br.BaseStream.Position = 923137;
+            }
+            else if (mode == Mode.PCNov)
+            {
+                br.BaseStream.Position += 1911;
+                br.InBytePosition = 2;
+            }
 
             MoveStreamForSaveType();
 
@@ -1656,6 +1687,9 @@ namespace NBA_2K13_Roster_Editor
                 }
                 List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
 
+                dgTeams.CommitEdit();
+                dgTeams.CancelEdit();
+
                 for (int index = 0; index < dictList.Count; index++)
                 {
                     Dictionary<string, string> dict = dictList[index];
@@ -1698,6 +1732,7 @@ namespace NBA_2K13_Roster_Editor
                 te.RosterSpots[i] = te.RosterSpots[i].TrySetValue(dict, "R" + (i + 1).ToString(), true);
             }
             te.StAsstCoach = te.StAsstCoach.TrySetValue(dict, "StAsstCoach", true);
+            te.StHeadCoach = te.StHeadCoach.TrySetValue(dict, "StHeadCoach", true);
         }
 
         private void FixPlNumAndOrder()
@@ -1765,6 +1800,9 @@ namespace NBA_2K13_Roster_Editor
                     return;
                 }
                 List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
+
+                dgPlayers.CommitEdit();
+                dgPlayers.CancelEdit();
 
                 for (int index = 0; index < dictList.Count; index++)
                 {
@@ -1991,6 +2029,9 @@ namespace NBA_2K13_Roster_Editor
                     return;
                 }
                 List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
+
+                dgJerseys.CommitEdit();
+                dgJerseys.CancelEdit();
 
                 for (int index = 0; index < dictList.Count; index++)
                 {
@@ -2474,7 +2515,9 @@ namespace NBA_2K13_Roster_Editor
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
             Height = GetRegistrySetting("Height", (int) Height);
-            Width = GetRegistrySetting("Width", (int) Width);
+            Width = GetRegistrySetting("Width", (int)Width);
+            Left = GetRegistrySetting("Left", (int)Left);
+            Top = GetRegistrySetting("Top", (int)Top);
             var w = new BackgroundWorker();
             w.DoWork += w_DoWork;
             w.RunWorkerAsync();
@@ -2513,12 +2556,31 @@ namespace NBA_2K13_Roster_Editor
                 sw.Close();
             }
         }
+
+        private void btnModePCNov_Checked(object sender, RoutedEventArgs e)
+        {
+            SetRegistrySetting("Mode", "PCNov");
+            mode = Mode.PCNov;
+            chkRecalculateCRC.IsChecked = true;
+
+            SetRegistrySetting("FirstSSOffset", 40916);
+            SetRegistrySetting("FirstSSOffsetBit", 2);
+            try
+            {
+                ReloadEverything();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+        }
     }
 
     internal enum Mode
     {
         PC,
-        X360
+        X360,
+        PCNov
     }
 
     internal enum SaveType

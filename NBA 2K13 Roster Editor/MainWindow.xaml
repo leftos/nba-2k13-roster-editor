@@ -230,13 +230,15 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="82" HorizontalAlignment="Right"
+        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="99" HorizontalAlignment="Right"
                   Width="91">
             <Grid>
-                <RadioButton x:Name="btnModePC" Content="PC" HorizontalAlignment="Left" Margin="10,10,0,0"
+                <RadioButton x:Name="btnModePC" Content="PC Ret" HorizontalAlignment="Left" Margin="10,10,0,0"
                              VerticalAlignment="Top" Checked="btnModePC_Checked" />
-                <RadioButton x:Name="btnMode360" Content="360" HorizontalAlignment="Left" Margin="10,31,0,0"
+                <RadioButton x:Name="btnMode360" Content="360" HorizontalAlignment="Left" Margin="10,52,0,0"
                              VerticalAlignment="Top" Checked="btnMode360_Checked" />
+                <RadioButton x:Name="btnModePCNov" Content="PC Nov" HorizontalAlignment="Left" Margin="10,31,0,0"
+                	VerticalAlignment="Top" Checked="btnModePCNov_Checked" />
             </Grid>
         </GroupBox>
         <StatusBar HorizontalAlignment="Stretch" Height="25" Margin="0" VerticalAlignment="Bottom">

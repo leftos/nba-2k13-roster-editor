@@ -8,6 +8,7 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
         private int _plNum;
         private ObservableCollection<int> _rosterSpots;
         private short _stAsstCoach;
+        private short _stHeadCoach;
 
         public TeamEntry()
         {
@@ -35,6 +36,16 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
             {
                 _rosterSpots = value;
                 OnPropertyChanged("RosterSpots");
+            }
+        }
+        
+        public short StHeadCoach
+        {
+            get { return _stHeadCoach; }
+            set
+            {
+                _stHeadCoach = value;
+                OnPropertyChanged("StHeadCoach");
             }
         }
 
