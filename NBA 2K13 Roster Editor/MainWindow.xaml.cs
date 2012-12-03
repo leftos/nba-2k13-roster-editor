@@ -367,12 +367,19 @@ namespace NBA_2K13_Roster_Editor
         {
             optionsList = new ObservableCollection<Option>();
             optionsList.Add(new Option {Setting = "FirstSSOffset", Value = GetRegistrySetting("FirstSSOffset", 40916)});
-            optionsList.Add(new Option {Setting = "FirstSSOffsetBit", Value = GetRegistrySetting("FirstSSOffsetBIt", 2)});
+            optionsList.Add(new Option { Setting = "FirstSSOffsetBit", Value = GetRegistrySetting("FirstSSOffsetBIt", 2) });
             optionsList.Add(new Option {Setting = "LastPlayerID", Value = GetRegistrySetting("LastPlayerID", 1514)});
             optionsList.Add(new Option {Setting = "LastTeamID", Value = GetRegistrySetting("LastTeamID", 90)});
             optionsList.Add(new Option {Setting = "LastJerseyID", Value = GetRegistrySetting("LastJerseyID", 425)});
             optionsList.Add(new Option {Setting = "NamesFile", Value = GetRegistrySetting("NamesFile", "names.txt")});
-            optionsList.Add(new Option {Setting = "ChooseNameBy", Value = GetRegistrySetting("ChooseNameBy", "ID")});
+            optionsList.Add(new Option { Setting = "ChooseNameBy", Value = GetRegistrySetting("ChooseNameBy", "ID") });
+
+            optionsList.Add(new Option { Setting = "CustomSSOffset", Value = GetRegistrySetting("CustomSSOffset", 40916) });
+            optionsList.Add(new Option { Setting = "CustomSSOffsetBit", Value = GetRegistrySetting("CustomSSOffsetBIt", 2) });
+            optionsList.Add(new Option { Setting = "CustomRosterOffset", Value = GetRegistrySetting("CustomRosterOffset", 862911) });
+            optionsList.Add(new Option { Setting = "CustomRosterOffsetBit", Value = GetRegistrySetting("CustomRosterOffsetBIt", 6) });
+            optionsList.Add(new Option { Setting = "CustomJerseyOffset", Value = GetRegistrySetting("CustomJerseyOffset", 1486997) });
+            optionsList.Add(new Option { Setting = "CustomJerseyOffsetBit", Value = GetRegistrySetting("CustomJerseyOffsetBIt", 0) });
 
             PopulateNamesDictionary();
             dgOptions.ItemsSource = optionsList;
@@ -380,6 +387,7 @@ namespace NBA_2K13_Roster_Editor
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            txbStatus.FontWeight = FontWeights.Normal;
             txbStatus.Text = "Ready";
             timer.Stop();
         }
@@ -387,6 +395,7 @@ namespace NBA_2K13_Roster_Editor
         private void updateStatus(string text)
         {
             timer.Stop();
+            txbStatus.FontWeight = FontWeights.Bold;
             txbStatus.Text = text;
             timer.Start();
         }
@@ -520,6 +529,11 @@ namespace NBA_2K13_Roster_Editor
                 //br.MoveStreamPosition(1911, -4);
                 br.BaseStream.Position = 1489588; // 4080
                 br.InBytePosition = 4;
+            }
+            else if (mode == Mode.Custom)
+            {
+                br.BaseStream.Position = Convert.ToInt64(GetOption("CustomJerseyOffset"));
+                br.InBytePosition = Convert.ToInt32(GetOption("CustomJerseyOffsetBit"));
             }
 
             MoveStreamForSaveType();
@@ -667,6 +681,11 @@ namespace NBA_2K13_Roster_Editor
                 br.BaseStream.Position += 1911;
                 br.InBytePosition = 2;
             }
+            else if (mode == Mode.Custom)
+            {
+                MoveStreamToFirstRoster();
+                br.BaseStream.Position -= 9406;
+            }
 
             MoveStreamForSaveType();
 
@@ -698,6 +717,11 @@ namespace NBA_2K13_Roster_Editor
             {
                 br.BaseStream.Position += 1911;//2119;
                 br.InBytePosition = 2;
+            }
+            else if (mode == Mode.Custom)
+            {
+                br.BaseStream.Position = Convert.ToInt64(GetOption("CustomRosterOffset"));
+                br.InBytePosition = Convert.ToInt32(GetOption("CustomRosterOffsetBit"));
             }
 
             MoveStreamForSaveType();
@@ -786,11 +810,11 @@ namespace NBA_2K13_Roster_Editor
             byte[] por = br.ReadNonByteAlignedBytes(2);
 
             // PlType
-            br.MoveStreamPosition(2, 6);
+            br.MoveStreamPosition(2, 5);
 
             byte plType = Convert.ToByte(br.ReadNonByteAlignedBits(3), 2);
 
-            br.MoveStreamPosition(-3, -1);
+            br.MoveStreamPosition(-3, 0);
             //
 
 
@@ -831,6 +855,16 @@ namespace NBA_2K13_Roster_Editor
             pe.CAPFclHairClr = (HairColor) Enum.Parse(typeof (HairColor), Convert.ToByte(br.ReadNonByteAlignedBits(4), 2).ToString());
             pe.CAPBeard = Convert.ToInt32(br.ReadNonByteAlignedBits(4), 2);
             pe.CAPGoatee = Convert.ToInt32(br.ReadNonByteAlignedBits(5), 2);
+
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(154, 5);
+            pe.PlayStyle = Convert.ToInt32(br.ReadNonByteAlignedBits(5), 2);
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(143, 5);
+            pe.PlayType1 = (PlayType)Enum.Parse(typeof(PlayType), Convert.ToByte(br.ReadNonByteAlignedBits(4), 2).ToString());
+            pe.PlayType2 = (PlayType)Enum.Parse(typeof(PlayType), Convert.ToByte(br.ReadNonByteAlignedBits(4), 2).ToString());
+            pe.PlayType3 = (PlayType)Enum.Parse(typeof(PlayType), Convert.ToByte(br.ReadNonByteAlignedBits(4), 2).ToString());
+            pe.PlayType4 = (PlayType)Enum.Parse(typeof(PlayType), Convert.ToByte(br.ReadNonByteAlignedBits(4), 2).ToString());
 
             MoveStreamToPortraitID(playerID);
             br.MoveStreamPosition(178, 0);
@@ -921,6 +955,10 @@ namespace NBA_2K13_Roster_Editor
             pe.SigShtForm = br.ReadNonByteAlignedByte();
             pe.SigShtBase = br.ReadNonByteAlignedByte();
 
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(314, 2);
+            pe.ClothesType = (ClothesType)Enum.Parse(typeof(ClothesType), Convert.ToByte(br.ReadNonByteAlignedBits(2), 2).ToString());
+
             MoveStreamToFirstSS(playerID);
 
             pe.CFID = Convert.ToUInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(cf), 2);
@@ -945,13 +983,29 @@ namespace NBA_2K13_Roster_Editor
         private void MoveStreamToPortraitID(int playerID)
         {
             MoveStreamToFirstSS(playerID);
-            br.MoveStreamPosition(-300, -2);
+            try
+            {
+                br.MoveStreamPosition(-300, -2);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("Invalid roster offset.");
+                return;
+            }
         }
 
         private void MoveStreamToFirstSS(int playerID)
         {
-            br.BaseStream.Position = Convert.ToInt64(GetOption("FirstSSOffset"));
-            br.InBytePosition = Convert.ToInt32(GetOption("FirstSSOffsetBit"));
+            if (mode != Mode.Custom)
+            {
+                br.BaseStream.Position = Convert.ToInt64(GetOption("FirstSSOffset"));
+                br.InBytePosition = Convert.ToInt32(GetOption("FirstSSOffsetBit"));
+            }
+            else
+            {
+                br.BaseStream.Position = Convert.ToInt64(GetOption("CustomSSOffset"));
+                br.InBytePosition = Convert.ToInt32(GetOption("CustomSSOffsetBit"));
+            }
 
             MoveStreamForSaveType();
 
@@ -1126,6 +1180,27 @@ namespace NBA_2K13_Roster_Editor
                     bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID2), br.ReadBytes(2));
                     SyncBRwithBW(bw);
 
+                    // Play Style
+                    MoveStreamToPortraitID(pe.ID);
+                    br.MoveStreamPosition(154, 5);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.PlayStyle, 2).PadLeft(5, '0'), br.ReadBytes(2));
+                    SyncBRwithBW(bw);
+                    MoveStreamToPortraitID(pe.ID);
+                    br.MoveStreamPosition(143, 5);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType1.ToString()), 2).PadLeft(4, '0'), br.ReadBytes(2));
+                    SyncBRwithBW(bw);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte)Enum.Parse(typeof(PlayType), pe.PlayType2.ToString()), 2).PadLeft(4, '0'), br.ReadBytes(2));
+                    SyncBRwithBW(bw);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte)Enum.Parse(typeof(PlayType), pe.PlayType3.ToString()), 2).PadLeft(4, '0'), br.ReadBytes(2));
+                    SyncBRwithBW(bw);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte)Enum.Parse(typeof(PlayType), pe.PlayType4.ToString()), 2).PadLeft(4, '0'), br.ReadBytes(2));
+                    SyncBRwithBW(bw);
 
 
                     // Height & Weight
@@ -1220,6 +1295,12 @@ namespace NBA_2K13_Roster_Editor
                     bw.WriteNonByteAlignedBits(
                         Convert.ToString((byte) Enum.Parse(typeof (EyeColor), pe.EyeColor.ToString()), 2).PadLeft(3, '0'), br.ReadBytes(2));
                     //
+
+                    MoveStreamToPortraitID(pe.ID);
+                    br.MoveStreamPosition(314, 2);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(
+                        Convert.ToString((byte)Enum.Parse(typeof(ClothesType), pe.ClothesType.ToString()), 2).PadLeft(2, '0'), br.ReadBytes(2));
 
 
                     br.BaseStream.Position = prevPos;
@@ -1513,6 +1594,11 @@ namespace NBA_2K13_Roster_Editor
             {
                 br.BaseStream.Position += 1911;
                 br.InBytePosition = 2;
+            }
+            else if (mode == Mode.Custom)
+            {
+                MoveStreamToFirstRoster();
+                br.BaseStream.Position -= 9406;
             }
 
             MoveStreamForSaveType();
@@ -1865,6 +1951,12 @@ namespace NBA_2K13_Roster_Editor
             pe.SSList[2] = pe.SSList[2].TrySetValue(dict, "SS3", true);
             pe.SSList[3] = pe.SSList[3].TrySetValue(dict, "SS4", true);
             pe.SSList[4] = pe.SSList[4].TrySetValue(dict, "SS5", true);
+            pe.PlayStyle = pe.PlayStyle.TrySetValue(dict, "PlayStyle", true);
+            pe.PlayType1 = pe.PlayType1.TrySetValue(dict, "PlayType1", true);
+            pe.PlayType2 = pe.PlayType2.TrySetValue(dict, "PlayType2", true);
+            pe.PlayType3 = pe.PlayType3.TrySetValue(dict, "PlayType3", true);
+            pe.PlayType4 = pe.PlayType4.TrySetValue(dict, "PlayType4", true);
+            pe.ClothesType = pe.ClothesType.TrySetValue(dict, "ClothesType", true);
 
             string[] rtNames = Enum.GetNames(typeof (Rating));
             foreach (string rtName in rtNames)
@@ -2574,13 +2666,57 @@ namespace NBA_2K13_Roster_Editor
                 Console.WriteLine(exception);
             }
         }
+
+        private void btnModeCustom_Checked(object sender, RoutedEventArgs e)
+        {
+            SetRegistrySetting("Mode", "Custom");
+            mode = Mode.Custom;
+            chkRecalculateCRC.IsChecked = true;
+
+            try
+            {
+                ReloadEverything();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+        }
+
+        private void btnResetOptions_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult r = MessageBox.Show(
+                "Are you sure you want to reset all options to their default values? This can't be undone.", "NBA 2K13 Roster Editor",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (r != MessageBoxResult.Yes)
+                return;
+
+            RegistryKey rk = Registry.CurrentUser;
+            try
+            {
+                try
+                {
+                    rk.DeleteSubKeyTree(@"SOFTWARE\Lefteris Aslanoglou\NBA 2K13 Roster Editor");
+                }
+                catch (Exception)
+                {
+                }
+                ReloadOptions();
+            }
+            catch
+            {
+                MessageBox.Show("Couldn't save changed setting.");
+            }
+        }
     }
 
     internal enum Mode
     {
         PC,
         X360,
-        PCNov
+        PCNov,
+        Custom
     }
 
     internal enum SaveType

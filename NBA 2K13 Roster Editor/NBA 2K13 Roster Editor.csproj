@@ -65,7 +65,10 @@
     <Compile Include="Data\Jerseys\JerseyName.cs" />
     <Compile Include="Data\Jerseys\NeckType.cs" />
     <Compile Include="Data\Jerseys\SockColor.cs" />
+    <Compile Include="Data\Playbooks\PlaybookEntry.cs" />
+    <Compile Include="Data\Players\Parameters\ClothesType.cs" />
     <Compile Include="Data\Players\Parameters\HairColor.cs" />
+    <Compile Include="Data\Players\Parameters\PlayType.cs" />
     <Compile Include="SearchWindow.xaml.cs">
       <DependentUpon>SearchWindow.xaml</DependentUpon>
     </Compile>
@@ -152,6 +155,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

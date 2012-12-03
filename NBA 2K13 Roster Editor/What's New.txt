@@ -1,5 +1,16 @@
 ﻿Version History
 
+		v0.13.3.1
+			- Fixed Free Agents in Custom profile
+
+		v0.13.3
+			- Added Custom offsets function, so that users can experiment to find offsets of incompatible rosters
+			- Added Clothes Type for Players
+			- Added Reset button to Options tab
+
+		v0.13.2
+			- Added Play Style & Play Types for Players
+
 		v0.13.1
 			- Added Head Coach
 

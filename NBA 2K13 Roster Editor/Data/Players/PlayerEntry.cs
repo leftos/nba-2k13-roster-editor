@@ -170,6 +170,66 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
+        public int PlayStyle
+        {
+            get { return _playStyle; }
+            set
+            {
+                _playStyle = value;
+                OnPropertyChanged("PlayStyle");
+            }
+        }
+
+        private int _playStyle;
+
+        public PlayType PlayType1
+        {
+            get { return _playType1; }
+            set
+            {
+                _playType1 = value;
+                OnPropertyChanged("PlayType1");
+            }
+        }
+
+        private PlayType _playType1;
+
+        public PlayType PlayType2
+        {
+            get { return _playType2; }
+            set
+            {
+                _playType2 = value;
+                OnPropertyChanged("PlayType2");
+            }
+        }
+
+        private PlayType _playType2;
+
+        public PlayType PlayType3
+        {
+            get { return _playType3; }
+            set
+            {
+                _playType3 = value;
+                OnPropertyChanged("PlayType3");
+            }
+        }
+
+        private PlayType _playType3;
+
+        public PlayType PlayType4
+        {
+            get { return _playType4; }
+            set
+            {
+                _playType4 = value;
+                OnPropertyChanged("PlayType4");
+            }
+        }
+
+        private PlayType _playType4;
+
         public Position Position1
         {
             get { return _position1; }
@@ -399,6 +459,18 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("EyeColor");
             }
         }
+
+        public ClothesType ClothesType
+        {
+            get { return _clothesType; }
+            set
+            {
+                _clothesType = value;
+                OnPropertyChanged("ClothesType");
+            }
+        }
+
+        private ClothesType _clothesType;
 
         public bool ShCustomClr
         {
