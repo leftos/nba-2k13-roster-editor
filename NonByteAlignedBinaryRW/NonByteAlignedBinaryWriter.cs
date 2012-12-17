@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace NBA_2K13_Roster_Editor
+namespace NonByteAlignedBinaryRW
 {
     public class NonByteAlignedBinaryWriter : BinaryWriter
     {

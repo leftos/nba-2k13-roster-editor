@@ -116,12 +116,18 @@
                             <DataGridTextColumn Header="CFID" Binding="{Binding CFID, Mode=TwoWay}" />
                             <DataGridCheckBoxColumn Header="GenericF" Binding="{Binding GenericF, Mode=TwoWay}" />
                             <DataGridTextColumn Header="PortraitID" Binding="{Binding PortraitID, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="ASAID" Binding="{Binding ASAID, Mode=TwoWay}" />
                             <DataGridTextColumn Header="TeamID1" Binding="{Binding TeamID1, Mode=TwoWay}" />
                             <DataGridTextColumn Header="TeamID2" Binding="{Binding TeamID2, Mode=TwoWay}" />
                             <DataGridTextColumn Header="AssignedTo" Binding="{Binding AssignedTo, Mode=TwoWay}" IsReadOnly="True" />
                             <DataGridCheckBoxColumn Header="IsFA" Binding="{Binding IsFA, Mode=TwoWay}"  IsReadOnly="True" />
                             <DataGridCheckBoxColumn Header="IsHidden" Binding="{Binding IsHidden, Mode=TwoWay}"  IsReadOnly="True" />
-                            <DataGridTextColumn Header="ASAID" Binding="{Binding ASAID, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="InjuryType" Binding="{Binding InjuryType, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="InjuryDays" Binding="{Binding InjuryDays, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="BirthYear" Binding="{Binding BirthYear, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="BirthMonth" Binding="{Binding BirthMonth, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="BirthDay" Binding="{Binding BirthDay, Mode=TwoWay}" />
+                            <DataGridTextColumn Header="YearsPro" Binding="{Binding YearsPro, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Height" Binding="{Binding Height, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Weight" Binding="{Binding Weight, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="ShoeBrand"
@@ -253,17 +259,19 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="121" HorizontalAlignment="Right"
-                  Width="91">
+        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="139" HorizontalAlignment="Right"
+                  Width="100">
             <Grid>
                 <RadioButton x:Name="btnModePC" Content="PC Ret" HorizontalAlignment="Left" Margin="10,10,0,0"
                              VerticalAlignment="Top" Checked="btnModePC_Checked" />
                 <RadioButton x:Name="btnMode360" Content="360" HorizontalAlignment="Left" Margin="10,52,0,0"
                              VerticalAlignment="Top" Checked="btnMode360_Checked" />
-                <RadioButton x:Name="btnModePCNov" Content="PC Nov" HorizontalAlignment="Left" Margin="10,31,0,0"
+                <RadioButton x:Name="btnModePCNov" Content="PC Nv10" HorizontalAlignment="Left" Margin="10,31,0,0"
                 	VerticalAlignment="Top" Checked="btnModePCNov_Checked" />
-                <RadioButton x:Name="btnModeCustom" Content="Custom" HorizontalAlignment="Left" Margin="10,73,0,0"
+                <RadioButton x:Name="btnModeCustom" Content="Custom" HorizontalAlignment="Left" Margin="10,94,0,0"
                 	VerticalAlignment="Top" Checked="btnModeCustom_Checked" />
+                <RadioButton x:Name="btnMode360Nov10" Content="360 Nv10" HorizontalAlignment="Left" Margin="10,73,0,0"
+                	VerticalAlignment="Top" Checked="btnMode360Nov10_Checked" />
             </Grid>
         </GroupBox>
         <StatusBar HorizontalAlignment="Stretch" Height="25" Margin="0" VerticalAlignment="Bottom">

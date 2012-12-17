@@ -1,10 +1,13 @@
-0.13.3.1
+0.14.0.2
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-		v0.13.3.1
-			- Fixed Free Agents in Custom profile
+		v0.14.0.2
+			- Fixed startup crash introduced in v0.14 if last selected mode was PCNov
 
-		v0.13.3
-			- Added Custom offsets function, so that users can experiment to find offsets of incompatible rosters
-			- Added Clothes Type for Players
-			- Added Reset button to Options tab
+		v0.14.0.1
+			- Fixed saving and pasting Season and Playoff stats for Players
+
+		v0.14
+			- Added YearsPro, BirthYear, BirthMonth, BirthDay, InjuryType, InjuryDays for Players (kudos to TUSS11)
+			- Added SeasonStats and PlayoffStats for Players
+			- Fixed Teams table for save types other than Roster

@@ -68,6 +68,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             Tendencies = new ObservableCollection<byte>();
             HotSpots = new ObservableCollection<byte>();
             HotZones = new ObservableCollection<HotZone>();
+            SeasonStats = new ObservableCollection<int>();
         }
 
         public string Name
@@ -250,6 +251,78 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
+        public ushort InjuryType
+        {
+            get { return _injuryType; }
+            set
+            {
+                _injuryType = value;
+                OnPropertyChanged("InjuryType");
+            }
+        }
+
+        private ushort _injuryType;
+
+        public short InjuryDays
+        {
+            get { return _injuryDays; }
+            set
+            {
+                _injuryDays = value;
+                OnPropertyChanged("InjuryDays");
+            }
+        }
+
+        private short _injuryDays;
+
+        public ushort BirthYear
+        {
+            get { return _birthYear; }
+            set
+            {
+                _birthYear = value;
+                OnPropertyChanged("BirthYear");
+            }
+        }
+
+        private ushort _birthYear;
+
+        public byte BirthMonth
+        {
+            get { return _birthMonth; }
+            set
+            {
+                _birthMonth = value;
+                OnPropertyChanged("BirthMonth");
+            }
+        }
+
+        private byte _birthMonth;
+
+        public byte BirthDay
+        {
+            get { return _birthDay; }
+            set
+            {
+                _birthDay = value;
+                OnPropertyChanged("BirthDay");
+            }
+        }
+
+        private byte _birthDay;
+
+        public byte YearsPro
+        {
+            get { return _yearsPro; }
+            set
+            {
+                _yearsPro = value;
+                OnPropertyChanged("YearsPro");
+            }
+        }
+
+        private byte _yearsPro;
+
         public bool GenericF
         {
             get { return _genericF; }
@@ -409,6 +482,30 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("HotZones");
             }
         }
+
+        public ObservableCollection<int> SeasonStats
+        {
+            get { return _seasonStats; }
+            set
+            {
+                _seasonStats = value;
+                OnPropertyChanged("SeasonStats");
+            }
+        }
+
+        private ObservableCollection<int> _seasonStats;
+
+        public int PlayoffStats
+        {
+            get { return _playoffStats; }
+            set
+            {
+                _playoffStats = value;
+                OnPropertyChanged("PlayoffStats");
+            }
+        }
+
+        private int _playoffStats;
 
         public CAPHairType CAPHairType
         {

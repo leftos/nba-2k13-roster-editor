@@ -22,6 +22,7 @@ using NBA_2K13_Roster_Editor.Data.Jerseys;
 using NBA_2K13_Roster_Editor.Data.Players;
 using NBA_2K13_Roster_Editor.Data.Players.Parameters;
 using NBA_2K13_Roster_Editor.Data.Teams;
+using NonByteAlignedBinaryRW;
 using WPFColorPickerLib;
 
 namespace NBA_2K13_Roster_Editor
@@ -168,6 +169,8 @@ namespace NBA_2K13_Roster_Editor
         {
             InitializeComponent();
 
+            btnMode360Nov10.Visibility = Visibility.Collapsed; //
+
             mw = this;
 
             Title += " v" + Assembly.GetExecutingAssembly().GetName().Version;
@@ -188,13 +191,24 @@ namespace NBA_2K13_Roster_Editor
             doCRC = (GetRegistrySetting("CRC", 1) == 1);
             chkRecalculateCRC.IsChecked = doCRC;
 
-            mode = (Mode) Enum.Parse(typeof (Mode), GetRegistrySetting("Mode", "PC"));
+            try
+            {
+                mode = (Mode) Enum.Parse(typeof (Mode), GetRegistrySetting("Mode", "PC"));
+            }
+            catch (ArgumentException)
+            {
+                mode = Mode.PC;
+            }
             if (mode == Mode.PC)
                 btnModePC.IsChecked = true;
             else if (mode == Mode.X360)
                 btnMode360.IsChecked = true;
-            else if (mode == Mode.PCNov)
+            else if (mode == Mode.PCNov10)
                 btnModePCNov.IsChecked = true;
+            else if (mode == Mode.X360Nov10)
+                btnMode360Nov10.IsChecked = true;
+            else if (mode == Mode.Custom)
+                btnModeCustom.IsChecked = true;
 
             PreparePlayersDataGrid();
 
@@ -326,6 +340,23 @@ namespace NBA_2K13_Roster_Editor
                                               {Path = new PropertyPath(string.Format("DunkPackages[{0}]", i)), Mode = BindingMode.TwoWay}
                                       });
             }
+
+            for (int i = 0; i < 22; i++)
+            {
+                dgPlayers.Columns.Add(new DataGridTextColumn
+                {
+                    Header = string.Format("SeasonStats{0}", i),
+                    Binding =
+                        new Binding { Path = new PropertyPath(string.Format("SeasonStats[{0}]", i)), Mode = BindingMode.TwoWay }
+                });
+            }
+
+            dgPlayers.Columns.Add(new DataGridTextColumn
+            {
+                Header = string.Format("PlayoffStats"),
+                Binding =
+                    new Binding { Path = new PropertyPath(string.Format("PlayoffStats")), Mode = BindingMode.TwoWay }
+            });
 
             playersList = new ObservableCollection<PlayerEntry>();
             dgPlayers.ItemsSource = playersList;
@@ -524,7 +555,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 br.MoveStreamPosition(77824, 0);
             }
-            else if (mode == Mode.PCNov)
+            else if (mode == Mode.PCNov10 || mode == Mode.X360Nov10)
             {
                 //br.MoveStreamPosition(1911, -4);
                 br.BaseStream.Position = 1489588; // 4080
@@ -653,9 +684,9 @@ namespace NBA_2K13_Roster_Editor
 
                 //
                 MoveStreamToCurrentTeamRoster(i);
-                br.MoveStreamPosition(158, 0);
-                if (saveType == SaveType.Roster)
-                    br.MoveStreamPosition(8, 0);
+                br.MoveStreamPosition(166, 0);
+                /*if (saveType == SaveType.Roster)
+                    br.MoveStreamPosition(8, 0);*/
                 te.StHeadCoach = Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2)), 2);
 
                 MoveStreamToCurrentTeamRoster(i);
@@ -676,7 +707,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 br.BaseStream.Position += 69632;
             }
-            else if (mode == Mode.PCNov)
+            else if (mode == Mode.PCNov10 || mode == Mode.X360Nov10)
             {
                 br.BaseStream.Position += 1911;
                 br.InBytePosition = 2;
@@ -698,7 +729,7 @@ namespace NBA_2K13_Roster_Editor
         private void MoveStreamToCurrentTeamRoster(int i)
         {
             MoveStreamToFirstRoster();
-            MoveStreamForSaveType();
+            //MoveStreamForSaveType();
             br.MoveStreamPosition(720*i, 2*i);
         }
 
@@ -713,7 +744,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 br.BaseStream.Position += 69632;
             }
-            else if (mode == Mode.PCNov)
+            else if (mode == Mode.PCNov10 || mode == Mode.X360Nov10)
             {
                 br.BaseStream.Position += 1911;//2119;
                 br.InBytePosition = 2;
@@ -810,11 +841,11 @@ namespace NBA_2K13_Roster_Editor
             byte[] por = br.ReadNonByteAlignedBytes(2);
 
             // PlType
-            br.MoveStreamPosition(2, 5);
+            br.MoveStreamPosition(2, 6);
 
             byte plType = Convert.ToByte(br.ReadNonByteAlignedBits(3), 2);
 
-            br.MoveStreamPosition(-3, 0);
+            br.MoveStreamPosition(-3, -1);
             //
 
 
@@ -958,6 +989,32 @@ namespace NBA_2K13_Roster_Editor
             MoveStreamToPortraitID(playerID);
             br.MoveStreamPosition(314, 2);
             pe.ClothesType = (ClothesType)Enum.Parse(typeof(ClothesType), Convert.ToByte(br.ReadNonByteAlignedBits(2), 2).ToString());
+
+
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(24, 1);
+            pe.InjuryType = Convert.ToUInt16(br.ReadNonByteAlignedBits(7), 2);
+            br.MoveStreamPosition(3, 0);
+            pe.InjuryDays = Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2)), 2);
+
+
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(2, 0);
+            pe.BirthYear = Convert.ToUInt16(br.ReadNonByteAlignedBits(12), 2);
+            pe.BirthMonth = Convert.ToByte(br.ReadNonByteAlignedBits(4), 2);
+            pe.BirthDay = Convert.ToByte(br.ReadNonByteAlignedBits(5), 2);
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(87, 6);
+            pe.YearsPro = Convert.ToByte(br.ReadNonByteAlignedBits(5), 2);
+
+
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(40, 0);
+            for (int i = 0; i < 22; i++)
+            {
+                pe.SeasonStats.Add(Convert.ToInt32(br.ReadNonByteAlignedBits(16), 2));
+            }
+            pe.PlayoffStats = Convert.ToInt32(br.ReadNonByteAlignedBits(16), 2);
 
             MoveStreamToFirstSS(playerID);
 
@@ -1138,10 +1195,8 @@ namespace NBA_2K13_Roster_Editor
                     long prevPos = br.BaseStream.Position;
                     int prevPosIn = br.InBytePosition;
 
-                    br.MoveStreamPosition(-300, -2);
-
+                    MoveStreamToPortraitID(pe.ID);
                     Write2ByteStringToRoster(pe.PortraitID.ToString(), bw);
-
 
                     // PlType
                     br.MoveStreamPosition(2, 6);
@@ -1481,6 +1536,39 @@ namespace NBA_2K13_Roster_Editor
                     SyncBRwithBW(bw);
                     bw.WriteNonByteAlignedByte(Convert.ToByte(pe.SigShtBase), br.ReadBytes(2));
                     SyncBRwithBW(bw);
+
+                    MoveStreamToPortraitID(pe.ID);
+                    br.MoveStreamPosition(24, 1);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.InjuryType, 2).PadLeft(7, '0'), br.ReadBytes(2));
+                    SyncBRwithBW(bw);
+                    br.MoveStreamPosition(3, 0);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.InjuryDays, 2).PadLeft(16, '0'), br.ReadBytes(3));
+                    SyncBRwithBW(bw);
+
+                    MoveStreamToPortraitID(pe.ID);
+                    br.MoveStreamPosition(2, 0);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthYear, 2).PadLeft(12, '0'), br.ReadBytes(3));
+                    SyncBRwithBW(bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthMonth, 2).PadLeft(4, '0'), br.ReadBytes(2));
+                    SyncBRwithBW(bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthDay, 2).PadLeft(5, '0'), br.ReadBytes(2));
+                    MoveStreamToPortraitID(pe.ID);
+                    br.MoveStreamPosition(87, 6);
+                    SyncBWwithBR(ref bw);
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.YearsPro, 2).PadLeft(5, '0'), br.ReadBytes(2));
+
+                    MoveStreamToPortraitID(pe.ID);
+                    br.MoveStreamPosition(40, 0);
+                    SyncBWwithBR(ref bw);
+                    for (int j = 0; j < 22; j++)
+                    {
+                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.SeasonStats[j], 2).PadLeft(16, '0'), br.ReadBytes(3));
+                        SyncBRwithBW(bw);
+                    }
+                    bw.WriteNonByteAlignedBits(Convert.ToString(pe.PlayoffStats, 2).PadLeft(16, '0'), br.ReadBytes(3));
                 }
 
                 bw.Close();
@@ -1590,7 +1678,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 br.BaseStream.Position = 923137;
             }
-            else if (mode == Mode.PCNov)
+            else if (mode == Mode.PCNov10 || mode == Mode.X360Nov10)
             {
                 br.BaseStream.Position += 1911;
                 br.InBytePosition = 2;
@@ -1957,7 +2045,13 @@ namespace NBA_2K13_Roster_Editor
             pe.PlayType3 = pe.PlayType3.TrySetValue(dict, "PlayType3", true);
             pe.PlayType4 = pe.PlayType4.TrySetValue(dict, "PlayType4", true);
             pe.ClothesType = pe.ClothesType.TrySetValue(dict, "ClothesType", true);
-
+            pe.InjuryDays = pe.InjuryDays.TrySetValue(dict, "InjuryDays", true);
+            pe.InjuryType = pe.InjuryType.TrySetValue(dict, "InjuryType", true);
+            pe.BirthYear = pe.BirthYear.TrySetValue(dict, "BirthYear", true);
+            pe.BirthMonth = pe.BirthMonth.TrySetValue(dict, "BirthMonth", true);
+            pe.BirthDay = pe.BirthDay.TrySetValue(dict, "BirthDay", true);
+            pe.YearsPro = pe.YearsPro.TrySetValue(dict, "YearsPro", true);
+            
             string[] rtNames = Enum.GetNames(typeof (Rating));
             foreach (string rtName in rtNames)
             {
@@ -1992,7 +2086,13 @@ namespace NBA_2K13_Roster_Editor
             for (int i = 0; i < 15; i++)
             {
                 pe.DunkPackages[i] = pe.DunkPackages[i].TrySetValue(dict, "DunkPkg" + i, true);
+            } 
+            
+            for (int i = 0; i < 22; i++)
+            {
+                pe.SeasonStats[i] = pe.SeasonStats[i].TrySetValue(dict, "SeasonStats" + i, true);
             }
+            pe.PlayoffStats = pe.PlayoffStats.TrySetValue(dict, "PlayoffStats", true);
 
             pe.Skintone = pe.Skintone.TrySetValue(dict, "Skintone", true);
             pe.CAPHairClr = pe.CAPHairClr.TrySetValue(dict, "CAPHairClr", true);
@@ -2651,8 +2751,8 @@ namespace NBA_2K13_Roster_Editor
 
         private void btnModePCNov_Checked(object sender, RoutedEventArgs e)
         {
-            SetRegistrySetting("Mode", "PCNov");
-            mode = Mode.PCNov;
+            SetRegistrySetting("Mode", "PCNov10");
+            mode = Mode.PCNov10;
             chkRecalculateCRC.IsChecked = true;
 
             SetRegistrySetting("FirstSSOffset", 40916);
@@ -2709,14 +2809,33 @@ namespace NBA_2K13_Roster_Editor
                 MessageBox.Show("Couldn't save changed setting.");
             }
         }
+
+        private void btnMode360Nov10_Checked(object sender, RoutedEventArgs e)
+        {
+            SetRegistrySetting("Mode", "X360Nov10");
+            mode = Mode.X360Nov10;
+            chkRecalculateCRC.IsChecked = false;
+
+            SetRegistrySetting("FirstSSOffset", 94164);
+            SetRegistrySetting("FirstSSOffsetBit", 2);
+            try
+            {
+                ReloadEverything();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+        }
     }
 
     internal enum Mode
     {
         PC,
         X360,
-        PCNov,
-        Custom
+        PCNov10,
+        Custom,
+        X360Nov10
     }
 
     internal enum SaveType

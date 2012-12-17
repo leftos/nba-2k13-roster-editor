@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA 2K13 Roster Editor", "NBA 2K13 Roster Editor\NBA 2K13 Roster Editor.csproj", "{5BCD3848-5E89-4EF9-BA3D-FD2F1F3D70A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8E1B30E3-794C-4B91-8C45-49F1031347AE} = {8E1B30E3-794C-4B91-8C45-49F1031347AE}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NonByteAlignedBinaryRW", "NonByteAlignedBinaryRW\NonByteAlignedBinaryRW.csproj", "{8E1B30E3-794C-4B91-8C45-49F1031347AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,10 @@ Global
 		{5BCD3848-5E89-4EF9-BA3D-FD2F1F3D70A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BCD3848-5E89-4EF9-BA3D-FD2F1F3D70A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BCD3848-5E89-4EF9-BA3D-FD2F1F3D70A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E1B30E3-794C-4B91-8C45-49F1031347AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1B30E3-794C-4B91-8C45-49F1031347AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E1B30E3-794C-4B91-8C45-49F1031347AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E1B30E3-794C-4B91-8C45-49F1031347AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

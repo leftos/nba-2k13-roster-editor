@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace NBA_2K13_Roster_Editor
+namespace NonByteAlignedBinaryRW
 {
     public class NonByteAlignedBinaryReader : BinaryReader
     {
@@ -85,7 +85,7 @@ namespace NBA_2K13_Roster_Editor
                 throw new ArgumentOutOfRangeException("count");
 
             string s = "";
-            int bytesToRead = (count - 1)/8;
+            int bytesToRead = count/8;
             if (bytesToRead > 0)
             {
                 byte[] bytes = ReadNonByteAlignedBytes(bytesToRead);

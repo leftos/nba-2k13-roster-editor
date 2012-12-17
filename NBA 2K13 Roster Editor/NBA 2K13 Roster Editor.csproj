@@ -101,7 +101,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NonByteAlignedBinaryWriter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -112,7 +111,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NonByteAlignedBinaryReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -155,7 +153,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NonByteAlignedBinaryRW\NonByteAlignedBinaryRW.csproj">
+      <Project>{8e1b30e3-794c-4b91-8c45-49f1031347ae}</Project>
+      <Name>NonByteAlignedBinaryRW</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
