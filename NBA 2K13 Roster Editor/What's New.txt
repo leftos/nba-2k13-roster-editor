@@ -1,5 +1,11 @@
 ﻿Version History
 
+		v0.14.1.1
+			- Fixed Free Agents pool for Custom 360 profile
+
+		v0.14.1
+			- Added Custom 360 mode, which tries to skip the garbage bytes and make editing possible for players with ID 1365 and higher (known issue with editing player with ID 1364 remains)
+
 		v0.14.0.2
 			- Fixed startup crash introduced in v0.14 if last selected mode was PCNov
 

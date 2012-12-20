@@ -37,7 +37,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         private bool _genericF;
         private float _height;
         private ObservableCollection<byte> _hotSpots;
-        private ObservableCollection<HotZone> _hotZones;
+        private ObservableCollection<HotZoneValue> _hotZones;
         private int _id;
         private byte _jerseyNumber;
         private MuscleTone _muscleTone;
@@ -67,7 +67,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             Ratings = new ObservableCollection<byte>();
             Tendencies = new ObservableCollection<byte>();
             HotSpots = new ObservableCollection<byte>();
-            HotZones = new ObservableCollection<HotZone>();
+            HotZones = new ObservableCollection<HotZoneValue>();
             SeasonStats = new ObservableCollection<int>();
         }
 
@@ -473,7 +473,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        public ObservableCollection<HotZone> HotZones
+        public ObservableCollection<HotZoneValue> HotZones
         {
             get { return _hotZones; }
             set

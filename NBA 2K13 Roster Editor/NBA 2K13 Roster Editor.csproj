@@ -68,6 +68,7 @@
     <Compile Include="Data\Playbooks\PlaybookEntry.cs" />
     <Compile Include="Data\Players\Parameters\ClothesType.cs" />
     <Compile Include="Data\Players\Parameters\HairColor.cs" />
+    <Compile Include="Data\Players\Parameters\HotZoneName.cs" />
     <Compile Include="Data\Players\Parameters\PlayType.cs" />
     <Compile Include="SearchWindow.xaml.cs">
       <DependentUpon>SearchWindow.xaml</DependentUpon>
@@ -84,7 +85,7 @@
     <Compile Include="Data\Players\Parameters\ContractOption.cs" />
     <Compile Include="Data\Players\Parameters\EyeColor.cs" />
     <Compile Include="Data\Players\Parameters\HotSpot.cs" />
-    <Compile Include="Data\Players\Parameters\HotZone.cs" />
+    <Compile Include="Data\Players\Parameters\HotZoneValue.cs" />
     <Compile Include="Data\Players\Parameters\MuscleTone.cs" />
     <Compile Include="Data\Players\Parameters\Position.cs" />
     <Compile Include="Data\Players\Parameters\Rating.cs" />

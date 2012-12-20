@@ -1,13 +1,8 @@
-0.14.0.2
+0.14.1.1
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-		v0.14.0.2
-			- Fixed startup crash introduced in v0.14 if last selected mode was PCNov
+		v0.14.1.1
+			- Fixed Free Agents pool for Custom 360 profile
 
-		v0.14.0.1
-			- Fixed saving and pasting Season and Playoff stats for Players
-
-		v0.14
-			- Added YearsPro, BirthYear, BirthMonth, BirthDay, InjuryType, InjuryDays for Players (kudos to TUSS11)
-			- Added SeasonStats and PlayoffStats for Players
-			- Fixed Teams table for save types other than Roster
+		v0.14.1
+			- Added Custom 360 mode, which tries to skip the garbage bytes and make editing possible for players with ID 1365 and higher (known issue with editing player with ID 1364 remains)

@@ -287,6 +287,16 @@ namespace NBA_2K13_Roster_Editor
                                       });
             }
 
+            for (int i = 0; i < 25; i++)
+            {
+                dgPlayers.Columns.Add(new DataGridTextColumn
+                {
+                    Header = string.Format("HZ{0}", Enum.GetName(typeof(HotZoneName), i)),
+                    Binding =
+                        new Binding { Path = new PropertyPath(string.Format("HotZones[{0}]", i)), Mode = BindingMode.TwoWay }
+                });
+            }
+
             dgPlayers.Columns.Add(new DataGridComboBoxColumn
                                   {
                                       Header = "ContractOpt",
@@ -561,7 +571,7 @@ namespace NBA_2K13_Roster_Editor
                 br.BaseStream.Position = 1489588; // 4080
                 br.InBytePosition = 4;
             }
-            else if (mode == Mode.Custom)
+            else if (mode == Mode.Custom || mode == Mode.CustomX360)
             {
                 br.BaseStream.Position = Convert.ToInt64(GetOption("CustomJerseyOffset"));
                 br.InBytePosition = Convert.ToInt32(GetOption("CustomJerseyOffsetBit"));
@@ -589,6 +599,7 @@ namespace NBA_2K13_Roster_Editor
                 pe.Ratings = ReadRatings(i);
                 pe.Tendencies = ReadTendencies(i);
                 pe.HotSpots = ReadHotSpots(i);
+                pe.HotZones = ReadHotZones(i);
                 pe.AssignedTo = FindPlayerInTeams(i);
                 pe.IsFA = teamsList.Single(te => te.ID == 999).RosterSpots.Contains(pe.ID);
                 pe.IsHidden = (pe.AssignedTo == -1 && !pe.IsFA);
@@ -661,6 +672,21 @@ namespace NBA_2K13_Roster_Editor
             return hs;
         }
 
+        private ObservableCollection<HotZoneValue> ReadHotZones(int playerID)
+        {
+            var hz = new ObservableCollection<HotZoneValue>();
+
+            MoveStreamToPortraitID(playerID);
+            br.MoveStreamPosition(309, 2);
+
+            for (int i = 0; i < 14; i++)
+            {
+                hz.Add((HotZoneValue) Enum.Parse(typeof (HotZoneValue), Convert.ToByte(br.ReadNonByteAlignedBits(2),2).ToString()));
+            }
+
+            return hz;
+        }
+
         private void PopulateTeamsTab()
         {
             teamsList = new ObservableCollection<TeamEntry>();
@@ -712,7 +738,7 @@ namespace NBA_2K13_Roster_Editor
                 br.BaseStream.Position += 1911;
                 br.InBytePosition = 2;
             }
-            else if (mode == Mode.Custom)
+            else if (mode == Mode.Custom || mode == Mode.CustomX360)
             {
                 MoveStreamToFirstRoster();
                 br.BaseStream.Position -= 9406;
@@ -749,7 +775,7 @@ namespace NBA_2K13_Roster_Editor
                 br.BaseStream.Position += 1911;//2119;
                 br.InBytePosition = 2;
             }
-            else if (mode == Mode.Custom)
+            else if (mode == Mode.Custom || mode == Mode.CustomX360)
             {
                 br.BaseStream.Position = Convert.ToInt64(GetOption("CustomRosterOffset"));
                 br.InBytePosition = Convert.ToInt32(GetOption("CustomRosterOffsetBit"));
@@ -1053,7 +1079,7 @@ namespace NBA_2K13_Roster_Editor
 
         private void MoveStreamToFirstSS(int playerID)
         {
-            if (mode != Mode.Custom)
+            if (mode != Mode.Custom && mode !=Mode.CustomX360)
             {
                 br.BaseStream.Position = Convert.ToInt64(GetOption("FirstSSOffset"));
                 br.InBytePosition = Convert.ToInt32(GetOption("FirstSSOffsetBit"));
@@ -1066,7 +1092,7 @@ namespace NBA_2K13_Roster_Editor
 
             MoveStreamForSaveType();
 
-            if (playerID >= 1365 && mode == Mode.X360)
+            if (playerID >= 1365 && (mode == Mode.X360 || mode == Mode.CustomX360))
             {
                 br.BaseStream.Position += 16384;
             }
@@ -1683,7 +1709,7 @@ namespace NBA_2K13_Roster_Editor
                 br.BaseStream.Position += 1911;
                 br.InBytePosition = 2;
             }
-            else if (mode == Mode.Custom)
+            else if (mode == Mode.Custom || mode == Mode.CustomX360)
             {
                 MoveStreamToFirstRoster();
                 br.BaseStream.Position -= 9406;
@@ -2827,6 +2853,22 @@ namespace NBA_2K13_Roster_Editor
                 Console.WriteLine(exception);
             }
         }
+
+        private void btnModeCustom360_Checked(object sender, RoutedEventArgs e)
+        {
+            SetRegistrySetting("Mode", "CustomX360");
+            mode = Mode.CustomX360;
+            chkRecalculateCRC.IsChecked = true;
+
+            try
+            {
+                ReloadEverything();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+        }
     }
 
     internal enum Mode
@@ -2835,7 +2877,8 @@ namespace NBA_2K13_Roster_Editor
         X360,
         PCNov10,
         Custom,
-        X360Nov10
+        X360Nov10,
+        CustomX360
     }
 
     internal enum SaveType

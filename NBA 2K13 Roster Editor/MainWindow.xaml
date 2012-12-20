@@ -82,12 +82,12 @@
     <Grid>
         <Button x:Name="btnOpen" Content="Open" Margin="0,10,10,0" HorizontalAlignment="Right" Width="75" Height="22"
                 VerticalAlignment="Top" Click="btnOpen_Click" />
-        <TextBox x:Name="txtFile" Height="23" Margin="10,10,116,0" Text="" VerticalAlignment="Top" IsReadOnly="True"
+        <TextBox x:Name="txtFile" Height="23" Margin="10,10,129,0" Text="" VerticalAlignment="Top" IsReadOnly="True"
                  MaxLines="1" />
         <CheckBox x:Name="chkRecalculateCRC" Content="Recalculate CRC on Save" Margin="0,42,10,0"
                   VerticalAlignment="Top" Checked="chkRecalculateCRC_Checked" Unchecked="chkRecalculateCRC_Unchecked"
                   HorizontalAlignment="Right" Width="148" />
-        <TabControl Margin="10,42,116,30">
+        <TabControl Margin="10,42,129,30">
             <TabItem x:Name="tabPlayers" Header="Players">
                 <Grid x:Name="grdPlayers">
                     <DataGrid x:Name="dgPlayers" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
@@ -259,8 +259,8 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="139" HorizontalAlignment="Right"
-                  Width="100">
+        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="160" HorizontalAlignment="Right"
+                  Width="114">
             <Grid>
                 <RadioButton x:Name="btnModePC" Content="PC Ret" HorizontalAlignment="Left" Margin="10,10,0,0"
                              VerticalAlignment="Top" Checked="btnModePC_Checked" />
@@ -272,6 +272,8 @@
                 	VerticalAlignment="Top" Checked="btnModeCustom_Checked" />
                 <RadioButton x:Name="btnMode360Nov10" Content="360 Nv10" HorizontalAlignment="Left" Margin="10,73,0,0"
                 	VerticalAlignment="Top" Checked="btnMode360Nov10_Checked" />
+                <RadioButton x:Name="btnModeCustom360" Content="Custom 360" HorizontalAlignment="Left" Margin="10,115,0,0"
+                	VerticalAlignment="Top" Checked="btnModeCustom360_Checked" />
             </Grid>
         </GroupBox>
         <StatusBar HorizontalAlignment="Stretch" Height="25" Margin="0" VerticalAlignment="Bottom">
