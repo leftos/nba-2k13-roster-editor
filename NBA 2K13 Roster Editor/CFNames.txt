@@ -1,0 +1,1690 @@
+5	Allen Iverson
+6	Anthony Carter
+8	Jerry Stackhouse
+13	Ray Allen
+31	Juwan Howard
+35	Ben Wallace
+40	Gheorghe Muresan
+45	Steve Kerr
+45	Steve Kerr
+45	Steve Kerr
+46	Toni Kukoc
+46	Toni Kukoc
+58	Tyrone Hill
+58	Tyrone Hill 
+59	Mike Bibby
+64	Bob Sura
+66	Kevin Ollie
+67	Zydrunas Ilgauskas
+70	Bruce Bowen
+78	Tony Delk
+81	Dee Brown
+93	Stephen Jackson
+95	Lorenzen Wright
+96	Brent Barry
+101	Antonio McDyess
+102	George Lynch
+122	Steve Smith
+110	Vince Carter
+117	Christian Laettner
+119	Dikembe Mutombo
+129	Tim Hardaway 
+135	Kurt Thomas
+143	Vlade Divac
+144	Matt Geiger
+146	Anthony Mason
+157	Jeff Hornacek
+159	Karl Malone
+159	Karl Malone
+162	Bryon Russell
+163	John Stockton
+163	John Stockton
+174	Mitch Richmond 
+185	Charles Oakley
+195	Kobe Bryant
+195	Kobe Bryant
+198	Derek Fisher
+205	Nick Van Exel
+226	Jason Kidd
+227	Jamal Mashburn
+232	Matt Harpring
+236	Shawn Bradley
+237	Al Harrington
+250	Dale Ellis
+254	Mark Jackson
+257	Antonio McDyess
+262	Antawn Jamison
+266	Raef LaFrentz
+268	Erick Dampier
+274	Jalen Rose
+275	Rashard Lewis
+283	Grant Hill
+284	Lindsey Hunter
+288	Theo Ratliff
+295	Marcus Camby
+303	Tyronn Lue
+316	Sean Marks
+318	Kevin Willis
+323	Shawn Kemp
+326	Gary Payton
+329	Eric Snow
+336	Nazr Mohammed
+345	Rasho Nesterovic
+349	Dirk Nowitzki
+358	Steve Nash
+365	Kevin Garnett
+369	Stephon Marbury
+379	Kenny Anderson
+384	Aaron McKie
+386	Clifford Robinson
+389	Rasheed Wallace
+392	Paul Pierce
+393	Jermaine O'Neal
+397	Donyell Marshall
+402	Joe Smith
+411	Tim Duncan
+412	Keith Van Horn
+413	Chauncy Billups
+414	Antonio Daniels
+415	Tony Battie
+417	Tim Thomas
+418	Adonal Foyle
+419	Tracy McGrady
+437	Jacque Vaughn
+443	Brian Skinner
+449	Anthony Johnson
+450	Peja Stojakovic
+497	Brad Miller
+539	Todd MacCulloch
+550	Elton Brand
+553	Kenny Thomas
+557	Jeff Foster
+564	Lamar Odom
+567	Corey Maggette
+568	Shawn Marion
+572	Wally Szczerbiak
+573	Metta World Peace
+576	James Posey
+578	Steve Francis
+579	Richard Hamilton
+583	Greg Buckner
+589	Baron Davis
+594	Jumaine Jones
+597	Andre Miller
+600	Jason Terry
+617	Rodney Buford
+625	Kenyon Martin
+627	Darius Miles
+629	Mike Miller
+631	Jamal Crawford
+632	Chris Mihm
+633	Joel Przybilla
+634	Keyon Dooling
+636	Ethan Thomas
+640	Hedo Turkoglu
+642	Quentin Richardson
+643	Jamaal Maligore
+644	Speedy Claxton
+645	Morris Peterson
+647	Deshawn Stevenson
+651	Mamadou Ndiaye
+652	Mark Madsen
+653	Jake Voskuhl
+655	Eddie House
+730	Bill Russell
+731	Nate Thurmond
+732	Elgin Baylor
+732	Elgin Baylor
+732	Elgin Baylor
+732	Steve Mix
+733	Oscar Robertson
+734	Bob Cousy
+735	John Havlicek
+736	Bob Petit
+737	Dolph Schayes
+738	Jerry Lucas
+739	Hal Greer
+740	George Mikan
+741	Dave Cowens
+743	Billy Cunningham
+744	George Gervin
+745	Walt Frazier
+745	Richard Johnson
+746	Pete Maravich
+747	Earl Monroe
+748	Bob Lanier
+749	Willis Reed
+750	Nate Archibald
+751	Dave Bing
+752	Wilt Chamberlain
+752	Wilt Chamberlain
+752	George McGinnis
+753	Bill Walton
+754	Rick Barry
+755	David Thompson
+756	Jerry West
+756	Jerry West
+756	Jerry West
+757	Gail Goodrich
+757	Gail Goodrich
+757	Henry Bibby
+759	Spencer Haywood
+760	Lenny Wilkens
+763	Moses Malone
+764	Kevin McHale
+765	Larry Bird
+765	Larry Bird
+766	80s Julius Erving
+767	Isiah Thomas 
+768	Charles Barkley
+769	Robert Parish
+774	Jack Sikma
+775	Tom Chambers
+776	James Worthy
+776	James Worthy
+777	Clyde Drexler
+777	Clyde Drexler
+778	Magic Johnson
+779	Bob McAdoo
+780	Alex English
+784	Reggie Theus
+787	Maurice Lucas
+800	Kwame Brown
+801	Tyson Chandler
+801	Tyson Chandler
+802	Shane Battier
+803	Eddy Curry
+804	Eddie Griffin
+805	Jason Richardson
+807	Joe Johnson
+808	Troy Murphy
+809	Pau Gasol
+810	Desagana Diop
+813	Vladimir Radmanovic
+814	Jamaal Tinsley
+816	Richard Jefferson
+818	Brendan Haywood
+821	Gilbert Arenas
+822	Zach Randolph
+823	Jason Collins
+826	Samuel Dalembert
+828	Raja Bell
+834	Gerald Wallace
+837	Michael Redd
+838	Eduardo Najera
+839	Tony Parker
+845	Earl Watson
+847	Andrei Kirilenko
+871	Dan Issel
+872	Artis Gilmore
+874	80s Patrick Ewing
+875	Sidney Moncrief
+877	Michael Ray Richardson
+878	80s Hakeem Olajuwon
+879	Xavier McDaniel
+886	Primoz Brezec
+891	Earl Boykins
+901	Yao Ming
+903	Mike Dunleavy
+904	Drew Gooden
+907	Nene
+908	Chris Wilcox
+909	Amar'e Stoudemire
+910	Caron Butler
+911	Jared Jeffries
+912	Melvin Ely
+913	Marcus Haislip
+917	Juan Dixon
+921	Qyntel Woods
+923	Tayshaun Prince
+926	John Salmons
+930	Roger Mason
+933	Dan Gadzuric
+934	Carlos Boozer
+937	Rasual Butler
+940	Patrick Ewing
+940	Patrick Ewing
+941	90s Grant Hill
+942	00s Scottie Pippen
+946	00s Alonzo Mourning
+948	Shaquille O'Neal
+949	Glen Rice
+951	Steve Smith
+952	Hakeem Olajuwon
+953	00s Karl Malone
+955	90s Bald Clyde Drexler
+959	David Robinson
+959	David Robinson
+963	90s Jason Kidd
+966	Jarron Collins
+970	Manu Ginobili
+982	Malik Allen
+984	Chris Andersen
+987	Marko Jaric 
+988	Smush Parker
+991	Mike James
+992	Mehmet Okur
+993	Jannero Pargo
+1013	Lebron James
+1013	Lebron James
+1014	Darko Milicic
+1015	Carmelo Anthony
+1015	Carmelo Anthony
+1016	Chris Bosh
+1017	Dwyane Wade
+1018	Chris Kaman
+1019	Kirk Hinrich
+1020	T.J. Ford
+1023	Mickael Pietrus
+1024	Nick Collison
+1025	Marcus Banks
+1026	Luke Ridnour
+1030	David West
+1031	Sasha Pavlovic
+1032	Dahntay Jones
+1033	Boris Diaw
+1034	Zoran Planinic
+1035	Travis Outlaw
+1036	Brian Cook
+1039	Kendrick Perkins
+1040	Leandro Barbosa
+1041	Josh Howard
+1043	Jason Kapono
+1044	Luke Walton
+1048	Steve Blake
+1049	Keith Bogans
+1091	Carlos Arroyo
+1097	Kareem Abdul-Jabbar
+1098	Maurice Cheeks
+1101	Kevin Johnson
+1102	Larry Nance
+1118	Udonis Haslem
+1126	Kyle Korver
+1129	Ronald Dupree
+1130	Bobby Simmons
+1132	Mo Williams
+1133	Darius Songalia
+1134	Zaza Pachulia
+1135	Marquis Daniels
+1136	Brian Scalabrine
+1137	Francisco Elson
+1143	Reggie Evans
+1144	Jason Hart
+1145	Brian Cardinal
+1146	Chris Mullin 
+1146	Chris Mullin
+1148	Willie Green
+1150	Dwight Howard
+1151	Emeka Okafor
+1152	Ben Gordon
+1153	Shaun Livingston
+1154	Devin Harris
+1155	Josh Childress
+1156	Luol Deng
+1158	Andre Iguodala
+1158	Andre Iguodala
+1160	Andris Biedrins
+1161	Robert Swift
+1162	Sebastian Telfair
+1163	Kris Humphries
+1164	Al Jefferson
+1166	Josh Smith
+1167	J.R. Smith
+1168	Dorell Wright
+1169	Jameer Nelson
+1170	Pavel Podkolzin
+1173	Delonte West
+1174	Tony Allen
+1175	Kevin Martin
+1176	Sasha Vujacic
+1177	Beno Udrih
+1179	Anderson Varejao
+1183	Shaquille O'Neal
+1187	Nenad Krstic
+1194	Matt Barnes
+1197	Quinton Ross
+1203	Andres Nocioni
+1204	Maurice Evans
+1205	James Jones
+1206	Trevor Ariza
+1207	DJ Mebenga
+1209	Carlos Delfino
+1210	Luke Jackson
+1211	Paul Shirley
+1213	Joe Dumars
+1215	Dan Majerle
+1217	Detlef Schrempf
+1244	Mike Wang
+1252	Chris Duhon
+1254	Royal Ivey
+1256	Andrew Bogut
+1257	Marvin Williams
+1258	Deron Williams
+1258	Deron Williams
+1259	Chris Paul
+1259	Chris Paul
+1260	Raymond Felton
+1261	Martell Webster
+1262	Charlie Villanueva
+1263	Channing Frye
+1264	Ike Diougu
+1265	Andrew Bynum
+1270	Antoine Wright
+1271	Joey Graham
+1272	Danny Granger
+1273	Gerald Green
+1274	Hakim Warrick
+1276	Nate Robinson
+1277	Jarrett Jack
+1278	Francisco Garcia
+1279	Luther Head
+1280	Johan Petro
+1281	Jason Maxiell
+1282	Linas Kleiza
+1285	David Lee
+1288	Brandon Bass
+1289	Ersan Ilyasova
+1290	Ronny Turiaf
+1292	Monta Ellis
+1294	Chris Taft
+1296	Andray Blatche
+1297	Ryan Gomes
+1299	C.J. Miles
+1303	Damien Wilkins
+1307	Louis Williams
+1309	Matt Carroll
+1310	Charlie Bell
+1311	Orien Greene
+1316	Earl Barron
+1317	Jose Calderon
+1318	Matt Bonner
+1320	Mike Wilks
+1321	Dominique Wilkins
+1334	Andrea Bargnani
+1335	Lamarcus Aldridge
+1336	Adam Morrison
+1337	Tyrus Thomas
+1338	Shelden Williams
+1339	Brandon Roy
+1340	Randy Foye
+1341	Rudy Gay
+1343	Mouhamed Sene
+1344	J.J. Redick
+1345	Hilton Armstrong
+1346	Thabo Sefolosha
+1347	Ronnie Brewer
+1349	Rodney Carney
+1350	Shawne Williams
+1353	Renaldo Balkman
+1354	Rajon Rondo
+1356	Josh Boone
+1357	Kyle Lowry
+1358	Shannon Brown
+1359	Jordan Farmar
+1361	Maurice Ager
+1362	Daniel Gibson
+1364	Anthony Parker
+1368	Brian Townsend
+1369	Matt Townsend
+1374	Ime Udoka
+1376	Leon Powe
+1379	Paul Millsap
+1381	Ronnie Price
+1386	Chuck Hayes
+1388	Steve Novak
+1389	John Lucas
+1393	90s Larry Johnson
+1396	Dion Peete
+1402	Erick Boenisch
+1403	Tim Schroeder
+1404	Thomas Anderson
+1405	Allan Ray
+1406	Terrence Kinsey 
+1409	James White 
+1410	Greg Oden
+1411	Kevin Durant
+1411	Kevin Durant
+1412	Al Horford
+1413	Mike Conley
+1414	Jeff Green
+1415	Yi Jianlian
+1416	Corey Brewer
+1417	Brandan Wright
+1418	Joakim Noah
+1419	Spencer Hawes
+1420	Acie Law
+1421	Thaddeus Young
+1422	Julian Wright
+1423	Al Thornton
+1424	Rodney Stuckey
+1425	Nick Young
+1426	Sean Williams
+1427	Marco Belinelli
+1429	Jason Smith
+1430	Daequan Cook
+1431	Jared Dudley
+1432	Wilson Chandler
+1433	Rudy Fernandez
+1435	Aaron Brooks
+1436	Arron Afflalo
+1440	Carl Landry
+1442	Nick Fazekas
+1443	Glen Davis
+1444	Josh Mcroberts
+1445	Kyrylo Fesenko
+1447	Jared Jordan
+1448	Craig Smith
+1449	David Noel
+1450	Kelenna Azubuike
+1451	Luis Scola
+1452	Amir Johnson
+1453	Solomon Jones
+1459	Bobbito Garcia
+1460	Connie Hawkins
+1466	Arvydas Macijauskas
+1468	Dominic McGuire
+1469	Jamario Moon
+1471	Mario West
+1484	Grayson Boucher
+1485	Dennis Rodman All Blonde
+1486	Rolando Blackman
+1493	Zach Timmerman
+1497	Steve Park
+1498	Ramon Sessions
+1499	Josh Powell
+1501	Ryan Hollins
+1502	Chris Quinn
+1503	C.J. Watson
+1507	Derrick Rose
+1508	Michael Beasley
+1509	O.J. Mayo
+1510	Russell Westbrook
+1510	Russell Westbrook
+1511	Kevin Love
+1511	Kevin Love
+1512	Danilo Gallinari
+1513	Eric Gordon
+1514	Joe Alexander
+1515	D.J. Augustin
+1516	Brook Lopez
+1517	Jerryd Bayless
+1518	Jason Thompson
+1519	Brandon Rush
+1520	Anthony Randolph
+1521	Robin Lopez
+1522	Marreese Speights
+1523	Roy Hibbert
+1524	Javale Mcgee
+1525	J.J. Hickson
+1526	Mario Chalmers
+1527	Ryan Anderson
+1528	Courtney Lee
+1529	Kosta Koufos
+1530	Nicolas Batum
+1531	George Hill
+1532	Darrell Arthur
+1533	Donte Greene
+1534	D.J. White
+1537	Joey Dorsey
+1538	Deandre Jordan
+1539	Luc Richard Mbah a Moute
+1540	Kyle Weaver
+1541	Chris Douglas-Roberts
+1542	Bill Walker
+1548	Marc Gasol
+1549	Aaron Gray
+1550	J.J. Barea
+1555	Goran Dragic
+1556	Patrick Ewing Jr
+1557	Ian Mahinmi
+1559	Hamed Haddadi
+1562	Will Bynum
+1565	Von Wafer
+1568	Sonny Weems
+1569	Anthony Toliver
+1573	Alexis Ajinca
+1574	Anthony Morrow
+1575	Louis Amundson
+1579	Darnell Jackson
+1580	Jawad Williams
+1582	Stephen Graham
+1583	Joel Anthony
+1585	Marcin Gortat
+1588	Nenad Kristic
+1589	Cartier Martin
+1591	Su Lu
+1592	Pops Mensah-Bonsu
+1593	Trey Johnson
+1596	David Banner
+1600	Blake Griffin
+1601	Ricky Rubio
+1602	Hasheem Thabeet
+1603	James Harden
+1603	James Harden
+1604	Jordan Hill
+1605	Demar Derozan
+1606	Tyreke Evans
+1607	Jrue Holiday
+1608	Brandon Jennings
+1609	James Johnson
+1610	Earl Clark
+1611	Dejuan Blair
+1612	Stephen Curry
+1613	Eric Maynor
+1614	Jonny Flynn
+1615	Ty Lawson
+1616	Gerald Henderson
+1617	Jeff Teague
+1618	Terrence Williams
+1619	Austin Daye
+1620	Byron Mullens
+1621	Patrick Mills
+1622	Darren Collison
+1623	Sam Young
+1624	Tyler Hansbrough
+1625	Dajuan Summers
+1626	Chase Budinger
+1629	Derrick Brown
+1630	Chris Darroca
+1632	Nikki Lukas
+1634	Kanye West
+1636	Omri Casspi
+1637	Rodrigue Beaubois
+1638	Taj Gibson
+1639	Demarre Carroll
+1640	Wayne Ellington
+1641	Toney Douglas
+1643	Jeff Pendergraph
+1644	Jermaine Taylor
+1645	Dante Cunningham
+1647	Jon Brockman
+1648	Jonas Jerebko
+1649	Jodie Meeks
+1651	Marcus Thornton
+1652	Danny Green
+1658	A.J. Price
+1659	Nando De Colo
+1660	Robert Vaden
+1663	Lester Hudson
+1666	The Game
+1667	Wale
+1668	Mims
+1669	Asher Roth
+1670	Don Cannon
+1671	Big Kuntry
+1672	DJ Whoo Kid
+1673	Twista
+1674	Pitbull
+1675	Kingsoul
+1676	Slim Thug
+1693	David Andersen
+1698	Serge Ibaka
+1699	Wesley Matthews
+1701	Sundiata Gaines
+1721	Reggie Williams
+1722	Garrett Temple
+1723	Alonzo Gee
+1724	Mike Harris
+1725	Kyle Macy
+1726	Michael Jordan '85
+1726	Michael Jordan
+1727	Orlando Woolridge
+1728	Charles Oakley
+1729	Dave Corzine
+1729	Dave Corzine
+1730	Dennis Johnson
+1731	Danny Ainge
+1731	Danny Ainge
+1732	John Paxson
+1732	John Paxson
+1732	John Paxson
+1732	John Paxson
+1733	Michael Jordan
+1733	Michael Jordan
+1733	Michael Jordan
+1733	Michael Jordan
+1734	Scottie Pippen
+1734	Scottie Pippen
+1734	Scottie Pippen
+1734	Scottie Pippen
+1735	Horace Grant
+1735	Horace Grant
+1736	Bill Cartwright
+1736	Bill Cartwright
+1736	Bill Cartwright
+1737	Spud Webb
+1738	Doc Rivers
+1739	Mark Price
+1740	Craig Ehlo
+1741	John Williams
+1742	Brad Daugherty
+1743	Dennis Rodman
+1744	Bill Laimbeer
+1745	James Edwards
+1745	James Edwards
+1746	Byron Scott
+1746	Byron Scott
+1747	Sam Perkins
+1748	Terry Porter
+1749	Jerome Kersey
+1750	Buck Williams
+1752	B.J. Armstrong
+1752	B.J. Armstrong
+1754	Scottie Pippen
+1754	Scottie Pippen
+1755	Will Perdue 
+1755	Will Perdue
+1755	Will Perdue
+1756	Derek Harper
+1757	John Starks
+1758	Ron Harper
+1758	Ron Harper
+1759	Michael Jordan
+1759	Michael Jordan
+1760	Dennis Rodman
+1761	Luc Longley
+1761	Luc Longley
+1762	Hersey Hawkins
+1763	Sam Perkins
+1767	Dennis Rodman
+1768	Jud Buechler
+1768	Jud Buechler
+1769	Craig Hodges 
+1769	Craig Hodges
+1769	Craig Hodges
+1770	Stacey King
+1771	Cliff Levingston
+1771	Cliff Levingston
+1772	Ed Nealy
+1773	Bill Wennington
+1773	Bill Wennington
+1799	Gary Neal
+1800	Sherron Collins
+1801	John Wall
+1802	Evan Turner
+1803	Derrick Favors
+1804	Wesley Johnson
+1805	DeMarcus Cousins
+1806	Ekpe Udoh
+1807	Greg Monroe
+1808	Al-Farouq Aminu
+1809	Gordon Hayward
+1810	Paul George
+1811	Cole Aldrich
+1812	Xavier Henry
+1813	ED Davis
+1814	Patrick Patterson
+1815	Larry Sanders
+1816	Luke Babbitt
+1817	Kevin Seraphin
+1818	Eric Bledsoe
+1819	Avery Bradley
+1820	James Anderson
+1821	Craig Brackins
+1822	Elliot Williams
+1823	Trevor Booker
+1824	Damion James
+1825	Dominique Jones
+1826	Quincy Pondexter
+1827	Jordan Crawford
+1828	Greivis Vasquez
+1829	Daniel Orton
+1830	Lazar Hayward
+1832	Dexter Pittman
+1833	Hassan Whiteside
+1834	Armon Johnson
+1836	Terrico White
+1837	Darington Hobson
+1838	Andy Rautins
+1839	Landry Fields
+1840	Lance Stephenson
+1843	Devin Ebanks
+1846	Gani Lawal
+1850	Solomon Alabi
+1852	Luke Harangody
+1853	Pape Sy
+1854	Willie Warren
+1855	Jeremy Evans
+1856	Hamady N'diaye
+1858	Derrick Caracter
+1861	Barack Obama
+1862	Adam Keefe
+1863	Tiago Splitter
+1864	Nikola Pekovic
+1865	Timofey Mozgov
+1894	Jeremy Lin
+1895	Omer Asik
+1896	Gary Forbes
+1897	Eugene Jeter
+1898	Semih Erden
+1899	Jeff Adrien
+1900	Ishmael Smith
+1901	Ben Uzoh
+1902	Matt Janning
+1903	Christian Eyenga
+1904	Manny Harris
+1905	Samardo Samuels
+1906	Garret Siler
+1907	Zabian Dowdell
+1908	Mustafa Shakur
+1909	Chris Johnson
+1911	Larry Owens
+1913	K.C. Jones
+1914	Sam Jones
+1915	Tom Sanders
+1916	Tom Heinsohn
+1918	Larry Siegfried
+1919	John Thompson
+1920	Mel Counts
+1921	Dick Barnett
+1921	Dick Barnett
+1922	Rudy Larusso
+1923	Leroy Ellis
+1923	Leroy Ellis
+1923	Joe Bryant
+1925	Jim King
+1926	Darrall Imhoff
+1927	Ray Williams
+1928	Don Nelson
+1929	Jon McGlocklin
+1930	Bob Dandridge
+1931	Greg Smith
+1932	Bob Boozer
+1933	Lucius Allen
+1934	Dick Cunningham
+1937	Keith Erickson
+1937	Keith Erickson
+1937	World B. Free
+1939	Jim McMillian
+1939	Jim McMillian
+1939	Doug Collins
+1940	Willie McCarter
+1941	Rick Roberson
+1943	Flynn Robinson
+1944	Bill Bradley
+1945	Dave DeBusschere
+1946	Phil Jackson
+1948	Luther Rackley
+1951	Clint Richardson
+1952	Bobby Jones
+1953	Darryl Dawkins
+1954	Clemon Johnson
+1955	George Johnson
+1956	Paul Pressey
+1957	Terry Cummings
+1958	Alton Lister
+1958	Alton Lister 
+1959	Mike Dunleavy
+1959	Mike Dunleavy
+1960	Ricky Pierce
+1961	Paul Mokeski
+1961	Paul Mokeski
+1961	Paul Mokeski
+1962	Randy Breuer
+1963	Charles Davis
+1963	Charles Davis
+1964	Jerry Sichting
+1965	Scott Wedman
+1967	Sam Vincent
+1968	Randy Wittman
+1969	Tree Rollins
+1969	Tree Rollins
+1969	Tree Rollins
+1970	Jon Koncak
+1971	Eddie Johnson
+1972	Scott Hastings
+1973	Antoine Carr
+1973	Antoine Carr 
+1974	A.C. Green
+1975	Kareem Abdul-Jabbar
+1976	Michael Cooper
+1977	Kurt Rambis
+1978	Billy Thompson
+1979	Mychal Thompson
+1979	Mychal Thompson
+1980	Frank Brickowski
+1980	Frank Brickowski
+1981	Mark Aguirre
+1982	Vinnie Johnson
+1983	Rick Mahorn
+1984	John Salley
+1985	Darryl Dawkins
+1985	Darryl Dawkins
+1986	Sam Vincent
+1987	Brad Sellers
+1990	Larry Drew
+1991	Elden Campbell
+1992	Kevin Duckworth
+1994	Mark Bryant
+1995	Drazen Petrovic
+1996	Scott Williams
+1996	Scott Williams
+1997	Rodney McCray
+1998	Muggsy Bogues
+1999	Dell Curry
+2000	Kendall Gill
+2001	Larry Johnson
+2002	Alonzo Mourning
+2003	David Wingate
+2003	David Wingate
+2004	Johnny Newman
+2005	Kenny Gattison
+2006	Tony Bennett
+2007	Kevin Lynch
+2008	Kevin Johnson
+2009	Richard Dumas
+2011	Mark West
+2012	Tom Chambers
+2013	Cedric Ceballos
+2014	Frank Johnson
+2015	Oliver Miller
+2016	Kenny Smith
+2017	Vernon Maxwell
+2019	Otis Thorpe
+2020	Sam Cassell
+2021	Mario Elie
+2023	Matt Bullard
+2024	Scott Brooks
+2025	Mahmoud Abdul-Rauf
+2026	Bryant Stith
+2027	Reggie Williams
+2027	Reggie Williams
+2028	LaPhonso Ellis
+2029	Dikembe Mutombo
+2030	Rodney Rogers
+2032	Robert Pack
+2033	Tom Hammonds
+2035	Charles Smith
+2036	Hubert Davis
+2037	Greg Anthony
+2038	Anthony Bonner
+2039	Herb Williams
+2040	Penny Hardaway
+2041	Nick Anderson
+2042	Dennis Scott
+2043	Horace Grant
+2044	Donald Royal
+2045	Brian Shaw
+2046	Anthony Bowie
+2047	Jeff Turner
+2049	Dickey Simpkins
+2049	Dickey Simpkins
+2050	Vincent Askew 
+2050	Vincent Askew
+2051	Nate McMillan
+2052	Ervin Johnson
+2055	Greg Ostertag
+2056	Howard Eisley
+2057	Shandon Anderson
+2058	Greg Foster
+2061	Kobe Bryant
+2062	Eddie Jones
+2063	Elden Campbell
+2064	Robert Horry
+2064	Robert Horry
+2066	Jon Barry
+2067	Derek Fisher
+2068	Corie Blount
+2069	Avery Johnson
+2070	Vinny Del Negro
+2071	Sean Elliott
+2072	Tim Duncan
+2073	Jaren Jackson
+2074	Chuck Person
+2075	Will Perdue
+2076	Monty Williams
+2076	Monty Williams
+2080	Rod Higgins
+2080	Rod Higgins 
+2081	Tom Tolbert 
+2082	Sarunas Marciulionis
+2083	Mario Elie
+2085	Mike Bibby
+2086	Doug Christie
+2087	Peja Stojakovic
+2088	Chris Webber
+2089	Vlade Divac
+2090	Bobby Jackson
+2091	Hedo Turkoglu
+2092	Scot Pollard
+2093	Gerald Wallace
+2094	Lawrence Funderburke
+2095	A.C. Green
+2096	Bernard King
+2097	Elvin Hayes
+2098	Wes Unseld
+2099	Walt Bellamy
+2100	Sleepy Floyd
+2101	Fat Lever
+2102	Reggie Lewis
+2103	World B. Free
+2104	Kenny Walker
+2106	Kiki Vandeweghe
+2107	Jamaal Wilkes
+2108	Mark Eaton
+2109	David Burchanowski
+2112	Brad Jones
+2113	Bryan Harris
+2115	Walt Hazzard
+2116	Lou Hudson
+2117	Bill Bridges
+2118	Jim Davis
+2119	Jerry Chambers
+2120	Len Chappell
+2121	Sidney Green
+2121	Sidney Green
+2122	Kyrie Irving
+2123	Derrick Williams
+2125	Enes Kanter
+2126	Tristan Thompson
+2128	Jonas Valanciunas
+2129	Jan Vesely
+2131	Bismack Biyombo
+2132	Brandon Knight
+2134	Kemba Walker
+2135	Jimmer Fredette
+2137	Klay Thompson
+2138	Alec Burks
+2140	Markieff Morris
+2141	Marcus Morris
+2143	Kawhi Leonard
+2144	Nikola Vucevic
+2146	Iman Shumpert
+2147	Chris Singleton
+2147	James Singleton
+2149	Tobias Harris
+2150	Donatas Motiejunas
+2152	Nolan Smith
+2153	Kenneth Faried
+2155	Walt Hazzard
+2156	Riggie Jackson
+2158	Marshon Brooks
+2159	Jordan Hamilton
+2161	Jajuan Johnson
+2162	Norris Cole
+2164	Cory Joseph
+2165	Jimmy Butler
+2167	Bojan Bogdanovic
+2168	Justin Harper
+2170	Kyle Singler
+2171	Shelvin Mack
+2173	Tyler Honeycutt
+2174	Jordan Williams
+2176	Trey Thompkins
+2177	Chandler Parsons
+2179	Jeremy Tyler
+2180	Jon Leuer
+2182	Darius Morris
+2185	Malcolm Lee
+2186	Charles Jenkins
+2188	Josh Harrellson
+2189	Andrew Goudelock
+2191	Travis Leslie
+2194	Josh Selby
+2195	Lavoy Allen
+2198	Vernon Macklin
+2200	DeAndre Liggins
+2203	ETwaun Moore
+2210	Isaiah Thomas
+2212	David Stern
+2215	Adrian Dantley
+2219	Michael Davis
+2219	William Jones
+2219	Robert Williams
+2219	John Brown
+2219	Richard Johnson
+2219	Michael Davis
+2219	John Brown
+2219	Richard Johnson
+2219	David Miller
+2219	William Jones
+2219	Michael Davis
+2219	James Smith
+2219	John Brown
+2219	James Smith
+2219	Robert Williams
+2219	James Smith
+2219	Michael Davis
+2219	Richard Johnson
+2219	Michael Davis
+2219	John Brown
+2219	James Smith
+2219	John Brown
+2219	Michael Davis
+2219	Robert Williams
+2219	James Smith
+2219	Richard Johnson
+2219	Richard Johnson
+2219	John Brown
+2219	James Smith
+2219	Robert Williams
+2219	William Jones
+2219	John Brown
+2219	David Miller
+2219	Michael Davis
+2219	William Jones
+2219	James Smith
+2219	David Miller
+2219	Richard Johnson
+2219	John Brown
+2220	John Brown
+2220	Richard Johnson
+2220	William Jones
+2220	Robert Williams
+2220	James Smith
+2220	David Miller
+2220	Michael Davis
+2220	William Jones
+2220	Michael Davis
+2220	James Smith
+2220	David Miller
+2220	Robert Williams
+2220	William Jones
+2220	James Smith
+2220	John Brown
+2220	James Smith
+2220	David Miller
+2220	Robert Williams
+2220	Richard Johnson
+2220	William Jones
+2220	David Miller
+2220	Michael Davis
+2220	Robert Williams
+2220	James Smith
+2220	David Miller
+2220	Robert Williams
+2220	Robert Williams
+2220	David Miller
+2220	Michael Davis
+2220	David Miller
+2220	James Smith
+2220	Richard Johnson
+2220	David Miller
+2220	Michael Davis
+2220	Robert Williams
+2221	James Smith
+2221	William Jones
+2221	Richard Johnson
+2221	James Smith
+2221	David Miller
+2221	Richard Johnson
+2221	John Brown
+2221	Robert Williams
+2221	John Brown
+2221	Michael Davis
+2221	Robert Williams
+2221	William Jones
+2221	Michael Davis
+2221	Richard Johnson
+2221	David Miller
+2221	John Brown
+2221	William Jones
+2221	Richard Johnson
+2221	Michael Davis
+2221	Robert Williams
+2221	Michael Davis
+2221	Richard Johnson
+2221	John Brown
+2221	Michael Davis
+2299	Henry Bibby
+2300	Doug Collins
+2301	70s Julius Erving
+2302	George McGinnis
+2303	Steve Mix
+2304	Harvey Catchings
+2305	Joe Bryant
+2328	James Long
+2336	Horace Grant
+2337	Magic Johnson
+2337	Magic Johnson
+2338	Doug Christie
+2339	John Salley
+2342	Young Grant Hill
+2343	Young Vince Carter
+2344	Young Wilt Chamberlain
+2345	Young Jason Kidd
+2346	Young Buck Williams
+2347	Young Tracy McGrady
+2348	Afro Ben Wallace
+2349	Kareem Abdul-Jabbar Old
+2350	AK47
+2351	Kobe Bryant Afro Darker
+2352	Young Pete Maravich
+2354	Derek Harper
+2395	Ivan Johnson
+2396	Greg Stiemsma
+2397	Jeremy Pargo
+2398	Josh Davis
+2399	Terrel Harris
+2400	Gustavo Ayon
+2401	Carldell Johnson
+2402	Donald Sloan
+2403	Mychel Thompson
+2404	Julyan Stone
+2405	Chris Wright
+2406	Mickell Gladness
+2407	Jerome Jordan
+2408	Ryan Reid
+2409	Malcolm Thomas
+2410	Greg Smith
+2411	Cory Higgins
+2412	Justin Bieber
+2412	Justin Bieber
+2413	Scooter Braun
+2414	Ryan Good
+2415	Alfredo Flores
+2416	Kenny Hamilton
+2418	Snoop Dogg
+2418	Snoop Dogg
+2419	Wale
+2419	Wale
+2420	Vinny Guadagnino
+2420	Vinny Guadagnino
+2421	Mac Miller
+2421	Mac Miller
+2422	Bow Wow
+2422	Bow Wow
+2426	Sean Kingston
+2426	Sean Kingston
+2427	Pauly D
+2427	Pauly D
+2428	Jesse Willaims
+2428	Jesse Willaims
+2429	JB Smoove
+2429	JB Smoove
+2430	Brian Baumgartner
+2430	Brian Baumgartner
+2431	Chamillionaire
+2433	Meek Mill
+2433	Meek Mill
+2435	Bill Russell Old
+2436	Willie Taylor
+2437	Jerry West Old
+2438	Jay Z
+2439	Raja Bell
+2444	Anthony Davis
+2444	Anthony Davis
+2445	Michael Kidd-Gilchrist
+2446	Bradley Beal
+2447	Dion Waiters
+2448	Thomas Robinson
+2449	Damian Lillard
+2450	Harrison Barnes
+2451	Terrence Ross
+2452	Andre Drummond
+2453	Austin Rivers
+2454	Meyers Leonard
+2455	Jeremy Lamb
+2456	Kendall Marshall
+2457	John Henson
+2458	Maurice Harkless
+2459	Royce White
+2460	Tyler Zeller
+2461	Terrence Jones
+2462	Andrew Nicholson
+2463	Evan Fournier
+2464	Jared Sullinger
+2465	Fab Melo
+2466	John Jenkins
+2467	Jared Cunningham
+2468	Tony Wroten
+2469	Miles Plumlee
+2470	Arnett Moultrie
+2471	Perry Jones
+2472	Marquis Teague
+2473	Festus Ezeli
+2474	Jeff Taylor
+2475	Tomas Satoransky
+2476	Bernard James
+2477	Jae Crowder
+2478	Draymond Green
+2479	Orlando Johnson
+2480	Quincy Acy
+2481	Quincy Miller
+2482	Khris Middleton
+2483	Will Barton
+2484	Tyshawn Taylor
+2485	Doron Lamb
+2486	Mike Scott
+2487	Kim English
+2488	Justin Hamilton
+2489	Darius Miller
+2490	Kevin Murphy
+2491	Kostas Papanikolaou
+2492	Kyle O'Quinn
+2493	Izzet Turkyilmaz 
+2494	Kris Joseph
+2495	Ognjen Kuzmic
+2496	Furkan Aldemir
+2497	Tornike Shengelia
+2498	Darius Johnson-Odom
+2499	Tomislav Zubcic
+2500	Ilkan Karaman
+2501	Robbie Hummel
+2502	Marcus Denmon
+2503	Robert Sacre
+2504	Vyacheslav Kravtsov
+2507	Victor Claver
+2508	Joel Freeland
+2999	Adam Hanga
+2999	Davis Bertans
+2999	Chukwudiebere Maduabum
+2999	Bojan Bogdanovic
+2999	Keith Benson
+2999	Tanguy Ngombo
+2999	Milan Macvan
+2999	Jon Diebler
+2999	Ater Majok
+4000	Pablo Prigioni
+4001	Mirza Teletovic
+4002	Alexey Shved
+4003	Rick Fox
+4004	Dionte Christmas
+4005	Maalik Wayns 
+4006	John Surna
+4008	Dequan Jones 
+4009	Kent Bazemore
+4010	Seth Tarver
+4011	Luke Nevill
+4012	Wesley Witherspoon
+4013	Chris Copeland
+4014	Scott Machado
+4015	Ronald Murray
+4016	PJ Tucker
+4017	Luke Zeller
+4018	Alan Anderson
+4019	Brian Roberts
+4020	Will Conroy
+4021	Walker Russell
+4022	Diante Garrett
+4023	Ben Hansbrough
+4024	Lance Thomas
+4025	Devin Searcy
+4026	Kevin Jones 
+8001	Nando De Colo
+8002	Mirza Teletovic 
+8004	Vyacheslav Kravtsov
+8025	Brian Butch
+8820	80s Charles Barkley
+8821	Reggie Miller
+8822	Rik Smits
+8823	Aryvdas Sabonis
+8824	Damon Stoudamire
+8825	Bonzi Wells
+8826	Dale Davis
+8827	Derrick McKey
+8828	Travis Best
+8829	Austin Croshere
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535	
+65535

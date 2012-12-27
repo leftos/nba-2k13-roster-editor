@@ -19,6 +19,18 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
 
         public string Name { get; set; }
 
+        public int PlaybookID
+        {
+            get { return _playbookID; }
+            set
+            {
+                _playbookID = value;
+                OnPropertyChanged("PlaybookID");
+            }
+        }
+
+        private int _playbookID;
+
         public int PlNum
         {
             get { return _plNum; }

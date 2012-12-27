@@ -1,5 +1,17 @@
 ﻿Version History
 
+		v0.15
+			- Added Playbook editing (uses dumb-pasting all the time for now)
+			- Added PlaybookID to new Staff tab (uses dumb-pasting all of the time for now)
+			- Added HeadCoachOf (read-only) in Staff tab
+			- Added PlaybookID (read-only) in Teams tab
+			- Columns that are read-only now have an asterisk (*) in their header
+			- Added "Reset Current Teams' Playbooks" in Teams tab which allows you to automatically set the Playbooks for the 30 current teams to the default ones (after for example a Head Coach change in Association)
+			- Dumb Pasting can now be enabled for all tabs by setting the appropriate option in the Options tab to "True"
+			- Tool will now copy CFNames.txt to Documents folder (and use it by default on new installations, or if you click Reset in the Options tab) - thanks to DukeW74 and Medevenx
+
+			- Known Issue: Playbooks and Staff tabs will only work with "PC Ret" and Custom profiles, haven't found the offsets for 360 retail or PC November 10 yet
+
 		v0.14.1.1
 			- Fixed Free Agents pool for Custom 360 profile
 
