@@ -1,5 +1,21 @@
 ﻿Version History
 
+		v0.15.1.2
+			- Fixed bug which made the tool not paste last column's data when dumb-pasting
+
+		v0.15.1.1
+			- Fixed crash when opening rosters not compatible with the Staff tab yet
+
+		v0.15.1.0
+			- Added Playbooks tab compatibility for "PC Nov 10" profile
+			- Fixed crash when opening some rosters
+
+		v0.15.0.2
+			- Fixed bug with copy-pasting in Playbooks and Staff tab when dumb-pasting was turned off
+
+		v0.15.0.1
+			- Fixed crash when loading rosters if LastStaffID was too small
+
 		v0.15
 			- Added Playbook editing (uses dumb-pasting all the time for now)
 			- Added PlaybookID to new Staff tab (uses dumb-pasting all of the time for now)

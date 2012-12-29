@@ -440,7 +440,7 @@ namespace NBA_2K13_Roster_Editor
             optionsList.Add(new Option {Setting = "LastPlayerID", Value = GetRegistrySetting("LastPlayerID", 1514)});
             optionsList.Add(new Option {Setting = "LastTeamID", Value = GetRegistrySetting("LastTeamID", 90)});
             optionsList.Add(new Option { Setting = "LastJerseyID", Value = GetRegistrySetting("LastJerseyID", 425) });
-            optionsList.Add(new Option { Setting = "LastStaffID", Value = GetRegistrySetting("LastStaffID", 700) });
+            optionsList.Add(new Option { Setting = "LastStaffID", Value = GetRegistrySetting("LastStaffID", 725) });
             optionsList.Add(new Option { Setting = "LastPlaybookID", Value = GetRegistrySetting("LastPlaybookID", 69) });
             optionsList.Add(new Option {Setting = "NamesFile", Value = GetRegistrySetting("NamesFile", "CFnames.txt")});
             optionsList.Add(new Option { Setting = "ChooseNameBy", Value = GetRegistrySetting("ChooseNameBy", "CFID") });
@@ -471,8 +471,8 @@ namespace NBA_2K13_Roster_Editor
                 dgPlayers.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                 dgTeams.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                 dgJerseys.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-                dgPlaybooks.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
-                dgStaff.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
+                dgPlaybooks.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
+                dgStaff.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
             }
 
             PopulateNamesDictionary();
@@ -768,7 +768,23 @@ namespace NBA_2K13_Roster_Editor
                     br.MoveStreamPosition(8, 0);*/
                 te.StHeadCoach = Convert.ToInt16(NonByteAlignedBinaryReader.ByteArrayToBitString(br.ReadNonByteAlignedBytes(2)), 2);
 
-                staffList[te.StHeadCoach].HeadCoachOf = te.ID;
+                try
+                {
+                    staffList.Single(se => se.ID == te.StHeadCoach).HeadCoachOf = te.ID;
+                }
+                catch (InvalidOperationException)
+                {
+                    SetRegistrySetting("LastStaffID", te.StHeadCoach);
+                    ReloadOptions();
+                    PopulateStaffTab();
+                    try
+                    {
+                        staffList.Single(se => se.ID == te.StHeadCoach).HeadCoachOf = te.ID;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                    }
+                }
 
                 MoveStreamToCurrentTeamRoster(i);
                 br.MoveStreamPosition(170, 0);
@@ -784,7 +800,14 @@ namespace NBA_2K13_Roster_Editor
                     SetRegistrySetting("LastStaffID", te.StHeadCoach);
                     ReloadOptions();
                     PopulateStaffTab();
-                    te.PlaybookID = staffList.Single(se => se.ID == te.StHeadCoach).PlaybookID;
+                    try
+                    {
+                        te.PlaybookID = staffList.Single(se => se.ID == te.StHeadCoach).PlaybookID;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        te.PlaybookID = -1;
+                    }
                 }
             }
 
@@ -867,6 +890,11 @@ namespace NBA_2K13_Roster_Editor
             {
                 br.BaseStream.Position = Convert.ToInt64(GetOption("CustomPlaybookOffset"));
                 br.InBytePosition = Convert.ToInt32(GetOption("CustomPlaybookOffsetBit"));
+            }
+            else if (mode == Mode.PCNov10)
+            {
+                br.BaseStream.Position = 1101243;
+                br.InBytePosition = 7;
             }
 
             MoveStreamForSaveType();
@@ -1959,7 +1987,14 @@ namespace NBA_2K13_Roster_Editor
                 StaffEntry se = new StaffEntry();
                 se.ID = i;
 
-                se.PlaybookID = Convert.ToInt32(br.ReadNonByteAlignedBits(7), 2);
+                try
+                {
+                    se.PlaybookID = Convert.ToInt32(br.ReadNonByteAlignedBits(7), 2);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    se.PlaybookID = -1;
+                }
 
                 staffList.Add(se);
             }
@@ -2188,7 +2223,7 @@ namespace NBA_2K13_Roster_Editor
 
                 int columnDataIndex = 0;
                 for (int j = minColumnDisplayIndex;
-                     j < maxColumnDisplayIndex && columnDataIndex < rowData[rowDataIndex].Length;
+                     j <= maxColumnDisplayIndex && columnDataIndex < rowData[rowDataIndex].Length;
                      j++, columnDataIndex++)
                 {
                     DataGridColumn column = s.ColumnFromDisplayIndex(j);
