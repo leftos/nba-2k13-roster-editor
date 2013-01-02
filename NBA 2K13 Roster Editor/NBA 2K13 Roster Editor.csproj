@@ -37,10 +37,12 @@
     <ApplicationIcon>NLSC.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LeftosCommonLibrary">
+    <Reference Include="LeftosCommonLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>.\LeftosCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="LumenWorks.Framework.IO">
+    <Reference Include="LumenWorks.Framework.IO, Version=3.8.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>.\LumenWorks.Framework.IO.dll</HintPath>
     </Reference>
     <Reference Include="System" />

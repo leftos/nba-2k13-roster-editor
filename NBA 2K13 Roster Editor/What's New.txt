@@ -1,5 +1,11 @@
 ﻿Version History
 
+		v0.15.1.4
+			- Fixed crash when the user clicked Open and the last used directory no longer existed
+
+		v0.15.1.3
+			- Fixed bug which crashed the tool when a pasted value was out of range
+
 		v0.15.1.2
 			- Fixed bug which made the tool not paste last column's data when dumb-pasting
 

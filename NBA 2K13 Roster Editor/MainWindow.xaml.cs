@@ -501,7 +501,15 @@ namespace NBA_2K13_Roster_Editor
             ofd.Filter = "All compatible NBA 2K13 files (*.ROS; *.FXG; *.CMG)|*.ROS;*.FXG;*.CMG|" + "Roster files (*.ROS)|*.ROS|" +
                          "Association files (*.FXG)|*.FXG|" + "MyCareer files (*.CMG)|*.CMG|" + "All files (*.*)|*.*";
             ofd.DefaultExt = ".ROS";
-            ofd.ShowDialog();
+            try
+            {
+                ofd.ShowDialog();
+            }
+            catch
+            {
+                ofd.InitialDirectory = null;
+                ofd.ShowDialog();
+            }
 
             if (ofd.FileName == "")
                 return;
