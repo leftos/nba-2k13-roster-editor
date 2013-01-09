@@ -1,4 +1,5 @@
-0.15.1.3
+0.16.1.0
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-		v0.15 added Playbooks support, newer versions may come often for a few days as I'm ironing out bugs and increasing compatibility.
+			- Fixed various crashes when opening incompatible rosters
+			- When selecting a roster spot in the Teams tab or a TeamID/AssignedTo column in the Players tab, the corresponding name will be shown in the status bar

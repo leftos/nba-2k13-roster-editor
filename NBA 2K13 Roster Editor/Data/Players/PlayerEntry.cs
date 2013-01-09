@@ -68,7 +68,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             Tendencies = new ObservableCollection<byte>();
             HotSpots = new ObservableCollection<byte>();
             HotZones = new ObservableCollection<HotZoneValue>();
-            SeasonStats = new ObservableCollection<int>();
+            SeasonStats = new ObservableCollection<short>();
         }
 
         public string Name
@@ -483,7 +483,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        public ObservableCollection<int> SeasonStats
+        public ObservableCollection<short> SeasonStats
         {
             get { return _seasonStats; }
             set
@@ -493,9 +493,9 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private ObservableCollection<int> _seasonStats;
+        private ObservableCollection<short> _seasonStats;
 
-        public int PlayoffStats
+        public short PlayoffStats
         {
             get { return _playoffStats; }
             set
@@ -505,7 +505,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private int _playoffStats;
+        private short _playoffStats;
 
         public CAPHairType CAPHairType
         {

@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClipboardHelper.cs" />
+    <Compile Include="Data\PlayerStats\PlayerStatsEntry.cs" />
     <Compile Include="Data\Jerseys\JerseyName.cs" />
     <Compile Include="Data\Jerseys\NeckType.cs" />
     <Compile Include="Data\Jerseys\SockColor.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Data\Players\Parameters\HotZoneName.cs" />
     <Compile Include="Data\Players\Parameters\PlayType.cs" />
     <Compile Include="Data\Staff\StaffEntry.cs" />
+    <Compile Include="Data\TeamStats\TeamStatsEntry.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="SearchWindow.xaml.cs">
       <DependentUpon>SearchWindow.xaml</DependentUpon>

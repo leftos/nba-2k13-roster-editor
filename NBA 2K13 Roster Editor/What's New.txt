@@ -1,5 +1,20 @@
 ﻿Version History
 
+		v0.16.1.1
+			- Fixed smart pasting for the Free Agents row in the Teams tab not updating players after R18
+
+		v0.16.1
+			- Fixed various crashes when opening incompatible rosters
+			- When selecting a roster spot in the Teams tab or a TeamID/AssignedTo column in the Players tab, the corresponding name will be shown in the status bar
+
+		v0.16
+			- Added Team Stats
+			- Added Run Plays for Staff
+			- Fixed dumb pasting not updating the last row
+
+		v0.15.2
+			- Added smart pasting by any column in the Players table (use DoPlayersPasteBy option)
+
 		v0.15.1.4
 			- Fixed crash when the user clicked Open and the last used directory no longer existed
 

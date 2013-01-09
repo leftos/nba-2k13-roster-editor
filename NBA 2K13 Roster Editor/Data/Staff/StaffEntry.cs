@@ -11,7 +11,7 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
     {
         public StaffEntry()
         {
-            HeadCoachOf = -1;
+            HeadCoachOf = "-1";
         }
 
         public int ID
@@ -26,6 +26,18 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
 
         private int _iD;
 
+        public int CPRunPlays
+        {
+            get { return _cPRunPlays; }
+            set
+            {
+                _cPRunPlays = value;
+                OnPropertyChanged("CPRunPlays");
+            }
+        }
+
+        private int _cPRunPlays;
+
         public int PlaybookID
         {
             get { return _playbookID; }
@@ -36,7 +48,7 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
             }
         }
 
-        public int HeadCoachOf
+        public string HeadCoachOf
         {
             get { return _headCoachOf; }
             set
@@ -46,7 +58,7 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
             }
         }
 
-        private int _headCoachOf;
+        private string _headCoachOf;
 
 
         private int _playbookID;

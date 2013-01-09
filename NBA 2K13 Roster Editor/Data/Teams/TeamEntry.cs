@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -18,6 +19,54 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
         public int ID { get; set; }
 
         public string Name { get; set; }
+
+        public Int16 CurSeaSta
+        {
+            get { return _curSeaSta; }
+            set
+            {
+                _curSeaSta = value;
+                OnPropertyChanged("CurSeaSta");
+            }
+        }
+
+        private Int16 _curSeaSta;
+
+        public Int16 CurPlaSta
+        {
+            get { return _curPlaSta; }
+            set
+            {
+                _curPlaSta = value;
+                OnPropertyChanged("CurPlaSta");
+            }
+        }
+
+        private Int16 _curPlaSta;
+
+        public Int16 PrvSeaSta
+        {
+            get { return _prvSeaSta; }
+            set
+            {
+                _prvSeaSta = value;
+                OnPropertyChanged("PrvSeaSta");
+            }
+        }
+
+        private Int16 _prvSeaSta;
+
+        public Int16 PrvPlaSta
+        {
+            get { return _prvPlaSta; }
+            set
+            {
+                _prvPlaSta = value;
+                OnPropertyChanged("PrvPlaSta");
+            }
+        }
+
+        private Int16 _prvPlaSta;
 
         public int PlaybookID
         {
