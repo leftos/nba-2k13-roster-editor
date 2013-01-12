@@ -1,5 +1,9 @@
-0.16.1.0
+0.16.1.1
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
+		v0.16.1.1
+			- Fixed smart pasting for the Free Agents row in the Teams tab not updating players after R18
+
+		v0.16.1
 			- Fixed various crashes when opening incompatible rosters
 			- When selecting a roster spot in the Teams tab or a TeamID/AssignedTo column in the Players tab, the corresponding name will be shown in the status bar

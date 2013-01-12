@@ -1,5 +1,12 @@
 ﻿Version History
 
+		v0.16.1.3
+			- Fixed head coach saving for all save types
+			- Optimized file opening speed
+
+		v0.16.1.2
+			- Added missing Custom Team Stats Offset options
+
 		v0.16.1.1
 			- Fixed smart pasting for the Free Agents row in the Teams tab not updating players after R18
 
