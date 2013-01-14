@@ -263,7 +263,6 @@
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
                             <DataGridTextColumn Header="HeadCoachOf*" Binding="{Binding HeadCoachOf, Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="PlaybookID" Binding="{Binding PlaybookID, Mode=TwoWay}" />
-                            <DataGridTextColumn Header="CPRunPlays" Binding="{Binding CPRunPlays, Mode=TwoWay}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnSaveStaff" Content="Save Staff" Margin="0,10,10,0"

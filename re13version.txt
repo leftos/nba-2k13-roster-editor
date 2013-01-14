@@ -1,9 +1,12 @@
-0.16.1.1
+0.16.1.4
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-		v0.16.1.1
-			- Fixed smart pasting for the Free Agents row in the Teams tab not updating players after R18
+		v0.16.1.4
+			- Fixed Custom 360 profile re-enabling "Recalculate CRC on Save"; crc needs to be calculated only for PC saves
 
-		v0.16.1
-			- Fixed various crashes when opening incompatible rosters
-			- When selecting a roster spot in the Teams tab or a TeamID/AssignedTo column in the Players tab, the corresponding name will be shown in the status bar
+		v0.16.1.3
+			- Fixed head coach saving for all save types
+			- Optimized file opening speed
+
+		v0.16.1.2
+			- Added missing Custom Team Stats Offset options

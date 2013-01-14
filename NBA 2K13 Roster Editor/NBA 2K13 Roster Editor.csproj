@@ -74,6 +74,7 @@
     <Compile Include="Data\Players\Parameters\HairColor.cs" />
     <Compile Include="Data\Players\Parameters\HotZoneName.cs" />
     <Compile Include="Data\Players\Parameters\PlayType.cs" />
+    <Compile Include="Data\Staff\Parameters\CPSetting.cs" />
     <Compile Include="Data\Staff\StaffEntry.cs" />
     <Compile Include="Data\TeamStats\TeamStatsEntry.cs" />
     <Compile Include="Properties\Annotations.cs" />

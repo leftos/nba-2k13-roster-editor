@@ -155,7 +155,7 @@ namespace NBA_2K13_Roster_Editor
 
         public void MoveStreamToPlayerStats(int i)
         {
-            long firstPlayerStatsOffset = 1475628;
+            long firstPlayerStatsOffset = 1475604;
             int firstPlayerStatsOffsetBit = 0;
 
             BaseStream.Position = firstPlayerStatsOffset;
@@ -170,6 +170,30 @@ namespace NBA_2K13_Roster_Editor
             MoveStreamForSaveType();
 
             MoveStreamPosition(42*i, 0*i);
+        }
+
+        public void MoveStreamRelativeToPlayerStatsEntry(int i, int bytes, int bits)
+        {
+            MoveStreamToPlayerStats(i);
+            if ((InBytePosition + bits >= 8))
+            {
+                BaseStream.Position += (InBytePosition + bits) / 8;
+            }
+            if (InBytePosition + bits >= 0)
+            {
+                InBytePosition = (InBytePosition + bits) % 8;
+            }
+            else
+            {
+                BaseStream.Position += ((InBytePosition + bits) / 8) - 1;
+                InBytePosition = ((InBytePosition + bits) % 8) + 8;
+            }
+            BaseStream.Position += bytes;
+        }
+
+        public T ReadUInt16AndRaise<T>(int bits, int power)
+        {
+            return (T) Convert.ChangeType(ReadUInt16(bits)*Math.Pow(2, power), typeof(T));
         }
 
         public void MoveStreamToStaffPlaybookID(int i)

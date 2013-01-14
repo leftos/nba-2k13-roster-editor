@@ -25,6 +25,7 @@ using NBA_2K13_Roster_Editor.Data.PlayerStats;
 using NBA_2K13_Roster_Editor.Data.Players;
 using NBA_2K13_Roster_Editor.Data.Players.Parameters;
 using NBA_2K13_Roster_Editor.Data.Staff;
+using NBA_2K13_Roster_Editor.Data.Staff.Parameters;
 using NBA_2K13_Roster_Editor.Data.TeamStats;
 using NBA_2K13_Roster_Editor.Data.Teams;
 using NonByteAlignedBinaryRW;
@@ -223,8 +224,9 @@ namespace NBA_2K13_Roster_Editor
 
             PreparePlaybooksDataGrid();
 
+            PrepareStaffDataGrid();
+
             jerseysList = new ObservableCollection<JerseyEntry>();
-            dgJerseys.ItemsSource = jerseysList;
             playersList = new ObservableCollection<PlayerEntry>();
             teamsList = new ObservableCollection<TeamEntry>();
             staffList = new ObservableCollection<StaffEntry>();
@@ -349,6 +351,23 @@ namespace NBA_2K13_Roster_Editor
         private ObservableCollection<JerseyEntry> jerseysList { get; set; }
         private ObservableCollection<PlaybookEntry> playbooksList { get; set; }
         private ObservableCollection<StaffEntry> staffList { get; set; }
+
+        private void PrepareStaffDataGrid()
+        {
+            for (int i = 0; i < 21; i++)
+            {
+                dgStaff.Columns.Add(new DataGridTextColumn
+                {
+                    Header = string.Format("CP{0}", Enum.GetName(typeof(CPSetting), i)),
+                    Binding =
+                        new Binding
+                        {
+                            Path = new PropertyPath(string.Format("CoachingProfile[{0}]", i)),
+                            Mode = BindingMode.TwoWay
+                        }
+                });
+            }
+        }
 
         private void PreparePlayersDataGrid()
         {
@@ -581,7 +600,11 @@ namespace NBA_2K13_Roster_Editor
                                 Value = GetRegistrySetting("CustomStaffPlaybookIDOffsetBit", 6)
                             });
             optionsList.Add(new Option {Setting = "CustomTeamStatsOffset", Value = GetRegistrySetting("CustomTeamStatsOffset", 1434425)});
-            optionsList.Add(new Option {Setting = "CustomTeamStatsOffsetBit", Value = GetRegistrySetting("CustomTeamStatsOffsetBit", 5)});
+            optionsList.Add(new Option { Setting = "CustomTeamStatsOffsetBit", Value = GetRegistrySetting("CustomTeamStatsOffsetBit", 5) });
+#if DEBUG
+            optionsList.Add(new Option { Setting = "CustomPlayerStatsOffset", Value = GetRegistrySetting("CustomPlayerStatsOffset", 1475604) });
+            optionsList.Add(new Option { Setting = "CustomPlayerStatsOffsetBit", Value = GetRegistrySetting("CustomPlayerStatsOffsetBit", 0) });
+#endif
 
             optionsList.Add(new Option {Setting = "DumbPasting", Value = GetRegistrySetting("DumbPasting", "False")});
 
@@ -771,7 +794,7 @@ namespace NBA_2K13_Roster_Editor
                     pe.HotSpots = ReadHotSpots(i, brOpen);
                     pe.HotZones = ReadHotZones(i, brOpen);
                     pe.AssignedTo = FindPlayerInTeams(i);
-                    pe.IsFA = teamsList.Single(te => te.ID == 999).RosterSpots.Contains(pe.ID);
+                    pe.IsFA = teamsList.Count > 0 ? teamsList.Single(te => te.ID == 999).RosterSpots.Contains(pe.ID) : false;
                     pe.IsHidden = (pe.AssignedTo == -1 && !pe.IsFA);
                     playersList.Add(pe);
                 }
@@ -881,6 +904,12 @@ namespace NBA_2K13_Roster_Editor
 
                     brOpen.MoveStreamToCurrentTeamRoster(i);
                     PopulateRosterRow(18, ref te, brOpen);
+                    if (te.RosterSpots.Any(rs => rs < -1))
+                    {
+                        teamsList.Clear();
+                        dgTeams.ItemsSource = null;
+                        throw (new Exception("Invalid Teams Offset, found player with ID lower than -1"));
+                    }
 
                     //
                     brOpen.MoveStreamToCurrentTeamRoster(i);
@@ -2013,7 +2042,17 @@ namespace NBA_2K13_Roster_Editor
                     dgTeamStats.ItemsSource = null;
                 }
                 expCount = 0;
-                //PopulatePlayerStatsTab();
+
+                #if DEBUG
+                //try
+                //{
+                    PopulatePlayerStatsTab();
+                //}
+                //catch
+                //{
+                    //dgPlayerStats.ItemsSource = null;
+                //}
+                #endif
             }
         }
 
@@ -2100,32 +2139,26 @@ namespace NBA_2K13_Roster_Editor
             RosterReader brOpen;
             using (brOpen = new RosterReader(new MemoryStream(File.ReadAllBytes(currentFile))))
             {
-                brOpen.MoveStreamToPlayerStats(0);
                 for (int i = 0; i < 200; i++)
                 {
                     PlayerStatsEntry pse = new PlayerStatsEntry();
                     pse.ID = i;
-                    /*
-                    pse.TeamSta = ReadInt16(16);
-                    pse.TeamFin = ReadInt16(16);
-                    pse.GP = ReadUInt16(7);
-                    pse.GS = ReadUInt16(7);
-                    pse.MINS = ReadUInt16(14);
-                    */
-                    pse.PTS = brOpen.ReadUInt16(16);
-                    pse.DREB = brOpen.ReadUInt16(16);
-                    pse.OREB = brOpen.ReadUInt16(10);
-                    pse.AST = brOpen.ReadUInt16(11);
-                    pse.STL = brOpen.ReadUInt16(11);
-                    pse.BLK = brOpen.ReadUInt16(11);
-                    pse.TOS = brOpen.ReadUInt16(15);
-                    pse.FOUL = brOpen.ReadUInt16(10);
-                    pse.FGM = brOpen.ReadUInt16(12);
-                    pse.FGA = brOpen.ReadUInt16(13);
-                    pse.TPM = brOpen.ReadUInt16(10);
-                    pse.TPA = brOpen.ReadUInt16(11);
-                    pse.FTM = brOpen.ReadUInt16(11);
-                    pse.FTA = brOpen.ReadUInt16(11);
+
+                    brOpen.MoveStreamRelativeToPlayerStatsEntry(i, 0, 1);
+                    pse.GP = brOpen.ReadUInt16(7);
+
+                    brOpen.MoveStreamRelativeToPlayerStatsEntry(i, 0, 0);
+                    var temp = brOpen.ReadUInt16(1);
+                    brOpen.MoveStreamRelativeToPlayerStatsEntry(i, 1, 2);
+                    temp += brOpen.ReadUInt16AndRaise<UInt16>(6, 1);
+                    pse.GS = temp;
+
+                    brOpen.MoveStreamRelativeToPlayerStatsEntry(i, 24, 0);
+                    pse.PTS = brOpen.ReadUInt16();
+
+                    brOpen.MoveStreamRelativeToPlayerStatsEntry(i, 20, 0);
+                    pse.DREB = brOpen.ReadUInt16();
+
                     for (int j = 0; j < expCount; j++)
                     {
                         pse.Experimental.Add(brOpen.ReadBigEndianUInt16());
@@ -2167,15 +2200,18 @@ namespace NBA_2K13_Roster_Editor
                     }
 
                     brOpen.MoveStreamToStaffPlaybookID(i);
-                    brOpen.MoveStreamPosition(-18, 0);
-                    se.CPRunPlays = brOpen.ReadInt32(8);
+                    brOpen.MoveStreamPosition(-24, 0);
+                    for (int j = 0; j < 21; j++)
+                    {
+                        se.CoachingProfile.Add(brOpen.ReadNonByteAlignedByte());
+                    }
 
                     try
                     {
                         se.HeadCoachOf =
                             teamsList.Where(te => te.StHeadCoach == se.ID)
-                                     .Select(te => te.ID.ToString())
-                                     .Aggregate((i1, i2) => i1 + ", " + i2);
+                                        .Select(te => te.ID.ToString())
+                                        .Aggregate((i1, i2) => i1 + ", " + i2);
                     }
                     catch (InvalidOperationException)
                     {
@@ -3243,8 +3279,10 @@ namespace NBA_2K13_Roster_Editor
             Left = GetRegistrySetting("Left", (int) Left);
             Top = GetRegistrySetting("Top", (int) Top);
 
+            #if !DEBUG
             tabPlayerStats.Visibility = Visibility.Collapsed;
-
+            #endif
+            
             var w = new BackgroundWorker();
             w.DoWork += w_DoWork;
             w.RunWorkerAsync();
@@ -3367,7 +3405,7 @@ namespace NBA_2K13_Roster_Editor
         {
             SetRegistrySetting("Mode", "CustomX360");
             mode = Mode.CustomX360;
-            chkRecalculateCRC.IsChecked = true;
+            chkRecalculateCRC.IsChecked = false;
 
             try
             {
@@ -3440,10 +3478,13 @@ namespace NBA_2K13_Roster_Editor
                         SyncBRwithBW(ref brSave, bw);
 
                         brSave.MoveStreamToStaffPlaybookID(i);
-                        brSave.MoveStreamPosition(-18, 0);
+                        brSave.MoveStreamPosition(-24, 0);
                         SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(se.CPRunPlays, 2).PadLeft(8, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
+                        for (int j = 0; j < 21; j++)
+                        {
+                            bw.WriteNonByteAlignedBits(Convert.ToString(se.CoachingProfile[j], 2).PadLeft(8, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                        }
                     }
                 }
             }

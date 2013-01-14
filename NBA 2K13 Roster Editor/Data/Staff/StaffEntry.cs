@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
         public StaffEntry()
         {
             HeadCoachOf = "-1";
+            CoachingProfile = new ObservableCollection<byte>();
         }
 
         public int ID
@@ -26,18 +28,18 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
 
         private int _iD;
 
-        public int CPRunPlays
+        public ObservableCollection<byte> CoachingProfile
         {
-            get { return _cPRunPlays; }
+            get { return _coachingProfile; }
             set
             {
-                _cPRunPlays = value;
-                OnPropertyChanged("CPRunPlays");
+                _coachingProfile = value;
+                OnPropertyChanged("CoachingProfile");
             }
         }
 
-        private int _cPRunPlays;
-
+        private ObservableCollection<byte> _coachingProfile;
+        
         public int PlaybookID
         {
             get { return _playbookID; }
