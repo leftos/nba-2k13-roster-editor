@@ -1,5 +1,11 @@
 ﻿Version History
 
+		v0.18
+			- Added Find Offset (i.e. Find That Hex) functionality
+			- Added searching text
+			- Enumerable properties (such as Signature Skills) can now be properly found and replaced
+			- Last used Find & Replace properties will be remembered when re-opening dialog
+
 		v0.17
 			- Added full Coaching Profile editing in Staff tab
 

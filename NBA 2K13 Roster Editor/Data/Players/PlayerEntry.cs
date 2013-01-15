@@ -39,7 +39,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         private ObservableCollection<byte> _hotSpots;
         private ObservableCollection<HotZoneValue> _hotZones;
         private int _id;
-        private byte _jerseyNumber;
+        private byte _number;
         private MuscleTone _muscleTone;
         private string _name;
         private int _plType;
@@ -517,12 +517,12 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        public byte JerseyNumber
+        public byte Number
         {
-            get { return _jerseyNumber; }
+            get { return _number; }
             set
             {
-                _jerseyNumber = value;
+                _number = value;
                 OnPropertyChanged("JerseyNumber");
             }
         }

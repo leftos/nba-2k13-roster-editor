@@ -13,7 +13,7 @@ namespace NBA_2K13_Roster_Editor
     /// </summary>
     public partial class SearchWindow : Window
     {
-        private readonly List<string> NumericOptions = new List<string> {"<", "<=", "=", ">=", ">"};
+        private readonly List<string> NumericOptions = new List<string> {"<", "<=", "=", ">=", ">", "Contains(Text)"};
         private readonly string folder = MainWindow.DocsPath + @"\Search Filters";
         public List<string> FindFilters = new List<string>();
         public List<string> ReplaceFilters = new List<string>();
@@ -42,6 +42,7 @@ namespace NBA_2K13_Roster_Editor
             if (cmbFindPar.SelectedIndex == -1 || cmbFindOp.SelectedIndex == -1 || String.IsNullOrWhiteSpace(txtFindVal.Text))
                 return;
 
+            /*
             try
             {
                 Convert.ToSingle(txtFindVal.Text);
@@ -50,6 +51,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 return;
             }
+            */
 
             lstFind.Items.Add(cmbFindPar.SelectedItem + " " + cmbFindOp.SelectedItem + " " + txtFindVal.Text);
             cmbFindPar.SelectedIndex = -1;
@@ -83,7 +85,7 @@ namespace NBA_2K13_Roster_Editor
         {
             if (cmbReplacePar.SelectedIndex == -1 || String.IsNullOrWhiteSpace(txtReplaceVal.Text))
                 return;
-
+            /*
             try
             {
                 Convert.ToSingle(txtReplaceVal.Text);
@@ -92,7 +94,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 return;
             }
-
+            */
             lstReplace.Items.Add(string.Format("{0} = {1}", cmbReplacePar.SelectedItem, txtReplaceVal.Text));
             cmbReplacePar.SelectedIndex = -1;
             txtReplaceVal.Text = "";
@@ -254,6 +256,24 @@ namespace NBA_2K13_Roster_Editor
 
             DialogResult = true;
             Close();
+        }
+
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow.LastFindFilters.ForEach(f => lstFind.Items.Add(f));
+            }
+            catch (NullReferenceException)
+            {
+            }
+            try
+            {
+                MainWindow.LastReplaceFilters.ForEach(f => lstReplace.Items.Add(f));
+            }
+            catch (NullReferenceException)
+            {
+            }
         }
     }
 }
