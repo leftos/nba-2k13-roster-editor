@@ -69,6 +69,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             HotSpots = new ObservableCollection<byte>();
             HotZones = new ObservableCollection<HotZoneValue>();
             SeasonStats = new ObservableCollection<short>();
+            Accessories = new ObservableCollection<byte>();
         }
 
         public string Name
@@ -90,6 +91,30 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("ID");
             }
         }
+
+        public ObservableCollection<byte> Accessories
+        {
+            get { return _accessories; }
+            set
+            {
+                _accessories = value;
+                OnPropertyChanged("Accessories");
+            }
+        }
+
+        private ObservableCollection<byte> _accessories;
+
+        public byte LayupPkg
+        {
+            get { return _layupPkg; }
+            set
+            {
+                _layupPkg = value;
+                OnPropertyChanged("LayupPkg");
+            }
+        }
+
+        private byte _layupPkg;
 
         public int TeamID1
         {

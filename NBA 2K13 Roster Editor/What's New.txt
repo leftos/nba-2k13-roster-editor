@@ -1,5 +1,18 @@
 ﻿Version History
 
+		v0.19.1
+			- Greatly improved both smart and dumb pasting behavior; fixed lots of buggy cases, all errors during paste will be reported in the tracelog.txt file
+
+		v0.19.0.1
+			- Fixed pasting of some values in Players table
+
+		v0.19
+			- Added Gear, Layup Package editing for Players
+			
+		v0.18.1
+			- Added CFID, PortaitID to Staff tab
+			- Fixed sorting by HeadCoachOf* in Staff tab
+
 		v0.18
 			- Added Find Offset (i.e. Find That Hex) functionality
 			- Added searching text

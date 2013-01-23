@@ -1,0 +1,43 @@
+namespace NBA_2K13_Roster_Editor.Data.Players.Parameters
+{
+    internal enum Gear : byte
+    {
+        Headband = 0,
+        LeftElbow = 1,
+        RightElbow = 2,
+        LeftWrist = 3,
+        Undershirt = 4,
+        Shorts = 5,
+        RightWrist = 6,
+        LeftFingers = 7,
+        RightFingers = 8,
+        LeftLeg = 9,
+        RightLeg = 10,
+        LeftKnee = 11,
+        RightKnee = 12,
+        LeftAnkle = 13,
+        Socks = 14,
+        RightAnkle = 15,
+        UndershirtColor = 16,
+        ShortsColor = 17,
+        LeftElbowColor = 18,
+        RightElbowColor = 19,
+        LeftArmColor = 20,
+        RightArmColor = 21,
+        LeftWristColor1 = 22,
+        LeftWristColor2 = 23,
+        RightWristColor1 = 24,
+        RightWristColor2 = 25,
+        LeftFingersColor = 26,
+        RightFingersColor = 27,
+        LeftLegColor = 28,
+        RightLegColor = 29,
+        HeadbandLogo = 30,
+        LeftKneeColor = 31,
+        RightKneeColor = 32,
+        LeftAnkleColor = 33,
+        RightAnkleColor = 34,
+        LeftArm = 35,
+        RightArm = 36
+    }
+}

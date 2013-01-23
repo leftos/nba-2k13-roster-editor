@@ -1,8 +1,8 @@
-0.17.0.0
+0.19.0.1
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-		v0.17
-			- Added full Coaching Profile editing in Staff tab
+		v0.19.0.1
+			- Fixed pasting of some values in Players table
 
-		v0.16.1.4
-			- Fixed Custom 360 profile re-enabling "Recalculate CRC on Save"; crc needs to be calculated only for PC saves
+		v0.19
+			- Added Gear, Layup Package editing for Players

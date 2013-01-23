@@ -60,11 +60,35 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
             }
         }
 
+        public int CFID
+        {
+            get { return _cFID; }
+            set
+            {
+                _cFID = value;
+                OnPropertyChanged("CFID");
+            }
+        }
+
+        private int _cFID;
+
+        public int PortraitID
+        {
+            get { return _portraitID; }
+            set
+            {
+                _portraitID = value;
+                OnPropertyChanged("PortraitID");
+            }
+        }
+
+        private int _portraitID;
+
         private string _headCoachOf;
 
 
         private int _playbookID;
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

@@ -55,6 +55,27 @@ namespace NBA_2K13_Roster_Editor
             var app = new App();
             app.InitializeComponent();
 
+            if (!Directory.Exists(NBA_2K13_Roster_Editor.MainWindow.DocsPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(NBA_2K13_Roster_Editor.MainWindow.DocsPath);
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("DocsPath couldn't be created.");
+                }
+            }
+
+            try
+            {
+                File.Delete(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\tracelog.txt");
+            }
+            catch
+            {
+                Debug.WriteLine("Couldn't delete previous trace file, if any.");
+            }
+
             Trace.Listeners.Clear();
 
             var twtl = new TextWriterTraceListener(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\tracelog.txt");

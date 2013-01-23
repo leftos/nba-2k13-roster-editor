@@ -244,17 +244,22 @@ namespace NBA_2K13_Roster_Editor
             return Convert.ToUInt16(ReadNonByteAlignedBits(bitsCount), 2);
         }
 
-        public Int16 ReadInt16(int bitsCount)
+        public byte ReadNBAByte(int bitsCount)
+        {
+            return Convert.ToByte(ReadNonByteAlignedBits(bitsCount), 2);
+        }
+
+        public Int16 ReadNBAInt16(int bitsCount)
         {
             return Convert.ToInt16(ReadNonByteAlignedBits(bitsCount), 2);
         }
 
-        public UInt32 ReadUInt32(int bitsCount)
+        public UInt32 ReadNBAUInt32(int bitsCount)
         {
             return Convert.ToUInt32(ReadNonByteAlignedBits(bitsCount), 2);
         }
 
-        public Int32 ReadInt32(int bitsCount)
+        public Int32 ReadNBAInt32(int bitsCount)
         {
             return Convert.ToInt32(ReadNonByteAlignedBits(bitsCount), 2);
         }
