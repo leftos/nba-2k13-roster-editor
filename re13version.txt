@@ -1,8 +1,9 @@
-0.19.0.1
+0.19.4.4
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-		v0.19.0.1
-			- Fixed pasting of some values in Players table
+	v0.19.4.4
+		- Tool will not update a player's Free Agent status if the Teams tab isn't properly set-up
+		- Check For Updates setting added in Options tab; if set to anything but "True", it will tell the tool not to check for updates on start
 
-		v0.19
-			- Added Gear, Layup Package editing for Players
+	v0.19.4.3
+		- Fixed players being put into the FA pool not becoming Free Agents in-game, and also players being removed from the FA pool remaining Free Agents

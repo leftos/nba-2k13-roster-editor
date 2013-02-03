@@ -29,13 +29,15 @@
             <Grid>
                 <ComboBox Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="cmbReplacePar"
                           VerticalAlignment="Top" Width="97" />
-                <TextBox Height="23" Margin="108,6,10,0" Name="txtReplaceVal" VerticalAlignment="Top" />
+                <TextBox Height="23" Margin="154,6,10,0" Name="txtReplaceVal" VerticalAlignment="Top" />
                 <ListBox HorizontalAlignment="Stretch" Margin="6,64,6,6" Name="lstReplace" VerticalAlignment="Stretch"
                          SelectionMode="Extended" />
                 <Button Content="Add" Height="23" Margin="6,35,0,0" Name="btnReplaceAdd" VerticalAlignment="Top"
                         HorizontalAlignment="Left" Width="75" Click="btnReplaceAdd_Click" />
                 <Button Content="Remove" Height="23" Margin="0,35,6,0" Name="btnReplaceDel" VerticalAlignment="Top"
                         HorizontalAlignment="Right" Width="75" Click="btnReplaceDel_Click" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="108,6,0,0" x:Name="cmbReplaceOp"
+                	VerticalAlignment="Top" Width="41" />
             </Grid>
         </GroupBox>
         <Button Content="Load Filters" Height="23" HorizontalAlignment="Left" Margin="12,0,0,6" Name="btnLoadFilters"

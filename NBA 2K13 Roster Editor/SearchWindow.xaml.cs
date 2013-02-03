@@ -14,6 +14,7 @@ namespace NBA_2K13_Roster_Editor
     public partial class SearchWindow : Window
     {
         private readonly List<string> NumericOptions = new List<string> {"<", "<=", "=", ">=", ">", "Contains(Text)"};
+        private readonly List<string> ReplaceOptions = new List<string> { "=", "+=", "-=", "*=", "/=", "=Rand", "+=Rand", "-=Rand", "*=Rand", "/=Rand" }; 
         private readonly string folder = MainWindow.DocsPath + @"\Search Filters";
         public List<string> FindFilters = new List<string>();
         public List<string> ReplaceFilters = new List<string>();
@@ -32,9 +33,11 @@ namespace NBA_2K13_Roster_Editor
             cmbReplacePar.Items.Remove("ID");
             cmbReplacePar.Items.Remove("Name");
 
-            NumericOptions.ForEach(delegate(string no) { cmbFindOp.Items.Add(no); });
+            NumericOptions.ForEach(no => cmbFindOp.Items.Add(no));
+            ReplaceOptions.ForEach(ro => cmbReplaceOp.Items.Add(ro));
 
             cmbFindOp.SelectedIndex = 2;
+            cmbReplaceOp.SelectedIndex = 0;
         }
 
         private void btnFindAdd_Click(object sender, RoutedEventArgs e)
@@ -95,7 +98,7 @@ namespace NBA_2K13_Roster_Editor
                 return;
             }
             */
-            lstReplace.Items.Add(string.Format("{0} = {1}", cmbReplacePar.SelectedItem, txtReplaceVal.Text));
+            lstReplace.Items.Add(string.Format("{0} {1} {2}", cmbReplacePar.SelectedItem, cmbReplaceOp.SelectedItem, txtReplaceVal.Text));
             cmbReplacePar.SelectedIndex = -1;
             txtReplaceVal.Text = "";
         }
@@ -111,6 +114,7 @@ namespace NBA_2K13_Roster_Editor
                 lstReplace.Items.Remove(item);
                 string[] parts = item.Split(' ');
                 cmbReplacePar.SelectedItem = parts[0];
+                cmbReplaceOp.SelectedItem = parts[1];
                 txtReplaceVal.Text = parts[2];
             }
             else

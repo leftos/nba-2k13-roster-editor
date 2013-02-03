@@ -548,7 +548,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             set
             {
                 _number = value;
-                OnPropertyChanged("JerseyNumber");
+                OnPropertyChanged("Number");
             }
         }
 
@@ -827,6 +827,18 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("SigFT");
             }
         }
+
+        public bool IsFAReal
+        {
+            get { return _isFAReal; }
+            set
+            {
+                _isFAReal = value;
+                OnPropertyChanged("IsFAReal");
+            }
+        }
+
+        private bool _isFAReal;
 
         private int _sigFT;
 

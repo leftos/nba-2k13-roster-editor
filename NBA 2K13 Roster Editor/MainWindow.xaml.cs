@@ -177,6 +177,8 @@ namespace NBA_2K13_Roster_Editor
         {
             InitializeComponent();
 
+            random = new Random();
+
             btnMode360Nov10.Visibility = Visibility.Collapsed; //
 
             mw = this;
@@ -272,6 +274,11 @@ namespace NBA_2K13_Roster_Editor
             timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
             timer.Interval = new TimeSpan(0, 0, 3);
+
+            Height = GetRegistrySetting("Height", (int)Height);
+            Width = GetRegistrySetting("Width", (int)Width);
+            Left = GetRegistrySetting("Left", 0);
+            Top = GetRegistrySetting("Top", 0);
         }
 
         private void PreparePlaybooksDataGrid()
@@ -713,6 +720,7 @@ namespace NBA_2K13_Roster_Editor
                 dgJerseys.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
                 dgPlaybooks.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
                 dgStaff.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
+                dgTeamStats.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
             }
             else
             {
@@ -721,7 +729,10 @@ namespace NBA_2K13_Roster_Editor
                 dgJerseys.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader;
                 dgPlaybooks.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
                 dgStaff.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
+                dgTeamStats.ClipboardCopyMode = DataGridClipboardCopyMode.ExcludeHeader;
             }
+
+            optionsList.Add(new Option {Setting = "CheckForUpdates", Value = GetRegistrySetting("CheckForUpdates", "True")});
 
             PopulateNamesDictionary();
             dgOptions.ItemsSource = optionsList;
@@ -893,7 +904,7 @@ namespace NBA_2K13_Roster_Editor
                     pe.HotZones = ReadHotZones(i, brOpen);
                     pe.Accessories = ReadGear(i, brOpen);
                     pe.AssignedTo = FindPlayerInTeams(i);
-                    pe.IsFA = teamsList.Count > 0 ? teamsList.Single(te => te.ID == 999).RosterSpots.Contains(pe.ID) : false;
+                    pe.IsFA = teamsList.Count > 0 && teamsList.Single(te => te.ID == 999).RosterSpots.Contains(pe.ID);
                     pe.IsHidden = (pe.AssignedTo == -1 && !pe.IsFA);
                     playersList.Add(pe);
                 }
@@ -930,9 +941,9 @@ namespace NBA_2K13_Roster_Editor
             {
                 gear.Add(brOpen.ReadNBAByte(2));
             }
-            brOpen.MoveStreamPosition(1, 2);
+            brOpen.MoveStreamPosition(1, 0);
             gear.Add(brOpen.ReadNBAByte(3));
-            brOpen.MoveStreamPosition(2, 1);
+            brOpen.MoveStreamPosition(2, 3);
             for (int j = 0; j < 4; j++)
             {
                 gear.Add(brOpen.ReadNBAByte(2));
@@ -1212,7 +1223,9 @@ namespace NBA_2K13_Roster_Editor
 
 
             brOpen.MoveStreamToPortraitID(playerID);
-            brOpen.MoveStreamPosition(-5, 0);
+            brOpen.MoveStreamPosition(-8, 0);
+            pe.IsFAReal = brOpen.ReadNBAInt16(16) != 266;
+            brOpen.MoveStreamPosition(1, 0);
             pe.TeamID1 = brOpen.ReadNBAInt32(8);
             brOpen.MoveStreamPosition(261, 0);
             pe.TeamID2 = brOpen.ReadNBAInt32(8);
@@ -1389,8 +1402,8 @@ namespace NBA_2K13_Roster_Editor
         {
             SetRegistrySetting("Height", Height);
             SetRegistrySetting("Width", Width);
-            SetRegistrySetting("X", Left);
-            SetRegistrySetting("Y", Top);
+            SetRegistrySetting("Left", Left);
+            SetRegistrySetting("Top", Top);
         }
 
         public static void SetRegistrySetting<T>(string setting, T value)
@@ -1515,14 +1528,29 @@ namespace NBA_2K13_Roster_Editor
 
 
                         brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(-5, 0);
+                        brSave.MoveStreamPosition(-8, 0);
+                        SyncBWwithBR(ref bw, brSave);
+                        if (teamsList.Any(te => te.ID == 999))
+                            WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
+                        else
+                            brSave.MoveStreamPosition(2, 0);
+                        brSave.MoveStreamPosition(1, 0);
                         SyncBWwithBR(ref bw, brSave);
                         bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID1), brSave.ReadBytes(2));
                         SyncBRwithBW(ref brSave, bw);
-                        brSave.MoveStreamPosition(261, 0);
+                        brSave.MoveStreamPosition(258, 0);
+                        SyncBWwithBR(ref bw, brSave);
+                        if (teamsList.Any(te => te.ID == 999))
+                            WriteUInt16(bw, (ushort)(pe.IsFA ? 0 : 266), 16, ref brSave);
+                        else
+                            brSave.MoveStreamPosition(2, 0);
+                        brSave.MoveStreamPosition(1, 0);
                         SyncBWwithBR(ref bw, brSave);
                         bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID2), brSave.ReadBytes(2));
                         SyncBRwithBW(ref brSave, bw);
+                        brSave.MoveStreamPosition(15, 4);
+                        SyncBWwithBR(ref bw, brSave);
+                        bw.WriteNonByteAlignedBits(pe.IsFA ? "0" : "1", brSave.ReadBytes(1));
 
                         // Play Style
                         brSave.MoveStreamToPortraitID(pe.ID);
@@ -1907,10 +1935,10 @@ namespace NBA_2K13_Roster_Editor
                         {
                             WriteByte(pe.Accessories[k++], 2, bw, ref brSave);
                         }
-                        brSave.MoveStreamPosition(1, 2);
+                        brSave.MoveStreamPosition(1, 0);
                         SyncBWwithBR(ref bw, brSave);
                         WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        brSave.MoveStreamPosition(2, 1);
+                        brSave.MoveStreamPosition(2, 3);
                         SyncBWwithBR(ref bw, brSave);
                         for (int l = 0; l < 4; l++)
                         {
@@ -2485,19 +2513,21 @@ namespace NBA_2K13_Roster_Editor
             {
                 if (GetOption("DumbPasting").ToString() == "True")
                 {
-                    if (!GenericEventHandlers.OnExecutedPaste(sender, null))
-                        updateStatus("Paste into table completed but with errors. Check tracelog.txt for details.");
+                    updateStatus(!GenericEventHandlers.OnExecutedPaste(sender, null)
+                                     ? "Paste into table completed but with errors. Check tracelog.txt for details."
+                                     : "Paste into table completed.");
                 }
                 else
                 {
                     bool noErrors = true;
-                    string[] lines = Tools.SplitLinesToArray(Clipboard.GetText());
+                    var text = Clipboard.GetText();
+                    string[] lines = Tools.SplitLinesToArray(text);
                     if (!lines[0].StartsWith("ID\t") && !lines[0].Contains("\tID\t"))
                     {
                         MessageBox.Show("The pasted data must have the column headers in the first row.");
                         return;
                     }
-                    List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
+                    List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSVString(text);
 
                     dgTeams.CommitEdit();
                     dgTeams.CancelEdit();
@@ -2614,21 +2644,23 @@ namespace NBA_2K13_Roster_Editor
             {
                 if (GetOption("DumbPasting").ToString() == "True")
                 {
-                    if (!GenericEventHandlers.OnExecutedPaste(sender, null))
-                        updateStatus("Paste into table completed but with errors. Check tracelog.txt for details.");
+                    updateStatus(!GenericEventHandlers.OnExecutedPaste(sender, null)
+                                     ? "Paste into table completed but with errors. Check tracelog.txt for details."
+                                     : "Paste into table completed.");
                 }
                 else
                 {
                     bool noErrors = true;
 
-                    string[] lines = Tools.SplitLinesToArray(Clipboard.GetText());
+                    var text = Clipboard.GetText();
+                    string[] lines = Tools.SplitLinesToArray(text);
                     string doPasteBy = GetOption("DoPlayersPasteBy").ToString();
                     if (!lines[0].StartsWith(string.Format("{0}\t", doPasteBy)) && !lines[0].Contains(string.Format("\t{0}\t", doPasteBy)))
                     {
                         MessageBox.Show("The pasted data must have the column headers in the first row.");
                         return;
                     }
-                    List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
+                    List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSVString(text);
 
                     dgPlayers.CommitEdit();
                     dgPlayers.CancelEdit();
@@ -2841,6 +2873,7 @@ namespace NBA_2K13_Roster_Editor
         private List<string> gNames;
         private List<string> pColsToAvoid;
         private List<string> tColsToAvoid;
+        private Random random;
 
         private void dgPlayers_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
@@ -2899,19 +2932,21 @@ namespace NBA_2K13_Roster_Editor
             {
                 if (GetOption("DumbPasting").ToString() == "True")
                 {
-                    if (!GenericEventHandlers.OnExecutedPaste(sender, null))
-                        updateStatus("Paste into table completed but with errors. Check tracelog.txt for details.");
+                    updateStatus(!GenericEventHandlers.OnExecutedPaste(sender, null)
+                                     ? "Paste into table completed but with errors. Check tracelog.txt for details."
+                                     : "Paste into table completed.");
                 }
                 else
                 {
                     bool noErrors = true;
-                    string[] lines = Tools.SplitLinesToArray(Clipboard.GetText());
+                    var text = Clipboard.GetText();
+                    string[] lines = Tools.SplitLinesToArray(text);
                     if (!lines[0].StartsWith("ID\t") && !lines[0].Contains("\tID\t"))
                     {
                         MessageBox.Show("The pasted data must have the column headers in the first row.");
                         return;
                     }
-                    List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSV(lines);
+                    List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSVString(text);
 
                     dgJerseys.CommitEdit();
                     dgJerseys.CancelEdit();
@@ -3138,7 +3173,7 @@ namespace NBA_2K13_Roster_Editor
                                     case 'H':
                                         if (parts[0][1] == 'S' && Char.IsUpper(parts[0][2]))
                                         {
-                                            index = (byte) Enum.Parse(typeof (HotSpot), parts[0].Substring(1));
+                                            index = (byte) Enum.Parse(typeof (HotSpot), parts[0].Substring(2));
                                             prop = "HotSpots";
                                             isArray = true;
                                         }
@@ -3150,6 +3185,11 @@ namespace NBA_2K13_Roster_Editor
                                             prop = "SSList";
                                             isArray = true;
                                         }
+                                        break;
+                                    case 'G':
+                                        index = (byte)Enum.Parse(typeof(Gear), parts[0].Substring(1));
+                                        prop = "Accessories";
+                                        isArray = true;
                                         break;
                                 }
                             }
@@ -3171,10 +3211,58 @@ namespace NBA_2K13_Roster_Editor
                                         //var conversionType = propertyInfo.PropertyType;
                                         if (!type.IsEnum)
                                         {
+                                            var curVal = Convert.ToDouble(p[index]);
+                                            if (isNumeric && parts[1] != "=")
+                                            {
+                                                switch (parts[1])
+                                                {
+                                                    case "+=":
+                                                        value = curVal + toReplaceD;
+                                                        break;
+                                                    case "-=":
+                                                        value = curVal - toReplaceD;
+                                                        break;
+                                                    case "*=":
+                                                        value = curVal*toReplaceD;
+                                                        break;
+                                                    case "/=":
+                                                        value = curVal/toReplaceD;
+                                                        break;
+                                                }
+                                            }
+                                            else if (parts[1].Contains("Rand"))
+                                            {
+                                                var limits = parts[2].Split(';');
+                                                var rndVal = random.Next(Convert.ToInt32(limits[0]), Convert.ToInt32(limits[1]));
+                                                switch (parts[1].Substring(0, 2))
+                                                {
+                                                    case "=R":
+                                                        value = rndVal;
+                                                        break;
+                                                    case "+=":
+                                                        value = curVal + rndVal;
+                                                        break;
+                                                    case "-=":
+                                                        value = curVal - rndVal;
+                                                        break;
+                                                    case "*=":
+                                                        value = curVal * rndVal;
+                                                        break;
+                                                    case "/=":
+                                                        value = curVal / rndVal;
+                                                        break;
+                                                }
+                                            }
                                             p[index] = Convert.ChangeType(value, type);
                                         }
                                         else
                                         {
+                                            if (parts[1] == "=Rand")
+                                            {
+                                                var limits = parts[2].Split(';');
+                                                toReplaceS =
+                                                    random.Next(Convert.ToInt32(limits[0]), Convert.ToInt32(limits[1])).ToString();
+                                            }
                                             p[index] = Enum.Parse(type, toReplaceS);
                                         }
                                     }
@@ -3191,10 +3279,58 @@ namespace NBA_2K13_Roster_Editor
                                     var conversionType = propertyInfo.PropertyType;
                                     if (!conversionType.IsEnum)
                                     {
+                                        var curVal = Convert.ToDouble(propertyInfo.GetValue(playersList[id], null));
+                                        if (isNumeric && parts[1] != "=")
+                                        {
+                                            switch (parts[1])
+                                            {
+                                                case "+=":
+                                                    value = curVal + toReplaceD;
+                                                    break;
+                                                case "-=":
+                                                    value = curVal - toReplaceD;
+                                                    break;
+                                                case "*=":
+                                                    value = curVal * toReplaceD;
+                                                    break;
+                                                case "/=":
+                                                    value = curVal / toReplaceD;
+                                                    break;
+                                            }
+                                        }
+                                        else if (parts[1].Contains("Rand"))
+                                        {
+                                            var limits = parts[2].Split(';');
+                                            var rndVal = random.Next(Convert.ToInt32(limits[0]), Convert.ToInt32(limits[1]));
+                                            switch (parts[1].Substring(0, 2))
+                                            {
+                                                case "=R":
+                                                    value = rndVal;
+                                                    break;
+                                                case "+=":
+                                                    value = curVal + rndVal;
+                                                    break;
+                                                case "-=":
+                                                    value = curVal - rndVal;
+                                                    break;
+                                                case "*=":
+                                                    value = curVal * rndVal;
+                                                    break;
+                                                case "/=":
+                                                    value = curVal / rndVal;
+                                                    break;
+                                            }
+                                        }
                                         propertyInfo.SetValue(playersList[id], Convert.ChangeType(value, conversionType), null);
                                     }
                                     else
                                     {
+                                        if (parts[1] == "=Rand")
+                                        {
+                                            var limits = parts[2].Split(';');
+                                            toReplaceS =
+                                                random.Next(Convert.ToInt32(limits[0]), Convert.ToInt32(limits[1])).ToString();
+                                        }
                                         propertyInfo.SetValue(playersList[id], Enum.ToObject(conversionType, Enum.Parse(conversionType, toReplaceS)), null);
                                     }
                                 }
@@ -3471,18 +3607,16 @@ namespace NBA_2K13_Roster_Editor
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            Height = GetRegistrySetting("Height", (int) Height);
-            Width = GetRegistrySetting("Width", (int) Width);
-            Left = GetRegistrySetting("Left", (int) Left);
-            Top = GetRegistrySetting("Top", (int) Top);
-
-#if !DEBUG
+            #if !DEBUG
             tabPlayerStats.Visibility = Visibility.Collapsed;
             #endif
 
-            var w = new BackgroundWorker();
-            w.DoWork += w_DoWork;
-            w.RunWorkerAsync();
+            if (GetOption("CheckForUpdates").ToString() == "True")
+            {
+                var w = new BackgroundWorker();
+                w.DoWork += w_DoWork;
+                w.RunWorkerAsync();
+            }
         }
 
         private void w_DoWork(object sender, DoWorkEventArgs e)
@@ -3618,8 +3752,9 @@ namespace NBA_2K13_Roster_Editor
         {
             if (e.Key == Key.V && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
-                if (!GenericEventHandlers.OnExecutedPaste(sender, null))
-                    updateStatus("Paste into table completed but with errors. Check tracelog.txt for details.");
+                updateStatus(!GenericEventHandlers.OnExecutedPaste(sender, null)
+                                 ? "Paste into table completed but with errors. Check tracelog.txt for details."
+                                 : "Paste into table completed.");
             }
         }
 
@@ -3708,8 +3843,9 @@ namespace NBA_2K13_Roster_Editor
         {
             if (e.Key == Key.V && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
-                if (!GenericEventHandlers.OnExecutedPaste(sender, null))
-                    updateStatus("Paste into table completed but with errors. Check tracelog.txt for details.");
+                updateStatus(!GenericEventHandlers.OnExecutedPaste(sender, null)
+                                 ? "Paste into table completed but with errors. Check tracelog.txt for details."
+                                 : "Paste into table completed.");
             }
         }
 
@@ -3949,8 +4085,9 @@ namespace NBA_2K13_Roster_Editor
         {
             if (e.Key == Key.V && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
-                if (!GenericEventHandlers.OnExecutedPaste(sender, null))
-                    updateStatus("Paste into table completed but with errors. Check tracelog.txt for details.");
+                updateStatus(!GenericEventHandlers.OnExecutedPaste(sender, null)
+                                 ? "Paste into table completed but with errors. Check tracelog.txt for details."
+                                 : "Paste into table completed.");
             }
         }
     }
@@ -3968,7 +4105,7 @@ namespace NBA_2K13_Roster_Editor
             }
             catch (InvalidCastException)
             {
-                throw new InvalidCastException("SortCSVBasedOnFirst can only compare strings.");
+                throw new InvalidCastException("SortStaffOnHeadCoachOf can only compare StaffEntry instances.");
             }
             int i1, i2;
             try

@@ -127,6 +127,7 @@
                             <DataGridTextColumn Header="TeamID1" Binding="{Binding TeamID1, Mode=TwoWay}" />
                             <DataGridTextColumn Header="TeamID2" Binding="{Binding TeamID2, Mode=TwoWay}" />
                             <DataGridTextColumn Header="AssignedTo*" Binding="{Binding AssignedTo, Mode=TwoWay}" IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Header="IsFAReal" Binding="{Binding IsFAReal, Mode=TwoWay}" Visibility="Collapsed"/>
                             <DataGridCheckBoxColumn Header="IsFA*" Binding="{Binding IsFA, Mode=TwoWay}"  IsReadOnly="True" />
                             <DataGridCheckBoxColumn Header="IsHidden*" Binding="{Binding IsHidden, Mode=TwoWay}"  IsReadOnly="True" />
                             <DataGridTextColumn Header="InjuryType" Binding="{Binding InjuryType, Mode=TwoWay}" />

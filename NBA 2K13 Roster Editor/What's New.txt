@@ -1,292 +1,316 @@
 ﻿Version History
 
-		v0.19.1
-			- Greatly improved both smart and dumb pasting behavior; fixed lots of buggy cases, all errors during paste will be reported in the tracelog.txt file
+	v0.19.4.4
+		- Tool will not update a player's Free Agent status if the Teams tab isn't properly set-up
+		- Check For Updates setting added in Options tab; if set to anything but "True", it will tell the tool not to check for updates on start
 
-		v0.19.0.1
-			- Fixed pasting of some values in Players table
+	v0.19.4.3
+		- Fixed players being put into the FA pool not becoming Free Agents in-game, and also players being removed from the FA pool remaining Free Agents
 
-		v0.19
-			- Added Gear, Layup Package editing for Players
+	v0.19.4.2
+		- Fixed roster corruption in some cases when editing GHeadbandLogo
+		- Fixed editing a player's number not being reflected in the table
+
+	v0.19.4.1
+		- Fixed a crash in some occurrences when doing dumb pasting
+
+	v0.19.4
+		- Find & Replace can now make random relative changes to values (e.g. RPot -=Rand 10;30 will subtract a random amount between 10 and 30 from the matching players' potential rating)
+		- The Random operator in Find & Replace has been changed to =Rand
+
+	v0.19.3
+		- Find & Replace can now replace values with random ones within a range by using the Random operator and entering the minimum and maximum as the value separated by a semicolon (e.g. RPot Random 30;80 will generate random potential ratings for the matching players between 30 and 80)
+
+	v0.19.2
+		- Find & Replace can now make relative changes to values (add, subtract, multiply, divide; e.g. RPot -= 20 will subtract 20 from the potential rating of the matched players)
+
+	v0.19.1
+		- Greatly improved both smart and dumb pasting behavior; fixed lots of buggy cases, all errors during paste will be reported in the tracelog.txt file
+
+	v0.19.0.1
+		- Fixed pasting of some values in Players table
+
+	v0.19
+		- Added Gear, Layup Package editing for Players
 			
-		v0.18.1
-			- Added CFID, PortaitID to Staff tab
-			- Fixed sorting by HeadCoachOf* in Staff tab
+	v0.18.1
+		- Added CFID, PortaitID to Staff tab
+		- Fixed sorting by HeadCoachOf* in Staff tab
 
-		v0.18
-			- Added Find Offset (i.e. Find That Hex) functionality
-			- Added searching text
-			- Enumerable properties (such as Signature Skills) can now be properly found and replaced
-			- Last used Find & Replace properties will be remembered when re-opening dialog
+	v0.18
+		- Added Find Offset (i.e. Find That Hex) functionality
+		- Added searching text
+		- Enumerable properties (such as Signature Skills) can now be properly found and replaced
+		- Last used Find & Replace properties will be remembered when re-opening dialog
 
-		v0.17
-			- Added full Coaching Profile editing in Staff tab
+	v0.17
+		- Added full Coaching Profile editing in Staff tab
 
-		v0.16.1.4
-			- Fixed Custom 360 profile re-enabling "Recalculate CRC on Save"; crc needs to be calculated only for PC saves
+	v0.16.1.4
+		- Fixed Custom 360 profile re-enabling "Recalculate CRC on Save"; crc needs to be calculated only for PC saves
 
-		v0.16.1.3
-			- Fixed head coach saving for all save types
-			- Optimized file opening speed
+	v0.16.1.3
+		- Fixed head coach saving for all save types
+		- Optimized file opening speed
 
-		v0.16.1.2
-			- Added missing Custom Team Stats Offset options
+	v0.16.1.2
+		- Added missing Custom Team Stats Offset options
 
-		v0.16.1.1
-			- Fixed smart pasting for the Free Agents row in the Teams tab not updating players after R18
+	v0.16.1.1
+		- Fixed smart pasting for the Free Agents row in the Teams tab not updating players after R18
 
-		v0.16.1
-			- Fixed various crashes when opening incompatible rosters
-			- When selecting a roster spot in the Teams tab or a TeamID/AssignedTo column in the Players tab, the corresponding name will be shown in the status bar
+	v0.16.1
+		- Fixed various crashes when opening incompatible rosters
+		- When selecting a roster spot in the Teams tab or a TeamID/AssignedTo column in the Players tab, the corresponding name will be shown in the status bar
 
-		v0.16
-			- Added Team Stats
-			- Added Run Plays for Staff
-			- Fixed dumb pasting not updating the last row
+	v0.16
+		- Added Team Stats
+		- Added Run Plays for Staff
+		- Fixed dumb pasting not updating the last row
 
-		v0.15.2
-			- Added smart pasting by any column in the Players table (use DoPlayersPasteBy option)
+	v0.15.2
+		- Added smart pasting by any column in the Players table (use DoPlayersPasteBy option)
 
-		v0.15.1.4
-			- Fixed crash when the user clicked Open and the last used directory no longer existed
+	v0.15.1.4
+		- Fixed crash when the user clicked Open and the last used directory no longer existed
 
-		v0.15.1.3
-			- Fixed bug which crashed the tool when a pasted value was out of range
+	v0.15.1.3
+		- Fixed bug which crashed the tool when a pasted value was out of range
 
-		v0.15.1.2
-			- Fixed bug which made the tool not paste last column's data when dumb-pasting
+	v0.15.1.2
+		- Fixed bug which made the tool not paste last column's data when dumb-pasting
 
-		v0.15.1.1
-			- Fixed crash when opening rosters not compatible with the Staff tab yet
+	v0.15.1.1
+		- Fixed crash when opening rosters not compatible with the Staff tab yet
 
-		v0.15.1.0
-			- Added Playbooks tab compatibility for "PC Nov 10" profile
-			- Fixed crash when opening some rosters
+	v0.15.1.0
+		- Added Playbooks tab compatibility for "PC Nov 10" profile
+		- Fixed crash when opening some rosters
 
-		v0.15.0.2
-			- Fixed bug with copy-pasting in Playbooks and Staff tab when dumb-pasting was turned off
+	v0.15.0.2
+		- Fixed bug with copy-pasting in Playbooks and Staff tab when dumb-pasting was turned off
 
-		v0.15.0.1
-			- Fixed crash when loading rosters if LastStaffID was too small
+	v0.15.0.1
+		- Fixed crash when loading rosters if LastStaffID was too small
 
-		v0.15
-			- Added Playbook editing (uses dumb-pasting all the time for now)
-			- Added PlaybookID to new Staff tab (uses dumb-pasting all of the time for now)
-			- Added HeadCoachOf (read-only) in Staff tab
-			- Added PlaybookID (read-only) in Teams tab
-			- Columns that are read-only now have an asterisk (*) in their header
-			- Added "Reset Current Teams' Playbooks" in Teams tab which allows you to automatically set the Playbooks for the 30 current teams to the default ones (after for example a Head Coach change in Association)
-			- Dumb Pasting can now be enabled for all tabs by setting the appropriate option in the Options tab to "True"
-			- Tool will now copy CFNames.txt to Documents folder (and use it by default on new installations, or if you click Reset in the Options tab) - thanks to DukeW74 and Medevenx
+	v0.15
+		- Added Playbook editing (uses dumb-pasting all the time for now)
+		- Added PlaybookID to new Staff tab (uses dumb-pasting all of the time for now)
+		- Added HeadCoachOf (read-only) in Staff tab
+		- Added PlaybookID (read-only) in Teams tab
+		- Columns that are read-only now have an asterisk (*) in their header
+		- Added "Reset Current Teams' Playbooks" in Teams tab which allows you to automatically set the Playbooks for the 30 current teams to the default ones (after for example a Head Coach change in Association)
+		- Dumb Pasting can now be enabled for all tabs by setting the appropriate option in the Options tab to "True"
+		- Tool will now copy CFNames.txt to Documents folder (and use it by default on new installations, or if you click Reset in the Options tab) - thanks to DukeW74 and Medevenx
 
-			- Known Issue: Playbooks and Staff tabs will only work with "PC Ret" and Custom profiles, haven't found the offsets for 360 retail or PC November 10 yet
+		- Known Issue: Playbooks and Staff tabs will only work with "PC Ret" and Custom profiles, haven't found the offsets for 360 retail or PC November 10 yet
 
-		v0.14.1.1
-			- Fixed Free Agents pool for Custom 360 profile
+	v0.14.1.1
+		- Fixed Free Agents pool for Custom 360 profile
 
-		v0.14.1
-			- Added Custom 360 mode, which tries to skip the garbage bytes and make editing possible for players with ID 1365 and higher (known issue with editing player with ID 1364 remains)
+	v0.14.1
+		- Added Custom 360 mode, which tries to skip the garbage bytes and make editing possible for players with ID 1365 and higher (known issue with editing player with ID 1364 remains)
 
-		v0.14.0.2
-			- Fixed startup crash introduced in v0.14 if last selected mode was PCNov
+	v0.14.0.2
+		- Fixed startup crash introduced in v0.14 if last selected mode was PCNov
 
-		v0.14.0.1
-			- Fixed saving and pasting Season and Playoff stats for Players
+	v0.14.0.1
+		- Fixed saving and pasting Season and Playoff stats for Players
 
-		v0.14
-			- Added YearsPro, BirthYear, BirthMonth, BirthDay, InjuryType, InjuryDays for Players (kudos to TUSS11)
-			- Added SeasonStats and PlayoffStats for Players
-			- Fixed Teams table for save types other than Roster
+	v0.14
+		- Added YearsPro, BirthYear, BirthMonth, BirthDay, InjuryType, InjuryDays for Players (kudos to TUSS11)
+		- Added SeasonStats and PlayoffStats for Players
+		- Fixed Teams table for save types other than Roster
 			
-		v0.13.3.1
-			- Fixed Free Agents in Custom profile
+	v0.13.3.1
+		- Fixed Free Agents in Custom profile
 
-		v0.13.3
-			- Added Custom offsets function, so that users can experiment to find offsets of incompatible rosters
-			- Added Clothes Type for Players
-			- Added Reset button to Options tab
+	v0.13.3
+		- Added Custom offsets function, so that users can experiment to find offsets of incompatible rosters
+		- Added Clothes Type for Players
+		- Added Reset button to Options tab
 
-		v0.13.2
-			- Added Play Style & Play Types for Players
+	v0.13.2
+		- Added Play Style & Play Types for Players
 
-		v0.13.1
-			- Added Head Coach
+	v0.13.1
+		- Added Head Coach
 
-		v0.13
-			- Fixed Teams & Jerseys tab compatibility for November(?) PC rosters
+	v0.13
+		- Fixed Teams & Jerseys tab compatibility for November(?) PC rosters
 
-		v0.12.0.3
-			- LastJerseyID will be recalculated each time a roster is loaded
+	v0.12.0.3
+		- LastJerseyID will be recalculated each time a roster is loaded
 
-		v0.12.0.2
-			- Fixed pasting functionality for some columns in Players table
-			- Players table filter can be removed by clicking on Filter in the Find & Replace dialog with an empty Find column
+	v0.12.0.2
+		- Fixed pasting functionality for some columns in Players table
+		- Players table filter can be removed by clicking on Filter in the Find & Replace dialog with an empty Find column
 
-		v0.12.0.1
-			- Pasting TeamID1 & TeamID2 now works
+	v0.12.0.1
+		- Pasting TeamID1 & TeamID2 now works
 
-		v0.12
-			- Added TeamID1 & TeamID2
-			- Added the following read-only columns to Players table
-				* AssignedTo: Shows you which team this player is assigned to in the Teams table
-				* IsFA: Tells you if the player is in the FA pool
-				* IsHidden: Tells you if the player is in no teams, nor the FA pool
-			- Added Filter feature to Find & Replace dialog which filters the players table according to the specified filters
+	v0.12
+		- Added TeamID1 & TeamID2
+		- Added the following read-only columns to Players table
+			* AssignedTo: Shows you which team this player is assigned to in the Teams table
+			* IsFA: Tells you if the player is in the FA pool
+			* IsHidden: Tells you if the player is in no teams, nor the FA pool
+		- Added Filter feature to Find & Replace dialog which filters the players table according to the specified filters
 
-		v0.11.0.2
-			- Free Agents Pool expanded to 512 spots, since 256 were too few; may need further expansion
+	v0.11.0.2
+		- Free Agents Pool expanded to 512 spots, since 256 were too few; may need further expansion
 
-		v0.11.0.1
-			- Fixed automatic roster reordering & PlNum correction bug
+	v0.11.0.1
+		- Fixed automatic roster reordering & PlNum correction bug
 
-		v0.11
-			- Added jersey neck & sock color
-			- Added "Apply Replace Filters" feature which applies the replacements based on all the "Find & Replace" filters in a specific folder
-			- Fixed color handling in Jerseys tab, colors should now show and be applied correctly
-			- Fixed a mistake in the order of the Hot Spots
-			- Fixed bug that caused edits to some cells in tables not to save when pressing Tab to switch to the next cell
-			- Fixed color selection dialog showing up on non-related double-clicks on the tables
+	v0.11
+		- Added jersey neck & sock color
+		- Added "Apply Replace Filters" feature which applies the replacements based on all the "Find & Replace" filters in a specific folder
+		- Fixed color handling in Jerseys tab, colors should now show and be applied correctly
+		- Fixed a mistake in the order of the Hot Spots
+		- Fixed bug that caused edits to some cells in tables not to save when pressing Tab to switch to the next cell
+		- Fixed color selection dialog showing up on non-related double-clicks on the tables
 
-		v0.10.2
-			- Jersey GID and Names added, courtesy of Hyperballer21
+	v0.10.2
+		- Jersey GID and Names added, courtesy of Hyperballer21
 
-		v0.10.1
-			- Added "ChooseNameBy" option to allow user to have a "names.txt" with a first column that's not Player ID, but any column of the Players table
-			- Fixed paste crash bug in Players table
+	v0.10.1
+		- Added "ChooseNameBy" option to allow user to have a "names.txt" with a first column that's not Player ID, but any column of the Players table
+		- Fixed paste crash bug in Players table
 
-		v0.10.0.1
-			- Fixed hang when saving players
+	v0.10.0.1
+		- Fixed hang when saving players
 
-		v0.10
-			- Added Height, Weight, Skintone, Hair Color, Eyebrows, Moustache, Facial Hair Color, Beard, Goatee
-			- Added Dunk Packages, Signature Shot Form & Base, Signature Free Throw
-			- Added team names for all 90 entries (courtesy of Hyperballer21)
-			- Fixed Find & Replace ignoring the last player in the Players table
+	v0.10
+		- Added Height, Weight, Skintone, Hair Color, Eyebrows, Moustache, Facial Hair Color, Beard, Goatee
+		- Added Dunk Packages, Signature Shot Form & Base, Signature Free Throw
+		- Added team names for all 90 entries (courtesy of Hyperballer21)
+		- Fixed Find & Replace ignoring the last player in the Players table
 
-		v0.9.0.1
-			- Fixed checksum not being updated when saving Jerseys in PC mode
+	v0.9.0.1
+		- Fixed checksum not being updated when saving Jerseys in PC mode
 
-		v0.9
-			- Added Find & Replace functionality for Players tab
-			- Added Last Team ID option to force the Teams tab to show more roster entries
-			- Added automatic Check for Updates on start-up
+	v0.9
+		- Added Find & Replace functionality for Players tab
+		- Added Last Team ID option to force the Teams tab to show more roster entries
+		- Added automatic Check for Updates on start-up
 		
-		v0.8.1
-			- Added Player Contracts
-			- Fixed Jersey editing on the 360
-			- Fixed Muscle Tone and Body Type editing
-			- Fixed a bug that caused hex values of shoe colors not to update in the table after editing
+	v0.8.1
+		- Added Player Contracts
+		- Fixed Jersey editing on the 360
+		- Fixed Muscle Tone and Body Type editing
+		- Fixed a bug that caused hex values of shoe colors not to update in the table after editing
 
-		v0.8
-			- Added Shoe Colors
-			- Added Jersey Colors
+	v0.8
+		- Added Shoe Colors
+		- Added Jersey Colors
 
-		v0.7.2
-			- Added Assistant Coach to Teams tab
-			- Fill with consecutive works for 76ers again
-			- Teams table now parses data automatically when pasting
+	v0.7.2
+		- Added Assistant Coach to Teams tab
+		- Fill with consecutive works for 76ers again
+		- Teams table now parses data automatically when pasting
 
-		v0.7.1
-			- Added CAP Hair Type, Eye Color, Muscle Tone, Body Type, Jersey Number
-			- Shoe Brand and Shoe Model and all parameters added in this release are pastable
+	v0.7.1
+		- Added CAP Hair Type, Eye Color, Muscle Tone, Body Type, Jersey Number
+		- Shoe Brand and Shoe Model and all parameters added in this release are pastable
 
-		v0.7
-			- Shoe Brand and Shoe Model are editable
-			- Audio ID has been discovered by DukeW74 to actually be ASA ID
+	v0.7
+		- Shoe Brand and Shoe Model are editable
+		- Audio ID has been discovered by DukeW74 to actually be ASA ID
 
-		v0.6.1
-			- Support for MyCareer saves (*.CMG)
+	v0.6.1
+		- Support for MyCareer saves (*.CMG)
 
-		v0.6
-			- Support for Association saves (*.FXG)
+	v0.6
+		- Support for Association saves (*.FXG)
 
-		v0.5.2.4
-			- Tool will now skip any pasted rows that have Player IDs that can't be parsed (e.g. rows with no Player ID set, empty rows, etc), instead of stopping the paste; all such errors will be silently logged to "tracelog.txt" as well
+	v0.5.2.4
+		- Tool will now skip any pasted rows that have Player IDs that can't be parsed (e.g. rows with no Player ID set, empty rows, etc), instead of stopping the paste; all such errors will be silently logged to "tracelog.txt" as well
 
-		v0.5.2.3
-			- Fixed bug introduced in 0.5.2.2 that caused tool to crash when pasted data lacked one or more columns
+	v0.5.2.3
+		- Fixed bug introduced in 0.5.2.2 that caused tool to crash when pasted data lacked one or more columns
 
-		v0.5.2.2
-			- When pasting, erroneous data in a certain column will not change the value at all
-			- Silent errors will now be logged in the "tracelog.txt" file under "My Documents\NBA 2K13 Roster Editor"
+	v0.5.2.2
+		- When pasting, erroneous data in a certain column will not change the value at all
+		- Silent errors will now be logged in the "tracelog.txt" file under "My Documents\NBA 2K13 Roster Editor"
 
-		v0.5.2.1
-			- Fixed pasting Audio ID
+	v0.5.2.1
+		- Fixed pasting Audio ID
 
-		v0.5.2
-			- Audio ID added to Players table
+	v0.5.2
+		- Audio ID added to Players table
 
-		v0.5.1.2
-			- Fixed Hot Spots overwriting Tendencies when pasting to the Players table
+	v0.5.1.2
+		- Fixed Hot Spots overwriting Tendencies when pasting to the Players table
 
-		v0.5.1.1
-			- Fixed various bugs that would cause the tool to crash or misinterpret data when pasting into the Players and Teams tables
+	v0.5.1.1
+		- Fixed various bugs that would cause the tool to crash or misinterpret data when pasting into the Players and Teams tables
 
-		v0.5.1
-			- Ratings, Tendencies and Hot Spots columns now are named
-			- Copy-pasting for the Players table should work completely
+	v0.5.1
+		- Ratings, Tendencies and Hot Spots columns now are named
+		- Copy-pasting for the Players table should work completely
 
-		v0.5
-			- Players and Options tab are now spreadsheet like as well
-			- Ratings, Tendencies and Hot Spots added to Players
-			- Teams' PlNum and Player Order will automatically be fixed on save
-			- Now the user can change the name of the file to load Player names from, to allow for multiple files
+	v0.5
+		- Players and Options tab are now spreadsheet like as well
+		- Ratings, Tendencies and Hot Spots added to Players
+		- Teams' PlNum and Player Order will automatically be fixed on save
+		- Now the user can change the name of the file to load Player names from, to allow for multiple files
 
-		v0.4.1.1
-			- Fixed bug that would substitute the FA pool with the Bobcats players on save
+	v0.4.1.1
+		- Fixed bug that would substitute the FA pool with the Bobcats players on save
 
-		v0.4.1
-			- The tool will now read and write 18 roster entries instead of 15 for every team
+	v0.4.1
+		- The tool will now read and write 18 roster entries instead of 15 for every team
 
-		v0.4
-			- Added roster editing for all 30 current teams and the FA pool
+	v0.4
+		- Added roster editing for all 30 current teams and the FA pool
 
-		v0.3.3
-			- Fixed player entry reading after Player ID 1365 in X360 rosters
-			- Known Issue: (X360) Editing Signature Skills of Jamaal Magloire on Player ID 1364 doesn't work for now
-			- If you have a "names.txt" file in your "My Documents\NBA 2K13 Roster Editor" with tab-separated Player IDs and names, the tool will now show you the name of the player you're editing
+	v0.3.3
+		- Fixed player entry reading after Player ID 1365 in X360 rosters
+		- Known Issue: (X360) Editing Signature Skills of Jamaal Magloire on Player ID 1364 doesn't work for now
+		- If you have a "names.txt" file in your "My Documents\NBA 2K13 Roster Editor" with tab-separated Player IDs and names, the tool will now show you the name of the player you're editing
 
-		v0.3.2.3
-			- Tool no longer crashes when Search by CF doesn't find a player with that CF ID
+	v0.3.2.3
+		- Tool no longer crashes when Search by CF doesn't find a player with that CF ID
 
-		v0.3.2.2
-			- Fixed bug with CF reading/writing introduced in v0.3.2.1
+	v0.3.2.2
+		- Fixed bug with CF reading/writing introduced in v0.3.2.1
 
-		v0.3.2.1
-			- Fixed bug with PlType not being read correctly
+	v0.3.2.1
+		- Fixed bug with PlType not being read correctly
 
-		v0.3.2
-			- Added PlType editing (PC & X360)
+	v0.3.2
+		- Added PlType editing (PC & X360)
 		
-		v0.3.1
-			- Added support for GenericF editing (PC & X360)
-			- Added error reports
+	v0.3.1
+		- Added support for GenericF editing (PC & X360)
+		- Added error reports
 
-		v0.3
-			- Added support for CF ID & Portrait ID editing (PC & X360)
-			- Added Search by CF feature
+	v0.3
+		- Added support for CF ID & Portrait ID editing (PC & X360)
+		- Added Search by CF feature
 
-		v0.2.6
-			- Added X360 support for the Signature Skills editing
+	v0.2.6
+		- Added X360 support for the Signature Skills editing
 
-		v0.2.5
-			- Added X360 support for the Team Roster editing
+	v0.2.5
+		- Added X360 support for the Team Roster editing
 
-		v0.2.4
-			- All 12 player IDs of the 76ers can be changed
+	v0.2.4
+		- All 12 player IDs of the 76ers can be changed
 
-		v0.2.3
-			- Added changing the Player ID of the 5th player of the 76ers to test out different Player IDs
+	v0.2.3
+		- Added changing the Player ID of the 5th player of the 76ers to test out different Player IDs
 
-		v0.2.2
-			- The offset of the current player's first signature skill is shown
-			- Buttons to switch players quickly have been added
+	v0.2.2
+		- The offset of the current player's first signature skill is shown
+		- Buttons to switch players quickly have been added
 
-		v0.2.1
-			- Added Gatorade Prime Pack and On Court Coach signature skills
+	v0.2.1
+		- Added Gatorade Prime Pack and On Court Coach signature skills
 
-		v0.2
-			- Tool can now save changes to roster files
+	v0.2
+		- Tool can now save changes to roster files
 
-		v0.1
-			- Initial release
+	v0.1
+		- Initial release
