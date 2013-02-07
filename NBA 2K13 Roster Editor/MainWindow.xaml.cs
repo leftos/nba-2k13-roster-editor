@@ -3958,6 +3958,164 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
+        struct OffsetThingy
+        {
+            public string Option;
+            public string S;
+            public int BytesToMove;
+            public int BitsToMove;
+            public long Position;
+            public int InBytePosition;
+
+            public OffsetThingy(string option, string s, int bytesToMove, int bitsToMove)
+            {
+                Option = option;
+                S = s;
+                BytesToMove = bytesToMove;
+                BitsToMove = bitsToMove;
+                Position = 0;
+                InBytePosition = 0;
+            }
+        }
+
+        private void FindAllOffsets()
+        {
+            if (String.IsNullOrWhiteSpace(currentFile))
+                return;
+
+            BackgroundWorker bgwrk = new BackgroundWorker();
+
+            lstFOResults.Items.Clear();
+            btnFOSearch.IsEnabled = false;
+            btnFindAllOffsets.IsEnabled = false;
+
+            NonByteAlignedBinaryReader br = null;
+            bool found = false;
+            List<OffsetThingy> list = new List<OffsetThingy>
+                                      {
+                                          {new OffsetThingy("CustomRosterOffset", "657F9098010A0000", 8, 0)},
+                                          {new OffsetThingy("CustomJerseyOffset", "0000020D0440096E", 0, 0)},
+                                          {new OffsetThingy("CustomPlaybookOffset", "BEF53E7D", 0, 0)},
+                                          {new OffsetThingy("CustomStaffPlaybookIDOffset", "7e013bf0", -7, 0)},
+                                          {new OffsetThingy("CustomTeamStatsOffset", "231F0C6F", 0, 0)}
+                                      };
+            bgwrk.DoWork += delegate(object o, DoWorkEventArgs args)
+            {
+                br = new NonByteAlignedBinaryReader(new MemoryStream(File.ReadAllBytes(currentFile)));
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var thingy = list[i];
+                    br.BaseStream.Position = 0;
+                    br.InBytePosition = 0;
+                    var s = thingy.S;
+                    char[] ca = s.ToUpperInvariant().ToCharArray();
+                    string valid = "0123456789ABCDEF";
+                    foreach (char c in ca)
+                    {
+                        if (!valid.Contains(c))
+                        {
+                            MessageBox.Show("Hex string contains invalid character \"" + c + "\"");
+                            return;
+                        }
+                    }
+
+                    found = true;
+                    byte s1;
+                    byte s2 = Convert.ToByte(s.Substring(0, 2), 16);
+                    byte[] sba = Tools.HexStringToByteArray(s);
+                    while (true)
+                    {
+                        if (br.BaseStream.Position%500000 == 0 && br.InBytePosition == 0)
+                        {
+                            bgwrk.ReportProgress(Convert.ToInt32(br.BaseStream.Position*100/br.BaseStream.Length));
+                        }
+                        s1 = br.ReadNonByteAlignedByte();
+                        //Console.WriteLine("Compared {0} to {1} (at {2} +{3})", s1, s2, br.BaseStream.Position - 1, br.InBytePosition);
+                        while (s1 != s2)
+                        {
+                            br.MoveStreamPosition(0, -7);
+                            if (br.BaseStream.Length - br.BaseStream.Position == 1 && br.InBytePosition > 0)
+                            {
+                                found = false;
+                                break;
+                            }
+                            if (br.BaseStream.Position%500000 == 0 && br.InBytePosition == 0)
+                            {
+                                bgwrk.ReportProgress(Convert.ToInt32(br.BaseStream.Position*100/br.BaseStream.Length));
+                            }
+                            s1 = br.ReadNonByteAlignedByte();
+                            //Console.WriteLine("Compared {0} to {1} (at {2} +{3})", s1, s2, br.BaseStream.Position - 1, br.InBytePosition);
+                        }
+
+                        if (!found)
+                        {
+                            break;
+                        }
+
+                        br.BaseStream.Position--;
+                        long distanceFromEnd = br.BaseStream.Length - br.BaseStream.Position;
+                        if (distanceFromEnd < s.Length/2 || (distanceFromEnd == s.Length/2 && br.InBytePosition > 0))
+                        {
+                            found = false;
+                            break;
+                        }
+                        if (br.ReadNonByteAlignedBytes(s.Length/2).SequenceEqual(sba))
+                        {
+                            thingy.Position = br.BaseStream.Position;
+                            thingy.InBytePosition = br.InBytePosition;
+                            bgwrk.ReportProgress(0, thingy);
+                            break;
+                        }
+                        else
+                        {
+                            //Console.Write("Was at {0} +{1}, ", br.BaseStream.Position, br.InBytePosition);
+                            br.MoveStreamPosition(0 - (s.Length/2), 1);
+                            //Console.WriteLine("now at {0} +{1}.", br.BaseStream.Position, br.InBytePosition);
+                        }
+                    }
+                }
+                found = true;
+            };
+
+            bgwrk.ProgressChanged +=
+                delegate(object o, ProgressChangedEventArgs args)
+                {
+                    if (args.UserState == null)
+                    {
+                        lstFOResults.Items.Add(String.Format("Searching ({0}%)...", args.ProgressPercentage));
+                    }
+                    else
+                    {
+                        var offsetThingy = ((OffsetThingy) args.UserState);
+                        optionsList.Single(opt => opt.Setting == offsetThingy.Option).Value = offsetThingy.Position -
+                                                                                              (offsetThingy.S.Length/2) +
+                                                                                              offsetThingy.BytesToMove;
+                        optionsList.Single(opt => opt.Setting == offsetThingy.Option + "Bit").Value = offsetThingy.InBytePosition +
+                                                                                                      offsetThingy.BitsToMove;
+                        lstFOResults.Items.Add("Found " + offsetThingy.Option);
+                    }
+                };
+
+            bgwrk.RunWorkerCompleted += delegate(object o, RunWorkerCompletedEventArgs args)
+            {
+                if (!found)
+                {
+                    lstFOResults.Items.Add("Hex string not found after last occurrence, if any.");
+                }
+                else
+                {
+                    lstFOResults.Items.Add("Done! Save the Options tab and select the Custom profile to edit the roster!");
+                }
+                btnFOSearch.IsEnabled = true;
+                btnFindAllOffsets.IsEnabled = true;
+                br.Close();
+            };
+
+            bgwrk.WorkerReportsProgress = true;
+            bgwrk.RunWorkerAsync();
+        }
+
         private void btnFOSearch_Click(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(currentFile) || String.IsNullOrWhiteSpace(txtFOHex.Text))
@@ -4089,6 +4247,11 @@ namespace NBA_2K13_Roster_Editor
                                  ? "Paste into table completed but with errors. Check tracelog.txt for details."
                                  : "Paste into table completed.");
             }
+        }
+
+        private void btnFindAllOffsets_Click(object sender, RoutedEventArgs e)
+        {
+            FindAllOffsets();
         }
     }
 

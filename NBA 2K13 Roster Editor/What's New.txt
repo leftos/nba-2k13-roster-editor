@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.20
+		- Find Offsets button in Find Offsets tab added; attempts to find all the required offsets in the roster and inputs them in the Options tab automatically
+
 	v0.19.4.4
 		- Tool will not update a player's Free Agent status if the Teams tab isn't properly set-up
 		- Check For Updates setting added in Options tab; if set to anything but "True", it will tell the tool not to check for updates on start
