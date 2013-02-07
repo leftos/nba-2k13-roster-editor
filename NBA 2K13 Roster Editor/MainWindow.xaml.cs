@@ -3279,7 +3279,15 @@ namespace NBA_2K13_Roster_Editor
                                     var conversionType = propertyInfo.PropertyType;
                                     if (!conversionType.IsEnum)
                                     {
-                                        var curVal = Convert.ToDouble(propertyInfo.GetValue(playersList[id], null));
+                                        double curVal = double.NaN;
+                                        try
+                                        {
+                                            curVal = Convert.ToDouble(propertyInfo.GetValue(playersList[id], null));
+                                        }
+                                        catch (FormatException)
+                                        {
+                                            Console.WriteLine("Couldn't convert current value " + value + " to double.");
+                                        }
                                         if (isNumeric && parts[1] != "=")
                                         {
                                             switch (parts[1])

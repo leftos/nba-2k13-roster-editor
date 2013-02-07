@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.20.0.1
+		- Fixed bug when trying to use Find & Replace on certain kinds of values such as shoe colors
+
 	v0.20
 		- Find Offsets button in Find Offsets tab added; attempts to find all the required offsets in the roster and inputs them in the Options tab automatically
 
