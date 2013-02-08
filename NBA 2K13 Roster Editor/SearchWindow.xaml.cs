@@ -1,4 +1,24 @@
-﻿using System;
+﻿#region Copyright Notice
+
+//    Copyright 2011-2013 Eleftherios Aslanoglou
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+#endregion
+
+#region Using Directives
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,19 +26,35 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
+#endregion
+
 namespace NBA_2K13_Roster_Editor
 {
     /// <summary>
-    /// Interaction logic for SearchWindow.xaml
+    ///     Interaction logic for SearchWindow.xaml
     /// </summary>
     public partial class SearchWindow : Window
     {
         private readonly List<string> NumericOptions = new List<string> {"<", "<=", "=", ">=", ">", "Contains(Text)"};
-        private readonly List<string> ReplaceOptions = new List<string> { "=", "+=", "-=", "*=", "/=", "=Rand", "+=Rand", "-=Rand", "*=Rand", "/=Rand" }; 
+
+        private readonly List<string> ReplaceOptions = new List<string>
+                                                       {
+                                                           "=",
+                                                           "+=",
+                                                           "-=",
+                                                           "*=",
+                                                           "/=",
+                                                           "=Rand",
+                                                           "+=Rand",
+                                                           "-=Rand",
+                                                           "*=Rand",
+                                                           "/=Rand"
+                                                       };
+
         private readonly string folder = MainWindow.DocsPath + @"\Search Filters";
+        public List<string> FilterFilters = new List<string>();
         public List<string> FindFilters = new List<string>();
         public List<string> ReplaceFilters = new List<string>();
-        public List<string> FilterFilters = new List<string>();
 
         public SearchWindow()
         {
@@ -77,7 +113,7 @@ namespace NBA_2K13_Roster_Editor
             }
             else
             {
-                foreach (string item in new List<string>(lstFind.SelectedItems.Cast<string>()))
+                foreach (var item in new List<string>(lstFind.SelectedItems.Cast<string>()))
                 {
                     lstFind.Items.Remove(item);
                 }
@@ -119,7 +155,7 @@ namespace NBA_2K13_Roster_Editor
             }
             else
             {
-                foreach (string item in new List<string>(lstReplace.SelectedItems.Cast<string>()))
+                foreach (var item in new List<string>(lstReplace.SelectedItems.Cast<string>()))
                 {
                     lstReplace.Items.Remove(item);
                 }
@@ -195,13 +231,13 @@ namespace NBA_2K13_Roster_Editor
         {
             string s = "";
             s += String.Format("Find\n");
-            foreach (string item in lstFind.Items.Cast<string>())
+            foreach (var item in lstFind.Items.Cast<string>())
             {
                 s += item + "\n";
             }
             s += "FindEND\n";
             s += String.Format("Replace\n");
-            foreach (string item in lstReplace.Items.Cast<string>())
+            foreach (var item in lstReplace.Items.Cast<string>())
             {
                 s += item + "\n";
             }

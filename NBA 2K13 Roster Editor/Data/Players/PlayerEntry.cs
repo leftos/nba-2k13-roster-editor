@@ -1,7 +1,28 @@
-using System.Collections.Generic;
+#region Copyright Notice
+
+//    Copyright 2011-2013 Eleftherios Aslanoglou
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+#endregion
+
+#region Using Directives
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using NBA_2K13_Roster_Editor.Data.Players.Parameters;
+
+#endregion
 
 namespace NBA_2K13_Roster_Editor.Data.Players
 {
@@ -13,7 +34,12 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         // - Saving it via btnSavePlayers_Click
         // - Making it pasteable via dgPlayers_PreviewKeyDown
 
+        private ObservableCollection<byte> _accessories;
         private int _asaID;
+        private int _assignedTo;
+        private byte _birthDay;
+        private byte _birthMonth;
+        private ushort _birthYear;
         private BodyType _bodyType;
         private int _cAPBeard;
         private int _cAPEyebrow;
@@ -23,6 +49,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         private int _capGoatee;
         private CAPHairType _capHairType;
         private int _cfid;
+        private ClothesType _clothesType;
         private bool _contNoTrade;
         private ContractOption _contractOpt;
         private uint _contractY1;
@@ -39,14 +66,27 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         private ObservableCollection<byte> _hotSpots;
         private ObservableCollection<HotZoneValue> _hotZones;
         private int _id;
-        private byte _number;
+        private short _injuryDays;
+        private ushort _injuryType;
+        private bool _isFA;
+        private bool _isFAReal;
+        private bool _isHidden;
+        private byte _layupPkg;
         private MuscleTone _muscleTone;
         private string _name;
+        private byte _number;
         private int _plType;
+        private int _playStyle;
+        private PlayType _playType1;
+        private PlayType _playType2;
+        private PlayType _playType3;
+        private PlayType _playType4;
+        private short _playoffStats;
         private int _portraitID;
         private Position _position1;
         private Position _position2;
         private ObservableCollection<byte> _ratings;
+        private ObservableCollection<short> _seasonStats;
         private string _shAwayBase;
         private string _shAwayTeam1;
         private string _shAwayTeam2;
@@ -56,10 +96,16 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         private string _shHomeTeam2;
         private ShoeBrand _shoeBrand;
         private int _shoeModel;
+        private int _sigFT;
+        private int _sigShtBase;
+        private int _sigShtForm;
         private int _skintone;
         private ObservableCollection<SignatureSkill> _ssList;
+        private int _teamID1;
+        private int _teamID2;
         private ObservableCollection<byte> _tendencies;
         private float _weight;
+        private byte _yearsPro;
 
         public PlayerEntry()
         {
@@ -102,8 +148,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private ObservableCollection<byte> _accessories;
-
         public byte LayupPkg
         {
             get { return _layupPkg; }
@@ -113,8 +157,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("LayupPkg");
             }
         }
-
-        private byte _layupPkg;
 
         public int TeamID1
         {
@@ -126,8 +168,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private int _teamID1;
-
         public int TeamID2
         {
             get { return _teamID2; }
@@ -137,8 +177,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("TeamID2");
             }
         }
-
-        private int _teamID2;
 
         public int AssignedTo
         {
@@ -150,8 +188,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private int _assignedTo;
-
         public bool IsFA
         {
             get { return _isFA; }
@@ -162,8 +198,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private bool _isFA;
-
         public bool IsHidden
         {
             get { return _isHidden; }
@@ -173,8 +207,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("IsHidden");
             }
         }
-
-        private bool _isHidden;
 
         public int CFID
         {
@@ -206,8 +238,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private int _playStyle;
-
         public PlayType PlayType1
         {
             get { return _playType1; }
@@ -217,8 +247,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("PlayType1");
             }
         }
-
-        private PlayType _playType1;
 
         public PlayType PlayType2
         {
@@ -230,8 +258,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private PlayType _playType2;
-
         public PlayType PlayType3
         {
             get { return _playType3; }
@@ -242,8 +268,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private PlayType _playType3;
-
         public PlayType PlayType4
         {
             get { return _playType4; }
@@ -253,8 +277,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("PlayType4");
             }
         }
-
-        private PlayType _playType4;
 
         public Position Position1
         {
@@ -286,8 +308,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private ushort _injuryType;
-
         public short InjuryDays
         {
             get { return _injuryDays; }
@@ -297,8 +317,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("InjuryDays");
             }
         }
-
-        private short _injuryDays;
 
         public ushort BirthYear
         {
@@ -310,8 +328,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private ushort _birthYear;
-
         public byte BirthMonth
         {
             get { return _birthMonth; }
@@ -321,8 +337,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("BirthMonth");
             }
         }
-
-        private byte _birthMonth;
 
         public byte BirthDay
         {
@@ -334,8 +348,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private byte _birthDay;
-
         public byte YearsPro
         {
             get { return _yearsPro; }
@@ -345,8 +357,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("YearsPro");
             }
         }
-
-        private byte _yearsPro;
 
         public bool GenericF
         {
@@ -518,8 +528,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private ObservableCollection<short> _seasonStats;
-
         public short PlayoffStats
         {
             get { return _playoffStats; }
@@ -529,8 +537,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("PlayoffStats");
             }
         }
-
-        private short _playoffStats;
 
         public CAPHairType CAPHairType
         {
@@ -591,8 +597,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("ClothesType");
             }
         }
-
-        private ClothesType _clothesType;
 
         public bool ShCustomClr
         {
@@ -804,8 +808,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        private int _sigShtForm;
-
         public int SigShtBase
         {
             get { return _sigShtBase; }
@@ -815,8 +817,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("SigShtBase");
             }
         }
-
-        private int _sigShtBase;
 
         public int SigFT
         {
@@ -837,12 +837,6 @@ namespace NBA_2K13_Roster_Editor.Data.Players
                 OnPropertyChanged("IsFAReal");
             }
         }
-
-        private bool _isFAReal;
-
-        private int _sigFT;
-
-
 
         #region INotifyPropertyChanged Members
 

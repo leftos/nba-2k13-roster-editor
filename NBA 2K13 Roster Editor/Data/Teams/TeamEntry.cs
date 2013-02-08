@@ -1,12 +1,39 @@
+#region Copyright Notice
+
+//    Copyright 2011-2013 Eleftherios Aslanoglou
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+#endregion
+
+#region Using Directives
+
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+
+#endregion
 
 namespace NBA_2K13_Roster_Editor.Data.Teams
 {
     internal class TeamEntry : INotifyPropertyChanged
     {
+        private Int16 _curPlaSta;
+        private Int16 _curSeaSta;
         private int _plNum;
+        private int _playbookID;
+        private Int16 _prvPlaSta;
+        private Int16 _prvSeaSta;
         private ObservableCollection<int> _rosterSpots;
         private short _stAsstCoach;
         private short _stHeadCoach;
@@ -30,8 +57,6 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
             }
         }
 
-        private Int16 _curSeaSta;
-
         public Int16 CurPlaSta
         {
             get { return _curPlaSta; }
@@ -41,8 +66,6 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
                 OnPropertyChanged("CurPlaSta");
             }
         }
-
-        private Int16 _curPlaSta;
 
         public Int16 PrvSeaSta
         {
@@ -54,8 +77,6 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
             }
         }
 
-        private Int16 _prvSeaSta;
-
         public Int16 PrvPlaSta
         {
             get { return _prvPlaSta; }
@@ -66,8 +87,6 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
             }
         }
 
-        private Int16 _prvPlaSta;
-
         public int PlaybookID
         {
             get { return _playbookID; }
@@ -77,8 +96,6 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
                 OnPropertyChanged("PlaybookID");
             }
         }
-
-        private int _playbookID;
 
         public int PlNum
         {
@@ -99,7 +116,7 @@ namespace NBA_2K13_Roster_Editor.Data.Teams
                 OnPropertyChanged("RosterSpots");
             }
         }
-        
+
         public short StHeadCoach
         {
             get { return _stHeadCoach; }

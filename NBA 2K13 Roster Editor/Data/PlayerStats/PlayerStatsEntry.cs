@@ -1,12 +1,62 @@
+#region Copyright Notice
+
+//    Copyright 2011-2013 Eleftherios Aslanoglou
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+#endregion
+
+#region Using Directives
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using NBA_2K13_Roster_Editor.Annotations;
 
+#endregion
+
 namespace NBA_2K13_Roster_Editor.Data.PlayerStats
 {
     public class PlayerStatsEntry : INotifyPropertyChanged
     {
+        private UInt16 _aST;
+        private UInt16 _bLK;
+        private UInt16 _dREB;
+        private List<UInt16> _experimental;
+        private UInt16 _fGA;
+        private UInt16 _fGM;
+        private UInt16 _fOUL;
+        private UInt16 _fTA;
+        private UInt16 _fTM;
+        private UInt16 _gP;
+        private UInt16 _gS;
+        private int _iD;
+        private UInt16 _mINS;
+        private UInt16 _oREB;
+        private UInt16 _pTS;
+        private UInt16 _sTL;
+        private UInt16 _tOS;
+        private UInt16 _tPA;
+        private UInt16 _tPM;
+        private int _teamFin;
+
+        private int _teamSta;
+
+        public PlayerStatsEntry()
+        {
+            Experimental = new List<ushort>();
+        }
+
         public int ID
         {
             get { return _iD; }
@@ -16,8 +66,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("ID");
             }
         }
-
-        private int _iD;
 
         public int TeamSta
         {
@@ -29,8 +77,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private int _teamSta;
-
         public int TeamFin
         {
             get { return _teamFin; }
@@ -40,8 +86,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("TeamFin");
             }
         }
-
-        private int _teamFin;
 
         public UInt16 GP
         {
@@ -53,8 +97,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _gP;
-
         public UInt16 GS
         {
             get { return _gS; }
@@ -64,8 +106,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("GS");
             }
         }
-
-        private UInt16 _gS;
 
         public UInt16 MINS
         {
@@ -77,8 +117,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _mINS;
-
         public UInt16 FGM
         {
             get { return _fGM; }
@@ -88,8 +126,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("FGM");
             }
         }
-
-        private UInt16 _fGM;
 
         public UInt16 FGA
         {
@@ -101,8 +137,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _fGA;
-
         public UInt16 TPM
         {
             get { return _tPM; }
@@ -112,8 +146,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("TPM");
             }
         }
-
-        private UInt16 _tPM;
 
         public UInt16 TPA
         {
@@ -125,8 +157,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _tPA;
-
         public UInt16 FTM
         {
             get { return _fTM; }
@@ -136,8 +166,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("FTM");
             }
         }
-
-        private UInt16 _fTM;
 
         public UInt16 FTA
         {
@@ -149,8 +177,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _fTA;
-
         public UInt16 OREB
         {
             get { return _oREB; }
@@ -160,8 +186,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("OREB");
             }
         }
-
-        private UInt16 _oREB;
 
         public UInt16 DREB
         {
@@ -173,8 +197,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _dREB;
-
         public UInt16 STL
         {
             get { return _sTL; }
@@ -184,8 +206,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("STL");
             }
         }
-
-        private UInt16 _sTL;
 
         public UInt16 TOS
         {
@@ -197,8 +217,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _tOS;
-
         public UInt16 BLK
         {
             get { return _bLK; }
@@ -208,8 +226,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("BLK");
             }
         }
-
-        private UInt16 _bLK;
 
         public UInt16 AST
         {
@@ -221,8 +237,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _aST;
-
         public UInt16 FOUL
         {
             get { return _fOUL; }
@@ -232,8 +246,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
                 OnPropertyChanged("FOUL");
             }
         }
-
-        private UInt16 _fOUL;
 
         public UInt16 PTS
         {
@@ -245,8 +257,6 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private UInt16 _pTS;
-
         public List<UInt16> Experimental
         {
             get { return _experimental; }
@@ -257,19 +267,16 @@ namespace NBA_2K13_Roster_Editor.Data.PlayerStats
             }
         }
 
-        private List<UInt16> _experimental;
-
-        public PlayerStatsEntry()
-        {
-            Experimental = new List<ushort>();
-        }
+        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }

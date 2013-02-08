@@ -1,15 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region Copyright Notice
+
+//    Copyright 2011-2013 Eleftherios Aslanoglou
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+#endregion
+
+#region Using Directives
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using NBA_2K13_Roster_Editor.Annotations;
+
+#endregion
 
 namespace NBA_2K13_Roster_Editor.Data.Staff
 {
-    class StaffEntry : INotifyPropertyChanged
+    internal class StaffEntry : INotifyPropertyChanged
     {
+        private int _cFID;
+        private ObservableCollection<byte> _coachingProfile;
+        private string _headCoachOf;
+        private int _iD;
+        private int _playbookID;
+        private int _portraitID;
+
         public StaffEntry()
         {
             HeadCoachOf = "-1";
@@ -26,8 +51,6 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
             }
         }
 
-        private int _iD;
-
         public ObservableCollection<byte> CoachingProfile
         {
             get { return _coachingProfile; }
@@ -38,8 +61,6 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
             }
         }
 
-        private ObservableCollection<byte> _coachingProfile;
-        
         public int PlaybookID
         {
             get { return _playbookID; }
@@ -70,8 +91,6 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
             }
         }
 
-        private int _cFID;
-
         public int PortraitID
         {
             get { return _portraitID; }
@@ -82,19 +101,16 @@ namespace NBA_2K13_Roster_Editor.Data.Staff
             }
         }
 
-        private int _portraitID;
-
-        private string _headCoachOf;
-
-
-        private int _playbookID;
+        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }

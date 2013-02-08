@@ -1,8 +1,30 @@
+#region Copyright Notice
+
+//    Copyright 2011-2013 Eleftherios Aslanoglou
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+#endregion
+
+#region Using Directives
+
 using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Text;
+
+#endregion
 
 namespace NonByteAlignedBinaryRW
 {
@@ -64,7 +86,7 @@ namespace NonByteAlignedBinaryRW
         public void WriteNonByteAlignedBits(string s, byte[] originalBytes)
         {
             string r = "";
-            foreach (byte b in originalBytes)
+            foreach (var b in originalBytes)
             {
                 r += Convert.ToString(b, 2).PadLeft(8, '0');
             }

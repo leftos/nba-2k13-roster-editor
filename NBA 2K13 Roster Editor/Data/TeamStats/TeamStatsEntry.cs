@@ -1,12 +1,61 @@
-﻿using System;
+﻿#region Copyright Notice
+
+//    Copyright 2011-2013 Eleftherios Aslanoglou
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+#endregion
+
+#region Using Directives
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using NBA_2K13_Roster_Editor.Annotations;
+
+#endregion
 
 namespace NBA_2K13_Roster_Editor.Data.TeamStats
 {
     public class TeamStatsEntry : INotifyPropertyChanged
     {
+        private UInt16 _aST;
+        private UInt16 _bLK;
+        private UInt16 _dREB;
+        private List<UInt16> _experimental;
+        private UInt16 _fGA;
+        private UInt16 _fGM;
+        private UInt16 _fOUL;
+        private UInt16 _fTA;
+        private UInt16 _fTM;
+        private int _iD;
+        private byte _losses;
+        private UInt16 _mINS;
+        private UInt16 _oREB;
+        private UInt16 _pA;
+        private UInt16 _pF;
+        private UInt16 _sTL;
+        private UInt16 _tOS;
+        private UInt16 _tPA;
+        private UInt16 _tPM;
+
+        private byte _wins;
+
+        public TeamStatsEntry()
+        {
+            Experimental = new List<ushort>();
+        }
+
         public int ID
         {
             get { return _iD; }
@@ -16,8 +65,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("ID");
             }
         }
-
-        private int _iD;
 
         public byte Wins
         {
@@ -29,8 +76,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private byte _wins;
-
         public byte Losses
         {
             get { return _losses; }
@@ -40,8 +85,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("Losses");
             }
         }
-
-        private byte _losses;
 
         public UInt16 MINS
         {
@@ -53,8 +96,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _mINS;
-
         public UInt16 PF
         {
             get { return _pF; }
@@ -64,8 +105,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("PF");
             }
         }
-
-        private UInt16 _pF;
 
         public UInt16 PA
         {
@@ -77,8 +116,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _pA;
-
         public UInt16 FGM
         {
             get { return _fGM; }
@@ -88,8 +125,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("FGM");
             }
         }
-
-        private UInt16 _fGM;
 
         public UInt16 FGA
         {
@@ -101,8 +136,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _fGA;
-
         public UInt16 TPM
         {
             get { return _tPM; }
@@ -112,8 +145,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("TPM");
             }
         }
-
-        private UInt16 _tPM;
 
         public UInt16 TPA
         {
@@ -125,8 +156,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _tPA;
-
         public UInt16 FTM
         {
             get { return _fTM; }
@@ -136,8 +165,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("FTM");
             }
         }
-
-        private UInt16 _fTM;
 
         public UInt16 FTA
         {
@@ -149,8 +176,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _fTA;
-
         public UInt16 OREB
         {
             get { return _oREB; }
@@ -160,8 +185,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("OREB");
             }
         }
-
-        private UInt16 _oREB;
 
         public UInt16 DREB
         {
@@ -173,8 +196,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _dREB;
-
         public UInt16 STL
         {
             get { return _sTL; }
@@ -184,8 +205,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("STL");
             }
         }
-
-        private UInt16 _sTL;
 
         public UInt16 TOS
         {
@@ -197,8 +216,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _tOS;
-
         public UInt16 BLK
         {
             get { return _bLK; }
@@ -208,8 +225,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("BLK");
             }
         }
-
-        private UInt16 _bLK;
 
         public UInt16 AST
         {
@@ -221,8 +236,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private UInt16 _aST;
-
         public UInt16 FOUL
         {
             get { return _fOUL; }
@@ -232,8 +245,6 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
                 OnPropertyChanged("FOUL");
             }
         }
-
-        private UInt16 _fOUL;
 
         public List<UInt16> Experimental
         {
@@ -245,19 +256,16 @@ namespace NBA_2K13_Roster_Editor.Data.TeamStats
             }
         }
 
-        private List<UInt16> _experimental;
-
-        public TeamStatsEntry()
-        {
-            Experimental = new List<ushort>();
-        }
+        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
