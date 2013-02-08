@@ -3540,6 +3540,7 @@ namespace NBA_2K13_Roster_Editor
 
         private void btnReadme_Click(object sender, RoutedEventArgs e)
         {
+            File.Copy(AppPath + @"\README", AppPath + @"\Readme.txt", true);
             Process.Start(AppPath + @"\Readme.txt");
         }
 
