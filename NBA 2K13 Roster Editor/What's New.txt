@@ -1,5 +1,9 @@
 ﻿Version History
 
+	v0.20.1
+		- Errors while saving the Players tab should not result in the tool crashing anymore; they'll be reported to the tracelog.txt file and a message will be shown to the user; the tool will try to save the rest of the players anyway
+		- Error reports in errorlog_unh.txt now include version number
+
 	v0.20.0.1
 		- Fixed bug when trying to use Find & Replace on certain kinds of values such as shoe colors
 

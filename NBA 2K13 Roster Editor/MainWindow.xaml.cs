@@ -1515,473 +1515,490 @@ namespace NBA_2K13_Roster_Editor
             using (brSave = new RosterReader(File.Open(currentFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 NonByteAlignedBinaryWriter bw;
+                bool hadError = false;
                 using (bw = new NonByteAlignedBinaryWriter(File.Open(currentFile, FileMode.Open, FileAccess.Write, FileShare.ReadWrite)))
                 {
                     for (int i = 0; i < playersList.Count; i++)
                     {
-                        //Console.WriteLine("Saving Player " + i);
-                        PlayerEntry pe = playersList[i];
-                        brSave.MoveStreamToFirstSS(pe.ID);
-                        bw.BaseStream.Position = brSave.BaseStream.Position;
-                        bw.InBytePosition = brSave.InBytePosition;
+                        try
+                        {
+                            //Console.WriteLine("Saving Player " + i);
+                            PlayerEntry pe = playersList[i];
+                            brSave.MoveStreamToFirstSS(pe.ID);
+                            bw.BaseStream.Position = brSave.BaseStream.Position;
+                            bw.InBytePosition = brSave.InBytePosition;
 
-                        // Appearance
-                        long prevPos = brSave.BaseStream.Position;
-                        int prevPosIn = brSave.InBytePosition;
+                            // Appearance
+                            long prevPos = brSave.BaseStream.Position;
+                            int prevPosIn = brSave.InBytePosition;
 
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        Write2ByteStringToRoster(pe.PortraitID.ToString(), bw, ref brSave);
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            Write2ByteStringToRoster(pe.PortraitID.ToString(), bw, ref brSave);
 
-                        // PlType
-                        brSave.MoveStreamPosition(2, 6);
-                        SyncBWwithBR(ref bw, brSave);
+                            // PlType
+                            brSave.MoveStreamPosition(2, 6);
+                            SyncBWwithBR(ref bw, brSave);
 
-                        bw.WriteNonByteAlignedBits(Convert.ToString(Convert.ToByte(pe.PlType.ToString()), 2).PadLeft(3, '0'),
-                                                   brSave.ReadBytes(2));
+                            bw.WriteNonByteAlignedBits(Convert.ToString(Convert.ToByte(pe.PlType.ToString()), 2).PadLeft(3, '0'),
+                                                       brSave.ReadBytes(2));
 
-                        SyncBRwithBW(ref brSave, bw);
-                        brSave.MoveStreamPosition(-3, -1);
-                        //
-
-
-                        brSave.MoveStreamPosition(28, 0);
-
-                        Write2ByteStringToRoster(pe.CFID.ToString(), bw, ref brSave);
-
-                        brSave.MoveStreamPosition(94, 1);
-
-                        SyncBWwithBR(ref bw, brSave);
-                        byte b = brSave.ReadByte();
-                        bw.WriteNonByteAlignedBits(pe.GenericF ? "1" : "0", new[] {b});
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamPosition(137, 6);
-
-                        Write2ByteStringToRoster(pe.ASAID.ToString(), bw, ref brSave);
+                            SyncBRwithBW(ref brSave, bw);
+                            brSave.MoveStreamPosition(-3, -1);
+                            //
 
 
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(-8, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        if (teamsList.Any(te => te.ID == 999))
-                            WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
-                        else
+                            brSave.MoveStreamPosition(28, 0);
+
+                            Write2ByteStringToRoster(pe.CFID.ToString(), bw, ref brSave);
+
+                            brSave.MoveStreamPosition(94, 1);
+
+                            SyncBWwithBR(ref bw, brSave);
+                            byte b = brSave.ReadByte();
+                            bw.WriteNonByteAlignedBits(pe.GenericF ? "1" : "0", new[] {b});
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamPosition(137, 6);
+
+                            Write2ByteStringToRoster(pe.ASAID.ToString(), bw, ref brSave);
+
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(-8, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            if (teamsList.Any(te => te.ID == 999))
+                                WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
+                            else
+                                brSave.MoveStreamPosition(2, 0);
+                            brSave.MoveStreamPosition(1, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID1), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            brSave.MoveStreamPosition(258, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            if (teamsList.Any(te => te.ID == 999))
+                                WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
+                            else
+                                brSave.MoveStreamPosition(2, 0);
+                            brSave.MoveStreamPosition(1, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID2), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            brSave.MoveStreamPosition(15, 4);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(pe.IsFA ? "0" : "1", brSave.ReadBytes(1));
+
+                            // Play Style
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(154, 5);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.PlayStyle, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(143, 5);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType1.ToString()), 2).PadLeft(4, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType2.ToString()), 2).PadLeft(4, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType3.ToString()), 2).PadLeft(4, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType4.ToString()), 2).PadLeft(4, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+
+
+                            // Height & Weight
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(-16, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                NonByteAlignedBinaryReader.ByteArrayToBitString(BitConverter.GetBytes(pe.Height).Reverse().ToArray()),
+                                brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(
+                                NonByteAlignedBinaryReader.ByteArrayToBitString(BitConverter.GetBytes(pe.Weight).Reverse().ToArray()),
+                                brSave.ReadBytes(5));
+                            //
+
+                            // Positions
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(25, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (Position), pe.Position1.ToString()), 2).PadLeft(3, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (Position), pe.Position2.ToString()), 2).PadLeft(3, '0'),
+                                brSave.ReadBytes(2));
+
+                            // Shoes
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(122, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            byte[] original = brSave.ReadBytes(3);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ShoeModel, 2).PadLeft(12, '0'), original);
+                            SyncBRwithBW(ref brSave, bw);
+
+                            original = brSave.ReadBytes(2);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (ShoeBrand), pe.ShoeBrand.ToString()), 2).PadLeft(3, '0'),
+                                original);
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(98, 0);
+                            SyncBWwithBR(ref bw, brSave);
+
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShHomeTeam1.Substring(1)), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShHomeTeam2.Substring(1)), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShHomeBase.Substring(1)), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayBase.Substring(1)), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayTeam2.Substring(1)), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayTeam1.Substring(1)), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamPosition(3, 5);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(pe.ShCustomClr ? "1" : "0", brSave.ReadBytes(1));
+                            //
+
+
+                            //Hair
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(127, 1);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (CAPHairType), pe.CAPHairType.ToString()), 2).PadLeft(6, '0'),
+                                brSave.ReadBytes(2));
+                            //
+
+                            //
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(5, 4);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedByte(pe.Number, brSave.ReadBytes(2));
+                            //
+
+                            //
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(126, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (BodyType), pe.BodyType.ToString()), 2).PadLeft(2, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (MuscleTone), pe.MuscleTone.ToString()), 2).PadLeft(1, '0'),
+                                brSave.ReadBytes(1));
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(128, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (EyeColor), pe.EyeColor.ToString()), 2).PadLeft(3, '0'),
+                                brSave.ReadBytes(2));
+                            //
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(314, 2);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (ClothesType), pe.ClothesType.ToString()), 2).PadLeft(2, '0'),
+                                brSave.ReadBytes(2));
+
+
+                            brSave.BaseStream.Position = prevPos;
+                            brSave.InBytePosition = prevPosIn;
+                            SyncBWwithBR(ref bw, brSave);
+                            //
+
+                            original = brSave.ReadBytes(2);
+                            string s = pe.SSList[0].ToString();
+                            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                            SyncBRwithBW(ref brSave, bw);
+
+                            original = brSave.ReadBytes(2);
+                            s = pe.SSList[1].ToString();
+                            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamPosition(0, 14);
+                            bw.MoveStreamPosition(0, 14);
+
+                            original = brSave.ReadBytes(2);
+                            s = pe.SSList[2].ToString();
+                            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                            SyncBRwithBW(ref brSave, bw);
+
+                            original = brSave.ReadBytes(2);
+                            s = pe.SSList[3].ToString();
+                            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                            SyncBRwithBW(ref brSave, bw);
+
+                            original = brSave.ReadBytes(2);
+                            s = pe.SSList[4].ToString();
+                            bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
+                            SyncBRwithBW(ref brSave, bw);
+
+
+                            //Ratings
+                            brSave.MoveStreamToFirstSS(i);
+                            brSave.MoveStreamPosition(14, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            for (int j = 0; j < 37; j++)
+                            {
+                                byte byteToWrite;
+                                try
+                                {
+                                    byteToWrite = (byte) ((pe.Ratings[j] - 25)*3);
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("Problem with Player ID " + pe.ID + ", Rating " + j + "\nWill try to continue.");
+                                    continue;
+                                }
+                                bw.WriteNonByteAlignedByte(byteToWrite, brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+
+                            //Tendencies
+                            brSave.MoveStreamToFirstSS(i);
+                            brSave.MoveStreamPosition(51, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            for (int j = 0; j < 69; j++)
+                            {
+                                byte byteToWrite;
+                                try
+                                {
+                                    byteToWrite = pe.Tendencies[j];
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("Problem with Player ID " + pe.ID + ", Tendency " + j + "\nWill try to continue.");
+                                    continue;
+                                }
+                                bw.WriteNonByteAlignedByte(byteToWrite, brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+
+                            //Hot Spots
+                            brSave.MoveStreamToFirstSS(i);
+                            brSave.MoveStreamPosition(120, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            for (int j = 0; j < 25; j++)
+                            {
+                                byte byteToWrite;
+                                try
+                                {
+                                    byteToWrite = pe.HotSpots[j];
+                                }
+                                catch (Exception)
+                                {
+                                    MessageBox.Show("Problem with Player ID " + pe.ID + ", Hot Spot " + j + "\nWill try to continue.");
+                                    continue;
+                                }
+                                bw.WriteNonByteAlignedByte(byteToWrite, brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+
+                            #region Contracts
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(154, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (ContractOption), pe.ContractOpt.ToString()), 2).PadLeft(2, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(177, 5);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(pe.ContNoTrade ? "1" : "0", brSave.ReadBytes(1));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(214, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY1, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY2, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY3, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY4, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY5, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY6, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY7, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            #endregion
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(126, 6);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.Skintone, 2).PadLeft(3, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamPosition(0, 6);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (HairColor), pe.CAPHairClr.ToString()), 2).PadLeft(4, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamPosition(0, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPEyebrow, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            brSave.MoveStreamPosition(0, 6);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPMstch, 2).PadLeft(3, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(
+                                Convert.ToString((byte) Enum.Parse(typeof (HairColor), pe.CAPFclHairClr.ToString()), 2).PadLeft(4, '0'),
+                                brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPBeard, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPGoatee, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(178, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            for (int j = 0; j < 15; j++)
+                            {
+                                bw.WriteNonByteAlignedBits(Convert.ToString(pe.DunkPackages[j], 2).PadLeft(8, '0'), brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(274, 2);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.LayupPkg, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(193, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedByte(Convert.ToByte(pe.SigFT), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedByte(Convert.ToByte(pe.SigShtForm), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedByte(Convert.ToByte(pe.SigShtBase), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(24, 1);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.InjuryType, 2).PadLeft(7, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            brSave.MoveStreamPosition(3, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.InjuryDays, 2).PadLeft(16, '0'), brSave.ReadBytes(3));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
                             brSave.MoveStreamPosition(2, 0);
-                        brSave.MoveStreamPosition(1, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID1), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        brSave.MoveStreamPosition(258, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        if (teamsList.Any(te => te.ID == 999))
-                            WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
-                        else
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthYear, 2).PadLeft(12, '0'), brSave.ReadBytes(3));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthMonth, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthDay, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(87, 6);
+                            SyncBWwithBR(ref bw, brSave);
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.YearsPro, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
+
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(40, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            for (int j = 0; j < 22; j++)
+                            {
+                                bw.WriteNonByteAlignedBits(Convert.ToString(pe.SeasonStats[j], 2).PadLeft(16, '0'), brSave.ReadBytes(3));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.PlayoffStats, 2).PadLeft(16, '0'), brSave.ReadBytes(3));
+
+                            // Gear
+                            int k = 0;
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(129, 7);
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.Accessories[k++], 1, bw, ref brSave);
                             brSave.MoveStreamPosition(2, 0);
-                        brSave.MoveStreamPosition(1, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID2), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        brSave.MoveStreamPosition(15, 4);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(pe.IsFA ? "0" : "1", brSave.ReadBytes(1));
-
-                        // Play Style
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(154, 5);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.PlayStyle, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(143, 5);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType1.ToString()), 2).PadLeft(4, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType2.ToString()), 2).PadLeft(4, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType3.ToString()), 2).PadLeft(4, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (PlayType), pe.PlayType4.ToString()), 2).PadLeft(4, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-
-
-                        // Height & Weight
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(-16, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            NonByteAlignedBinaryReader.ByteArrayToBitString(BitConverter.GetBytes(pe.Height).Reverse().ToArray()),
-                            brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(
-                            NonByteAlignedBinaryReader.ByteArrayToBitString(BitConverter.GetBytes(pe.Weight).Reverse().ToArray()),
-                            brSave.ReadBytes(5));
-                        //
-
-                        // Positions
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(25, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (Position), pe.Position1.ToString()), 2).PadLeft(3, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (Position), pe.Position2.ToString()), 2).PadLeft(3, '0'),
-                            brSave.ReadBytes(2));
-
-                        // Shoes
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(122, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        byte[] original = brSave.ReadBytes(3);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ShoeModel, 2).PadLeft(12, '0'), original);
-                        SyncBRwithBW(ref brSave, bw);
-
-                        original = brSave.ReadBytes(2);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (ShoeBrand), pe.ShoeBrand.ToString()), 2).PadLeft(3, '0'), original);
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(98, 0);
-                        SyncBWwithBR(ref bw, brSave);
-
-                        bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShHomeTeam1.Substring(1)), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShHomeTeam2.Substring(1)), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShHomeBase.Substring(1)), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayBase.Substring(1)), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayTeam2.Substring(1)), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayTeam1.Substring(1)), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamPosition(3, 5);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(pe.ShCustomClr ? "1" : "0", brSave.ReadBytes(1));
-                        //
-
-
-                        //Hair
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(127, 1);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (CAPHairType), pe.CAPHairType.ToString()), 2).PadLeft(6, '0'),
-                            brSave.ReadBytes(2));
-                        //
-
-                        //
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(5, 4);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedByte(pe.Number, brSave.ReadBytes(2));
-                        //
-
-                        //
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(126, 3);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (BodyType), pe.BodyType.ToString()), 2).PadLeft(2, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (MuscleTone), pe.MuscleTone.ToString()), 2).PadLeft(1, '0'),
-                            brSave.ReadBytes(1));
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(128, 3);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (EyeColor), pe.EyeColor.ToString()), 2).PadLeft(3, '0'),
-                            brSave.ReadBytes(2));
-                        //
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(314, 2);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (ClothesType), pe.ClothesType.ToString()), 2).PadLeft(2, '0'),
-                            brSave.ReadBytes(2));
-
-
-                        brSave.BaseStream.Position = prevPos;
-                        brSave.InBytePosition = prevPosIn;
-                        SyncBWwithBR(ref bw, brSave);
-                        //
-
-                        original = brSave.ReadBytes(2);
-                        string s = pe.SSList[0].ToString();
-                        bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                        SyncBRwithBW(ref brSave, bw);
-
-                        original = brSave.ReadBytes(2);
-                        s = pe.SSList[1].ToString();
-                        bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamPosition(0, 14);
-                        bw.MoveStreamPosition(0, 14);
-
-                        original = brSave.ReadBytes(2);
-                        s = pe.SSList[2].ToString();
-                        bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                        SyncBRwithBW(ref brSave, bw);
-
-                        original = brSave.ReadBytes(2);
-                        s = pe.SSList[3].ToString();
-                        bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                        SyncBRwithBW(ref brSave, bw);
-
-                        original = brSave.ReadBytes(2);
-                        s = pe.SSList[4].ToString();
-                        bw.WriteNonByteAlignedBits(ConvertSignatureSkillToBinary(s), original);
-                        SyncBRwithBW(ref brSave, bw);
-
-
-                        //Ratings
-                        brSave.MoveStreamToFirstSS(i);
-                        brSave.MoveStreamPosition(14, 3);
-                        SyncBWwithBR(ref bw, brSave);
-                        for (int j = 0; j < 37; j++)
-                        {
-                            byte byteToWrite;
-                            try
-                            {
-                                byteToWrite = (byte) ((pe.Ratings[j] - 25)*3);
-                            }
-                            catch (Exception)
-                            {
-                                MessageBox.Show("Problem with Player ID " + pe.ID + ", Rating " + j + "\nWill try to continue.");
-                                continue;
-                            }
-                            bw.WriteNonByteAlignedByte(byteToWrite, brSave.ReadBytes(2));
-                            SyncBRwithBW(ref brSave, bw);
-                        }
-
-                        //Tendencies
-                        brSave.MoveStreamToFirstSS(i);
-                        brSave.MoveStreamPosition(51, 3);
-                        SyncBWwithBR(ref bw, brSave);
-                        for (int j = 0; j < 69; j++)
-                        {
-                            byte byteToWrite;
-                            try
-                            {
-                                byteToWrite = pe.Tendencies[j];
-                            }
-                            catch (Exception)
-                            {
-                                MessageBox.Show("Problem with Player ID " + pe.ID + ", Tendency " + j + "\nWill try to continue.");
-                                continue;
-                            }
-                            bw.WriteNonByteAlignedByte(byteToWrite, brSave.ReadBytes(2));
-                            SyncBRwithBW(ref brSave, bw);
-                        }
-
-                        //Hot Spots
-                        brSave.MoveStreamToFirstSS(i);
-                        brSave.MoveStreamPosition(120, 3);
-                        SyncBWwithBR(ref bw, brSave);
-                        for (int j = 0; j < 25; j++)
-                        {
-                            byte byteToWrite;
-                            try
-                            {
-                                byteToWrite = pe.HotSpots[j];
-                            }
-                            catch (Exception)
-                            {
-                                MessageBox.Show("Problem with Player ID " + pe.ID + ", Hot Spot " + j + "\nWill try to continue.");
-                                continue;
-                            }
-                            bw.WriteNonByteAlignedByte(byteToWrite, brSave.ReadBytes(2));
-                            SyncBRwithBW(ref brSave, bw);
-                        }
-
-                        #region Contracts
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(154, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (ContractOption), pe.ContractOpt.ToString()), 2).PadLeft(2, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(177, 5);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(pe.ContNoTrade ? "1" : "0", brSave.ReadBytes(1));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(214, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY1, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY2, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY3, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY4, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY5, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY6, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.ContractY7, 2).PadLeft(32, '0'), brSave.ReadBytes(5));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        #endregion
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(126, 6);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.Skintone, 2).PadLeft(3, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamPosition(0, 6);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (HairColor), pe.CAPHairClr.ToString()), 2).PadLeft(4, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamPosition(0, 3);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPEyebrow, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        brSave.MoveStreamPosition(0, 6);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPMstch, 2).PadLeft(3, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(
-                            Convert.ToString((byte) Enum.Parse(typeof (HairColor), pe.CAPFclHairClr.ToString()), 2).PadLeft(4, '0'),
-                            brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPBeard, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.CAPGoatee, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(178, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        for (int j = 0; j < 15; j++)
-                        {
-                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.DunkPackages[j], 2).PadLeft(8, '0'), brSave.ReadBytes(2));
-                            SyncBRwithBW(ref brSave, bw);
-                        }
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(274, 2);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.LayupPkg, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(193, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedByte(Convert.ToByte(pe.SigFT), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedByte(Convert.ToByte(pe.SigShtForm), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedByte(Convert.ToByte(pe.SigShtBase), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(24, 1);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.InjuryType, 2).PadLeft(7, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        brSave.MoveStreamPosition(3, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.InjuryDays, 2).PadLeft(16, '0'), brSave.ReadBytes(3));
-                        SyncBRwithBW(ref brSave, bw);
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(2, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthYear, 2).PadLeft(12, '0'), brSave.ReadBytes(3));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthMonth, 2).PadLeft(4, '0'), brSave.ReadBytes(2));
-                        SyncBRwithBW(ref brSave, bw);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.BirthDay, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(87, 6);
-                        SyncBWwithBR(ref bw, brSave);
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.YearsPro, 2).PadLeft(5, '0'), brSave.ReadBytes(2));
-
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(40, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        for (int j = 0; j < 22; j++)
-                        {
-                            bw.WriteNonByteAlignedBits(Convert.ToString(pe.SeasonStats[j], 2).PadLeft(16, '0'), brSave.ReadBytes(3));
-                            SyncBRwithBW(ref brSave, bw);
-                        }
-                        bw.WriteNonByteAlignedBits(Convert.ToString(pe.PlayoffStats, 2).PadLeft(16, '0'), brSave.ReadBytes(3));
-
-                        // Gear
-                        int k = 0;
-                        brSave.MoveStreamToPortraitID(pe.ID);
-                        brSave.MoveStreamPosition(129, 7);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 1, bw, ref brSave);
-                        brSave.MoveStreamPosition(2, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 4, bw, ref brSave);
-                        brSave.MoveStreamPosition(1, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 2, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 1, bw, ref brSave);
-                        brSave.MoveStreamPosition(0, 1);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 4, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        brSave.MoveStreamPosition(0, 1);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        brSave.MoveStreamPosition(0, 1);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 2, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 4, bw, ref brSave);
-                        for (int l = 0; l < 15; l++)
-                        {
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 4, bw, ref brSave);
+                            brSave.MoveStreamPosition(1, 0);
+                            SyncBWwithBR(ref bw, brSave);
                             WriteByte(pe.Accessories[k++], 2, bw, ref brSave);
-                        }
-                        brSave.MoveStreamPosition(1, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        brSave.MoveStreamPosition(2, 3);
-                        SyncBWwithBR(ref bw, brSave);
-                        for (int l = 0; l < 4; l++)
-                        {
+                            WriteByte(pe.Accessories[k++], 1, bw, ref brSave);
+                            brSave.MoveStreamPosition(0, 1);
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.Accessories[k++], 4, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            brSave.MoveStreamPosition(0, 1);
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            brSave.MoveStreamPosition(0, 1);
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
                             WriteByte(pe.Accessories[k++], 2, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 4, bw, ref brSave);
+                            for (int l = 0; l < 15; l++)
+                            {
+                                WriteByte(pe.Accessories[k++], 2, bw, ref brSave);
+                            }
+                            brSave.MoveStreamPosition(1, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            brSave.MoveStreamPosition(2, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            for (int l = 0; l < 4; l++)
+                            {
+                                WriteByte(pe.Accessories[k++], 2, bw, ref brSave);
+                            }
+                            brSave.MoveStreamPosition(152, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
+                            //
                         }
-                        brSave.MoveStreamPosition(152, 0);
-                        SyncBWwithBR(ref bw, brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
-                        //
+                        catch (Exception ex)
+                        {
+                            Trace.Write("Error while trying to save player with ID " + playersList[i].ID + ": " + ex.Message + "\n" +
+                                        ex.StackTrace + "\n\n");
+                            hadError = true;
+                        }
+                    }
+                    if (hadError)
+                    {
+                        MessageBox.Show(
+                            "One or more errors happened while trying to save this tab. Please check the tracelog.txt file in " +
+                            "My Documents\\NBA 2K13 Roster Editor and, if needed, report the errors to the developer.");
                     }
                 }
             }

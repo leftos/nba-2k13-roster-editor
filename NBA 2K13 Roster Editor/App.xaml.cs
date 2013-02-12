@@ -21,6 +21,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -41,6 +42,9 @@ namespace NBA_2K13_Roster_Editor
             {
                 var f = new StreamWriter(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
 
+                f.WriteLine("Unhandled Exception Error Report for NBA 2K13 Roster Editor");
+                f.WriteLine("Version " + Assembly.GetExecutingAssembly().GetName().Version);
+                f.WriteLine();
                 f.Write(e.Exception.ToString());
                 f.WriteLine();
                 f.WriteLine();
