@@ -94,7 +94,7 @@
         <CheckBox x:Name="chkRecalculateCRC" Content="Recalculate CRC on Save" Margin="0,42,10,0"
                   VerticalAlignment="Top" Checked="chkRecalculateCRC_Checked" Unchecked="chkRecalculateCRC_Unchecked"
                   HorizontalAlignment="Right" Width="148" />
-        <TabControl Margin="10,42,129,30">
+        <TabControl x:Name="tbcMain" Margin="10,42,129,30">
             <TabItem x:Name="tabPlayers" Header="Players">
                 <Grid x:Name="grdPlayers">
                     <DataGrid x:Name="dgPlayers" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
@@ -215,7 +215,8 @@
                               ClipboardCopyMode="IncludeHeader" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5" SelectedCellsChanged="dgTeams_SelectedCellsChanged"/>
                     <Button x:Name="btnResetPlaybooks" Margin="0,64,10,0"
                     	HorizontalAlignment="Right" Width="133" Height="50" VerticalAlignment="Top" Click="btnResetPlaybooks_Click" >
-                        <TextBlock TextAlignment="Center">Reset Current Teams'<LineBreak />Playbooks</TextBlock></Button>
+                        <TextBlock TextAlignment="Center">Reset Current Teams'<LineBreak />Playbooks</TextBlock>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Jerseys">
@@ -347,7 +348,7 @@
                     <Button Content="Button" HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
                 </Grid>
             </TabItem>
-                <TabItem IsEnabled="False" />
+            <TabItem IsEnabled="False" />
             <TabItem Header="Options">
                 <Grid>
                     <DataGrid x:Name="dgOptions" Margin="10,10,112,10" AutoGenerateColumns="False"
@@ -363,7 +364,7 @@
                     	Width="75" Height="22" VerticalAlignment="Top" Click="btnResetOptions_Click" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Find Offset">
+            <TabItem x:Name="tabFindOffsets" Header="Find Offset">
                 <Grid>
                     <Label Content="Hex string to find: " Margin="6,6" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <TextBox Name="txtFOHex" Margin="119,10,188,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
@@ -374,21 +375,21 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="160" HorizontalAlignment="Right"
+        <GroupBox Header="Mode" Margin="0,69,10,0" VerticalAlignment="Top" Height="79" HorizontalAlignment="Right"
                   Width="114">
             <Grid>
-                <RadioButton x:Name="btnModePC" Content="PC Ret" HorizontalAlignment="Left" Margin="10,10,0,0"
-                             VerticalAlignment="Top" Checked="btnModePC_Checked" />
-                <RadioButton x:Name="btnMode360" Content="360" HorizontalAlignment="Left" Margin="10,52,0,0"
-                             VerticalAlignment="Top" Checked="btnMode360_Checked" />
-                <RadioButton x:Name="btnModePCNov" Content="PC Nv10" HorizontalAlignment="Left" Margin="10,31,0,0"
-                	VerticalAlignment="Top" Checked="btnModePCNov_Checked" />
-                <RadioButton x:Name="btnModeCustom" Content="Custom" HorizontalAlignment="Left" Margin="10,94,0,0"
+                <RadioButton x:Name="btnModeCustom" Content="Auto PC" HorizontalAlignment="Left" Margin="10,10,0,0"
                 	VerticalAlignment="Top" Checked="btnModeCustom_Checked" />
-                <RadioButton x:Name="btnMode360Nov10" Content="360 Nv10" HorizontalAlignment="Left" Margin="10,73,0,0"
-                	VerticalAlignment="Top" Checked="btnMode360Nov10_Checked" />
-                <RadioButton x:Name="btnModeCustom360" Content="Custom 360" HorizontalAlignment="Left" Margin="10,115,0,0"
+                <RadioButton x:Name="btnModeCustom360" Content="Auto 360" HorizontalAlignment="Left" Margin="10,31,0,0"
                 	VerticalAlignment="Top" Checked="btnModeCustom360_Checked" />
+                <RadioButton x:Name="btnModePC" Content="PC Ret" HorizontalAlignment="Left" Margin="10,139,0,0"
+                	VerticalAlignment="Top" Checked="btnModePC_Checked" />
+                <RadioButton x:Name="btnMode360" Content="360" HorizontalAlignment="Left" Margin="10,181,0,0"
+                	VerticalAlignment="Top" Checked="btnMode360_Checked" />
+                <RadioButton x:Name="btnModePCNov" Content="PC Nv10" HorizontalAlignment="Left" Margin="10,160,0,0"
+                	VerticalAlignment="Top" Checked="btnModePCNov_Checked" />
+                <RadioButton x:Name="btnMode360Nov10" Content="360 Nv10" HorizontalAlignment="Left" Margin="10,202,0,0"
+                	VerticalAlignment="Top" Checked="btnMode360Nov10_Checked" />
             </Grid>
         </GroupBox>
         <StatusBar HorizontalAlignment="Stretch" Height="25" Margin="0" VerticalAlignment="Bottom">

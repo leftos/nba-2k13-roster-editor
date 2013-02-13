@@ -29,6 +29,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -84,7 +85,7 @@ namespace NBA_2K13_Roster_Editor
                                                          "TeamColor5",
                                                          "TeamColor6"
                                                      };
-
+        
         private readonly DispatcherTimer timer;
 
         //private RosterReader brOpen;
@@ -203,7 +204,7 @@ namespace NBA_2K13_Roster_Editor
                                                                  {91, "Unknown Slot 1"},
                                                                  {92, "Unknown Slot 2"}
                                                              };
-
+        
         #endregion
 
         public MainWindow()
@@ -242,6 +243,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 mode = Mode.PC;
             }
+            /*
             if (mode == Mode.PC)
                 btnModePC.IsChecked = true;
             else if (mode == Mode.X360)
@@ -252,6 +254,15 @@ namespace NBA_2K13_Roster_Editor
                 btnMode360Nov10.IsChecked = true;
             else if (mode == Mode.Custom)
                 btnModeCustom.IsChecked = true;
+            */
+            if (mode.ToString().Contains("360"))
+            {
+                btnModeCustom360.IsChecked = true;
+            }
+            else
+            {
+                btnModeCustom.IsChecked = true;
+            }
 
             PreparePlayersDataGrid();
 
@@ -829,7 +840,14 @@ namespace NBA_2K13_Roster_Editor
                     break;
             }
 
-            ReloadEverything();
+            if (mode == Mode.Custom || mode == Mode.CustomX360)
+            {
+                FindAllOffsets();
+            }
+            else
+            {
+                ReloadEverything();
+            }
 
             updateStatus("Roster loaded.");
         }
@@ -4016,26 +4034,29 @@ namespace NBA_2K13_Roster_Editor
             lstFOResults.Items.Clear();
             btnFOSearch.IsEnabled = false;
             btnFindAllOffsets.IsEnabled = false;
+            tbcMain.SelectedItem = tabFindOffsets;
+            tbcMain.IsEnabled = false;
 
-            NonByteAlignedBinaryReader br = null;
+            RosterReader br = null;
             bool found = false;
             var list = new List<OffsetThingy>
                        {
-                           new OffsetThingy("CustomRosterOffset", "657F9098010A0000", 8, 0),
-                           new OffsetThingy("CustomJerseyOffset", "0000020D0440096E", 0, 0),
-                           new OffsetThingy("CustomPlaybookOffset", "BEF53E7D", 0, 0),
-                           new OffsetThingy("CustomStaffPlaybookIDOffset", "7e013bf0", -7, 0),
-                           new OffsetThingy("CustomTeamStatsOffset", "231F0C6F", 0, 0)
+                           new OffsetThingy("CustomRosterOffset", "657F9098010A0000", 8, 0, 860000, 0),
+                           new OffsetThingy("CustomJerseyOffset", "0000020D0440096E", 0, 0, 1486000, 0),
+                           new OffsetThingy("CustomPlaybookOffset", "BEF53E7D", 0, 0, 1099000, 0),
+                           new OffsetThingy("CustomStaffPlaybookIDOffset", "7e013bf0", -7, 0, 991000, 0),
+                           new OffsetThingy("CustomTeamStatsOffset", "231F0C6F", 0, 0, 1434000, 0)
                        };
             bgwrk.DoWork += delegate
                             {
-                                br = new NonByteAlignedBinaryReader(new MemoryStream(File.ReadAllBytes(currentFile)));
+                                br = new RosterReader(new MemoryStream(File.ReadAllBytes(currentFile)));
 
                                 for (int i = 0; i < list.Count; i++)
                                 {
                                     OffsetThingy thingy = list[i];
-                                    br.BaseStream.Position = 0;
-                                    br.InBytePosition = 0;
+                                    br.BaseStream.Position = thingy.InitialPosition;
+                                    br.InBytePosition = thingy.InitialInBytePosition;
+                                    br.MoveStreamForSaveType();
                                     string s = thingy.S;
                                     char[] ca = s.ToUpperInvariant().ToCharArray();
                                     string valid = "0123456789ABCDEF";
@@ -4090,8 +4111,8 @@ namespace NBA_2K13_Roster_Editor
                                         }
                                         if (br.ReadNonByteAlignedBytes(s.Length/2).SequenceEqual(sba))
                                         {
-                                            thingy.Position = br.BaseStream.Position;
-                                            thingy.InBytePosition = br.InBytePosition;
+                                            thingy.FinalPosition = br.BaseStream.Position;
+                                            thingy.FinalInBytePosition = br.InBytePosition;
                                             bgwrk.ReportProgress(0, thingy);
                                             break;
                                         }
@@ -4115,11 +4136,11 @@ namespace NBA_2K13_Roster_Editor
                                          else
                                          {
                                              var offsetThingy = ((OffsetThingy) args.UserState);
-                                             optionsList.Single(opt => opt.Setting == offsetThingy.Option).Value = offsetThingy.Position -
-                                                                                                                   (offsetThingy.S.Length/2) +
-                                                                                                                   offsetThingy.BytesToMove;
+                                             optionsList.Single(opt => opt.Setting == offsetThingy.Option).Value =
+                                                 offsetThingy.FinalPosition - (offsetThingy.S.Length/2) + offsetThingy.BytesToMove -
+                                                 RosterReader.SaveTypeOffset(saveType);
                                              optionsList.Single(opt => opt.Setting == offsetThingy.Option + "Bit").Value =
-                                                 offsetThingy.InBytePosition + offsetThingy.BitsToMove;
+                                                 offsetThingy.FinalInBytePosition + offsetThingy.BitsToMove;
                                              lstFOResults.Items.Add("Found " + offsetThingy.Option);
                                          }
                                      };
@@ -4133,10 +4154,13 @@ namespace NBA_2K13_Roster_Editor
                                             else
                                             {
                                                 lstFOResults.Items.Add(
-                                                    "Done! Save the Options tab and select the Custom profile to edit the roster!");
+                                                    "Done! Select the Custom profile to edit the roster!");
                                             }
                                             btnFOSearch.IsEnabled = true;
                                             btnFindAllOffsets.IsEnabled = true;
+                                            btnSaveOptions_Click(null, null);
+                                            tbcMain.SelectedItem = tabPlayers;
+                                            tbcMain.IsEnabled = true;
                                             br.Close();
                                         };
 
@@ -4289,10 +4313,12 @@ namespace NBA_2K13_Roster_Editor
         {
             public int BitsToMove;
             public int BytesToMove;
-            public int InBytePosition;
+            public int FinalInBytePosition;
             public string Option;
-            public long Position;
+            public long FinalPosition;
             public string S;
+            public int InitialInBytePosition;
+            public long InitialPosition;
 
             public OffsetThingy(string option, string s, int bytesToMove, int bitsToMove)
             {
@@ -4300,8 +4326,22 @@ namespace NBA_2K13_Roster_Editor
                 S = s;
                 BytesToMove = bytesToMove;
                 BitsToMove = bitsToMove;
-                Position = 0;
-                InBytePosition = 0;
+                FinalPosition = 0;
+                FinalInBytePosition = 0;
+                InitialInBytePosition = 0;
+                InitialPosition = 0;
+            }
+
+            public OffsetThingy(string option, string s, int bytesToMove, int bitsToMove, long initialPosition, int initialInBytePosition)
+            {
+                Option = option;
+                S = s;
+                BytesToMove = bytesToMove;
+                BitsToMove = bitsToMove;
+                FinalPosition = 0;
+                FinalInBytePosition = 0;
+                InitialInBytePosition = initialInBytePosition;
+                InitialPosition = initialPosition;
             }
         }
 

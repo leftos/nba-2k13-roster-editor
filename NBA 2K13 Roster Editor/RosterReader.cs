@@ -55,6 +55,26 @@ namespace NBA_2K13_Roster_Editor
             }
         }
 
+        public static long SaveTypeOffset(SaveType saveType)
+        {
+            if (saveType == SaveType.Roster)
+            {
+                return 0;
+            }
+            else if (saveType == SaveType.Association)
+            {
+                return 8;
+            }
+            else if (saveType == SaveType.MyCareer)
+            {
+                return 2190248;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public void MoveStreamToCurrentTeamRoster(int i)
         {
             MoveStreamToFirstRoster();
