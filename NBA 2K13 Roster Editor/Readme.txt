@@ -15,6 +15,13 @@
 		- (X360) Editing Signature Skills of player with Player ID 1364 doesn't work for now
 
 
+	Development Credits
+		- Uses the WPF Color Picker Library by Sacha Barber under the CPOL license
+			(http://www.codeproject.com/Articles/33001/WPF-A-Simple-Color-Picker-With-Preview)
+		- Uses the LumenWorks Framework 
+			(http://www.codeproject.com/Articles/9258/A-Fast-CSV-Reader)
+
+
 	Credits
 	    - JaoSming, for helping with researching the roster format
 		- HyperBaller21, for helping with making the editor compatible with 360 files

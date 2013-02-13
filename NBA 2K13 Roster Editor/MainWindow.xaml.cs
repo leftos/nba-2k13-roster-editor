@@ -29,7 +29,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -41,13 +40,13 @@ using Microsoft.Win32;
 using NBA_2K13_Roster_Editor.Data;
 using NBA_2K13_Roster_Editor.Data.Jerseys;
 using NBA_2K13_Roster_Editor.Data.Playbooks;
-using NBA_2K13_Roster_Editor.Data.PlayerStats;
 using NBA_2K13_Roster_Editor.Data.Players;
 using NBA_2K13_Roster_Editor.Data.Players.Parameters;
+using NBA_2K13_Roster_Editor.Data.PlayerStats;
 using NBA_2K13_Roster_Editor.Data.Staff;
 using NBA_2K13_Roster_Editor.Data.Staff.Parameters;
-using NBA_2K13_Roster_Editor.Data.TeamStats;
 using NBA_2K13_Roster_Editor.Data.Teams;
+using NBA_2K13_Roster_Editor.Data.TeamStats;
 using NonByteAlignedBinaryRW;
 using WPFColorPickerLib;
 
@@ -85,7 +84,16 @@ namespace NBA_2K13_Roster_Editor
                                                          "TeamColor5",
                                                          "TeamColor6"
                                                      };
-        
+
+        private readonly List<string> gNames;
+        private readonly List<string> hsNames;
+        //private List<int> foundIDs = new List<int>();
+        private readonly List<string> pColsToAvoid;
+        private readonly Random random;
+        private readonly List<string> rtNames;
+        private readonly List<string> tColsToAvoid;
+        private readonly List<string> tNames;
+        private readonly List<string> teamColumns = new List<string> {"TeamID1", "TeamID2", "AssignedTo*"};
         private readonly DispatcherTimer timer;
 
         //private RosterReader brOpen;
@@ -95,16 +103,7 @@ namespace NBA_2K13_Roster_Editor
         private bool editing;
         private int expCount;
         private List<int> foundIDList = new List<int>();
-        private List<string> gNames;
-        private List<string> hsNames;
-        //private List<int> foundIDs = new List<int>();
         private Dictionary<string, string> names;
-        private List<string> pColsToAvoid;
-        private Random random;
-        private List<string> rtNames;
-        private List<string> tColsToAvoid;
-        private List<string> tNames;
-        private List<string> teamColumns = new List<string> {"TeamID1", "TeamID2", "AssignedTo*"};
 
         #region Team Names
 
@@ -204,7 +203,7 @@ namespace NBA_2K13_Roster_Editor
                                                                  {91, "Unknown Slot 1"},
                                                                  {92, "Unknown Slot 2"}
                                                              };
-        
+
         #endregion
 
         public MainWindow()
@@ -2514,7 +2513,7 @@ namespace NBA_2K13_Roster_Editor
                     }
 
                     List<int> teamsToUpdate = teamsList.Where(te => te.StHeadCoach == se.ID).Select(te => te.ID).ToList();
-                    foreach (var teamID in teamsToUpdate)
+                    foreach (int teamID in teamsToUpdate)
                     {
                         teamsList.Single(te => te.ID == teamID).PlaybookID = se.PlaybookID;
                     }
@@ -2693,7 +2692,7 @@ namespace NBA_2K13_Roster_Editor
 
         private void btnSaveOptions_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var o in optionsList)
+            foreach (Option o in optionsList)
             {
                 SetRegistrySetting(o.Setting, o.Value);
             }
@@ -2758,25 +2757,25 @@ namespace NBA_2K13_Roster_Editor
         {
             bool noErrors = SmartPasting(pe, dict, pColsToAvoid);
 
-            foreach (var rtName in rtNames)
+            foreach (string rtName in rtNames)
             {
                 var curInd = (byte) Enum.Parse(typeof (Rating), rtName.Substring(1));
                 pe.Ratings[curInd] = pe.Ratings[curInd].TrySetValue(dict, rtName, true);
             }
 
-            foreach (var tName in tNames)
+            foreach (string tName in tNames)
             {
                 var curInd = (byte) Enum.Parse(typeof (Tendency), tName.Substring(1));
                 pe.Tendencies[curInd] = pe.Tendencies[curInd].TrySetValue(dict, tName, true);
             }
 
-            foreach (var hsName in hsNames)
+            foreach (string hsName in hsNames)
             {
                 var curInd = (byte) Enum.Parse(typeof (HotSpot), hsName.Substring(2));
                 pe.HotSpots[curInd] = pe.HotSpots[curInd].TrySetValue(dict, hsName, true);
             }
 
-            foreach (var gName in gNames)
+            foreach (string gName in gNames)
             {
                 var curInd = (byte) Enum.Parse(typeof (Gear), gName.Substring(1));
                 pe.Accessories[curInd] = pe.Accessories[curInd].TrySetValue(dict, gName, true);
@@ -2803,7 +2802,7 @@ namespace NBA_2K13_Roster_Editor
         private bool SmartPasting<T>(T entry, Dictionary<string, string> dict, List<string> columnsToAvoid)
         {
             bool noErrors = true;
-            foreach (var key in dict.Keys)
+            foreach (string key in dict.Keys)
             {
                 if (columnsToAvoid.Contains(key) || key.Contains("*") || key == "ID")
                     continue;
@@ -3202,7 +3201,7 @@ namespace NBA_2K13_Roster_Editor
 
                     if (sw.ReplaceFilters.Count > 0)
                     {
-                        foreach (var filter in sw.ReplaceFilters)
+                        foreach (string filter in sw.ReplaceFilters)
                         {
                             string[] parts = filter.Split(' ');
                             parts[2] = parts.Skip(2).Aggregate((p1, p2) => p1 + " " + p2);
@@ -3253,7 +3252,7 @@ namespace NBA_2K13_Roster_Editor
                             string toReplaceS = parts[2];
                             object value = isNumeric ? (object) toReplaceD : toReplaceS;
 
-                            foreach (var id in foundIDs)
+                            foreach (int id in foundIDs)
                             {
                                 PropertyInfo propertyInfo = typeof (PlayerEntry).GetProperty(prop);
                                 if (isArray)
@@ -3417,7 +3416,7 @@ namespace NBA_2K13_Roster_Editor
                 foundIDs.Add(i);
             }
 
-            foreach (var filter in sw.FindFilters)
+            foreach (string filter in sw.FindFilters)
             {
                 string[] parts = filter.Split(' ');
                 parts[2] = parts.Skip(2).Aggregate((p1, p2) => p1 + " " + p2);
@@ -3458,7 +3457,7 @@ namespace NBA_2K13_Roster_Editor
                             break;
                     }
                 }
-                foreach (var id in foundIDs)
+                foreach (int id in foundIDs)
                 {
                     double test;
                     bool isNumeric = double.TryParse(parts[2], out test);
@@ -3708,7 +3707,7 @@ namespace NBA_2K13_Roster_Editor
             List<string> files = Directory.GetFiles(Path.GetDirectoryName(ofd.FileName)).ToList();
             files.Sort();
 
-            foreach (var file in files)
+            foreach (string file in files)
             {
                 var sw = new SearchWindow();
                 sw.LoadFilters(file);
@@ -4060,7 +4059,7 @@ namespace NBA_2K13_Roster_Editor
                                     string s = thingy.S;
                                     char[] ca = s.ToUpperInvariant().ToCharArray();
                                     string valid = "0123456789ABCDEF";
-                                    foreach (var c in ca)
+                                    foreach (char c in ca)
                                     {
                                         if (!valid.Contains(c))
                                         {
@@ -4153,8 +4152,7 @@ namespace NBA_2K13_Roster_Editor
                                             }
                                             else
                                             {
-                                                lstFOResults.Items.Add(
-                                                    "Done! Select the Custom profile to edit the roster!");
+                                                lstFOResults.Items.Add("Done! Select the Custom profile to edit the roster!");
                                             }
                                             btnFOSearch.IsEnabled = true;
                                             btnFindAllOffsets.IsEnabled = true;
@@ -4187,7 +4185,7 @@ namespace NBA_2K13_Roster_Editor
 
                                 char[] ca = s.ToCharArray();
                                 string valid = "0123456789ABCDEF";
-                                foreach (var c in ca)
+                                foreach (char c in ca)
                                 {
                                     if (!valid.Contains(c))
                                     {
@@ -4311,14 +4309,14 @@ namespace NBA_2K13_Roster_Editor
 
         private struct OffsetThingy
         {
-            public int BitsToMove;
-            public int BytesToMove;
+            public readonly int BitsToMove;
+            public readonly int BytesToMove;
+            public readonly int InitialInBytePosition;
+            public readonly long InitialPosition;
+            public readonly string Option;
+            public readonly string S;
             public int FinalInBytePosition;
-            public string Option;
             public long FinalPosition;
-            public string S;
-            public int InitialInBytePosition;
-            public long InitialPosition;
 
             public OffsetThingy(string option, string s, int bytesToMove, int bitsToMove)
             {

@@ -11,7 +11,8 @@
         xmlns:PlayerStats="clr-namespace:NBA_2K13_Roster_Editor.Data.PlayerStats"
         xmlns:players="clr-namespace:NBA_2K13_Roster_Editor.Data.Players" mc:Ignorable="d"
         Title="NBA 2K13 Roster Editor"
-        Height="477" Width="902" Closing="Window_Closing_1" Icon="pack://siteoforigin:,,,/NLSC.ico" Loaded="Window_Loaded_1">
+        Height="477" Width="902" Closing="Window_Closing_1" Icon="pack://siteoforigin:,,,/NLSC.ico"
+        Loaded="Window_Loaded_1">
     <Window.Resources>
         <ObjectDataProvider x:Key="SignatureSkillsList" MethodName="GetValues"
                             ObjectType="{x:Type Parameters:SignatureSkill}">
@@ -80,7 +81,8 @@
                 <x:Type TypeName="Parameters:PlayType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="ClothesTypesList" MethodName="GetValues" ObjectType="{x:Type Parameters:ClothesType}">
+        <ObjectDataProvider x:Key="ClothesTypesList" MethodName="GetValues"
+                            ObjectType="{x:Type Parameters:ClothesType}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="Parameters:ClothesType" />
             </ObjectDataProvider.MethodParameters>
@@ -98,27 +100,38 @@
             <TabItem x:Name="tabPlayers" Header="Players">
                 <Grid x:Name="grdPlayers">
                     <DataGrid x:Name="dgPlayers" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
-                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True" EnableRowVirtualization="True"
-                              PreviewKeyDown="dgPlayers_PreviewKeyDown" ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
-                              MouseDoubleClick="dgPlayers_MouseDoubleClick" SelectedCellsChanged="dgPlayers_SelectedCellsChanged" CellEditEnding="dataGrid_CellEditEnding"
-                              AlternatingRowBackground="#FFE5E5E5" d:DataContext="{d:DesignInstance players:PlayerEntry}">
+                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              PreviewKeyDown="dgPlayers_PreviewKeyDown" ClipboardCopyMode="IncludeHeader"
+                              SelectionUnit="Cell"
+                              MouseDoubleClick="dgPlayers_MouseDoubleClick"
+                              SelectedCellsChanged="dgPlayers_SelectedCellsChanged"
+                              CellEditEnding="dataGrid_CellEditEnding"
+                              AlternatingRowBackground="#FFE5E5E5"
+                              d:DataContext="{d:DesignInstance players:PlayerEntry}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" />
                             <DataGridTextColumn Header="PlType" Binding="{Binding PlType, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="Position1"
-                                                    SelectedValueBinding="{Binding Position1, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource PositionsList}}" />
+                                                    SelectedValueBinding="{Binding Position1, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource PositionsList}}" />
                             <DataGridComboBoxColumn Header="Position2"
-                                                    SelectedValueBinding="{Binding Position2, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource PositionsList}}" />
+                                                    SelectedValueBinding="{Binding Position2, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource PositionsList}}" />
                             <DataGridTextColumn Header="PlayStyle" Binding="{Binding PlayStyle, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="PlayType1"
-                                                    SelectedValueBinding="{Binding PlayType1, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
+                                                    SelectedValueBinding="{Binding PlayType1, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
                             <DataGridComboBoxColumn Header="PlayType2"
-                                                    SelectedValueBinding="{Binding PlayType2, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
+                                                    SelectedValueBinding="{Binding PlayType2, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
                             <DataGridComboBoxColumn Header="PlayType3"
-                                                    SelectedValueBinding="{Binding PlayType3, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
+                                                    SelectedValueBinding="{Binding PlayType3, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
                             <DataGridComboBoxColumn Header="PlayType4"
-                                                    SelectedValueBinding="{Binding PlayType4, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
+                                                    SelectedValueBinding="{Binding PlayType4, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource PlayTypesList}}" />
                             <DataGridTextColumn Header="Number" Binding="{Binding Number, Mode=TwoWay}" />
                             <DataGridTextColumn Header="CFID" Binding="{Binding CFID, Mode=TwoWay}" />
                             <DataGridCheckBoxColumn Header="GenericF" Binding="{Binding GenericF, Mode=TwoWay}" />
@@ -126,10 +139,14 @@
                             <DataGridTextColumn Header="ASAID" Binding="{Binding ASAID, Mode=TwoWay}" />
                             <DataGridTextColumn Header="TeamID1" Binding="{Binding TeamID1, Mode=TwoWay}" />
                             <DataGridTextColumn Header="TeamID2" Binding="{Binding TeamID2, Mode=TwoWay}" />
-                            <DataGridTextColumn Header="AssignedTo*" Binding="{Binding AssignedTo, Mode=TwoWay}" IsReadOnly="True" />
-                            <DataGridCheckBoxColumn Header="IsFAReal" Binding="{Binding IsFAReal, Mode=TwoWay}" Visibility="Collapsed"/>
-                            <DataGridCheckBoxColumn Header="IsFA*" Binding="{Binding IsFA, Mode=TwoWay}"  IsReadOnly="True" />
-                            <DataGridCheckBoxColumn Header="IsHidden*" Binding="{Binding IsHidden, Mode=TwoWay}"  IsReadOnly="True" />
+                            <DataGridTextColumn Header="AssignedTo*" Binding="{Binding AssignedTo, Mode=TwoWay}"
+                                                IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Header="IsFAReal" Binding="{Binding IsFAReal, Mode=TwoWay}"
+                                                    Visibility="Collapsed" />
+                            <DataGridCheckBoxColumn Header="IsFA*" Binding="{Binding IsFA, Mode=TwoWay}"
+                                                    IsReadOnly="True" />
+                            <DataGridCheckBoxColumn Header="IsHidden*" Binding="{Binding IsHidden, Mode=TwoWay}"
+                                                    IsReadOnly="True" />
                             <DataGridTextColumn Header="InjuryType" Binding="{Binding InjuryType, Mode=TwoWay}" />
                             <DataGridTextColumn Header="InjuryDays" Binding="{Binding InjuryDays, Mode=TwoWay}" />
                             <DataGridTextColumn Header="BirthYear" Binding="{Binding BirthYear, Mode=TwoWay}" />
@@ -139,7 +156,8 @@
                             <DataGridTextColumn Header="Height" Binding="{Binding Height, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Weight" Binding="{Binding Weight, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="ShoeBrand"
-                                                    SelectedValueBinding="{Binding ShoeBrand, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource ShoeBrandsList}}" />
+                                                    SelectedValueBinding="{Binding ShoeBrand, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource ShoeBrandsList}}" />
                             <DataGridTextColumn Header="ShoeModel" Binding="{Binding ShoeModel, Mode=TwoWay}" />
                             <DataGridCheckBoxColumn Header="ShCustomClr" Binding="{Binding ShCustomClr, Mode=TwoWay}" />
                             <DataGridTextColumn Header="ShHomeTeam1" Binding="{Binding ShHomeTeam1, Mode=TwoWay}" />
@@ -150,17 +168,20 @@
                             <DataGridTextColumn Header="ShAwayBase" Binding="{Binding ShAwayBase, Mode=TwoWay}" />
                             <DataGridTextColumn Header="Skintone" Binding="{Binding Skintone, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="EyeColor"
-                                                    SelectedValueBinding="{Binding EyeColor, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource EyeColorsList}}" />
+                                                    SelectedValueBinding="{Binding EyeColor, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource EyeColorsList}}" />
                             <DataGridComboBoxColumn Header="MuscleTone"
                                                     SelectedValueBinding="{Binding MuscleTone, Mode=TwoWay}"
                                                     ItemsSource="{Binding Source={StaticResource MuscleTonesList}}" />
                             <DataGridComboBoxColumn Header="BodyType"
-                                                    SelectedValueBinding="{Binding BodyType, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource BodyTypesList}}" />
+                                                    SelectedValueBinding="{Binding BodyType, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource BodyTypesList}}" />
                             <DataGridComboBoxColumn Header="CAPHairType"
                                                     SelectedValueBinding="{Binding CAPHairType, Mode=TwoWay}"
                                                     ItemsSource="{Binding Source={StaticResource CAPHairTypesList}}" />
                             <DataGridComboBoxColumn Header="CAPHairClr"
-                                                    SelectedValueBinding="{Binding CAPHairClr, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource HairColorsList}}" />
+                                                    SelectedValueBinding="{Binding CAPHairClr, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource HairColorsList}}" />
                             <DataGridTextColumn Header="CAPEyebrow" Binding="{Binding CAPEyebrow, Mode=TwoWay}" />
                             <DataGridTextColumn Header="CAPMstch" Binding="{Binding CAPMstch, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="CAPFclHairClr"
@@ -169,7 +190,8 @@
                             <DataGridTextColumn Header="CAPBeard" Binding="{Binding CAPBeard, Mode=TwoWay}" />
                             <DataGridTextColumn Header="CAPGoatee" Binding="{Binding CAPGoatee, Mode=TwoWay}" />
                             <DataGridComboBoxColumn Header="ClothesType"
-                                                    SelectedValueBinding="{Binding ClothesType, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource ClothesTypesList}}" />
+                                                    SelectedValueBinding="{Binding ClothesType, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource ClothesTypesList}}" />
                             <DataGridComboBoxColumn Header="SS1"
                                                     SelectedValueBinding="{Binding SSList[0], Mode=TwoWay}"
                                                     ItemsSource="{Binding Source={StaticResource SignatureSkillsList}}" />
@@ -193,12 +215,16 @@
                                Margin="0,37,10,0" Stroke="Black" VerticalAlignment="Top" Width="102"
                                PreviewMouseLeftButtonDown="AnyRect_PreviewMouseLeftButtonDown" />
                     <Button x:Name="btnSearch" Content="Find &amp; Replace" Margin="0,78,10,0"
-                            HorizontalAlignment="Right" Width="102" Height="22" VerticalAlignment="Top" Click="btnSearch_Click" />
+                            HorizontalAlignment="Right" Width="102" Height="22" VerticalAlignment="Top"
+                            Click="btnSearch_Click" />
                     <Button x:Name="btnFindNext" Content="Find Next" Margin="0,105,10,0" HorizontalAlignment="Right"
                             Width="102" Height="22" VerticalAlignment="Top" Click="btnFindNext_Click" />
                     <Button x:Name="btnBatchEdit" Margin="0,0,10,21"
-                    	HorizontalAlignment="Right" Width="102" Height="41" VerticalAlignment="Bottom" Click="btnBatchEdit_Click">
-                        <TextBlock TextAlignment="Center">Apply Replace<LineBreak/>Filters</TextBlock>
+                            HorizontalAlignment="Right" Width="102" Height="41" VerticalAlignment="Bottom"
+                            Click="btnBatchEdit_Click">
+                        <TextBlock TextAlignment="Center">
+                            Apply Replace<LineBreak />Filters
+                        </TextBlock>
                     </Button>
                 </Grid>
             </TabItem>
@@ -207,24 +233,36 @@
                     <Button x:Name="btnSaveTeams" Content="Save Teams" Margin="0,10,10,0" HorizontalAlignment="Right"
                             Width="102" Height="22" VerticalAlignment="Top" Click="btnSaveTeams_Click" />
                     <Button x:Name="btnFill" Content="Fill with consecutive" Margin="0,37,10,0"
-                            HorizontalAlignment="Right" Width="133" Height="22" VerticalAlignment="Top" Click="btnFill_Click" />
+                            HorizontalAlignment="Right" Width="133" Height="22" VerticalAlignment="Top"
+                            Click="btnFill_Click" />
                     <DataGrid x:Name="dgTeams" AutoGenerateColumns="False" Margin="10,10,157,10"
-                              CanUserReorderColumns="False" CanUserSortColumns="True" SelectionUnit="Cell" PreviewKeyDown="dgTeams_PreviewKeyDown"
-                              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" EnableColumnVirtualization="True"
-                              EnableRowVirtualization="True" FrozenColumnCount="2" CanUserAddRows="False" CanUserDeleteRows="False"
-                              ClipboardCopyMode="IncludeHeader" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5" SelectedCellsChanged="dgTeams_SelectedCellsChanged"/>
+                              CanUserReorderColumns="False" CanUserSortColumns="True" SelectionUnit="Cell"
+                              PreviewKeyDown="dgTeams_PreviewKeyDown"
+                              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True" FrozenColumnCount="2" CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              ClipboardCopyMode="IncludeHeader" CellEditEnding="dataGrid_CellEditEnding"
+                              AlternatingRowBackground="#FFE5E5E5" SelectedCellsChanged="dgTeams_SelectedCellsChanged" />
                     <Button x:Name="btnResetPlaybooks" Margin="0,64,10,0"
-                    	HorizontalAlignment="Right" Width="133" Height="50" VerticalAlignment="Top" Click="btnResetPlaybooks_Click" >
-                        <TextBlock TextAlignment="Center">Reset Current Teams'<LineBreak />Playbooks</TextBlock>
+                            HorizontalAlignment="Right" Width="133" Height="50" VerticalAlignment="Top"
+                            Click="btnResetPlaybooks_Click">
+                        <TextBlock TextAlignment="Center">
+                            Reset Current Teams'<LineBreak />Playbooks
+                        </TextBlock>
                     </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Jerseys">
                 <Grid>
                     <DataGrid x:Name="dgJerseys" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
-                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True" EnableRowVirtualization="True"
-                              ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell" MouseDoubleClick="dgJerseys_MouseDoubleClick"
-                              PreviewKeyDown="dgJerseys_PreviewKeyDown" SelectedCellsChanged="dgJerseys_SelectedCellsChanged" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5"
+                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
+                              MouseDoubleClick="dgJerseys_MouseDoubleClick"
+                              PreviewKeyDown="dgJerseys_PreviewKeyDown"
+                              SelectedCellsChanged="dgJerseys_SelectedCellsChanged"
+                              CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5"
                               d:DataContext="{d:DesignInstance Jerseys:JerseyEntry}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
@@ -249,7 +287,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnSaveJerseys" Content="Save Jerseys" Margin="0,10,10,0"
-                            HorizontalAlignment="Right" Width="102" Height="22" VerticalAlignment="Top" Click="btnSaveJerseys_Click" />
+                            HorizontalAlignment="Right" Width="102" Height="22" VerticalAlignment="Top"
+                            Click="btnSaveJerseys_Click" />
                     <Rectangle x:Name="rctJerseyColor" Fill="#FFF4F4F5" HorizontalAlignment="Right" Height="24"
                                Margin="0,37,10,0" Stroke="Black" VerticalAlignment="Top" Width="102"
                                PreviewMouseLeftButtonDown="AnyRect_PreviewMouseLeftButtonDown" />
@@ -258,39 +297,52 @@
             <TabItem Header="Staff">
                 <Grid>
                     <DataGrid x:Name="dgStaff" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="1"
-                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True" EnableRowVirtualization="True"
+                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
                               ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
-                              PreviewKeyDown="dgStaff_PreviewKeyDown"  CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5"
+                              PreviewKeyDown="dgStaff_PreviewKeyDown" CellEditEnding="dataGrid_CellEditEnding"
+                              AlternatingRowBackground="#FFE5E5E5"
                               d:DataContext="{d:DesignInstance staff:StaffEntry}" Sorting="dgStaff_Sorting">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
-                            <DataGridTextColumn Header="HeadCoachOf*" Binding="{Binding HeadCoachOf, Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="HeadCoachOf*" Binding="{Binding HeadCoachOf, Mode=TwoWay}"
+                                                IsReadOnly="True" />
                             <DataGridTextColumn Header="PlaybookID" Binding="{Binding PlaybookID, Mode=TwoWay}" />
                             <DataGridTextColumn Header="PortraitID" Binding="{Binding PortraitID, Mode=TwoWay}" />
                             <DataGridTextColumn Header="CFID" Binding="{Binding CFID, Mode=TwoWay}" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btnSaveStaff" Content="Save Staff" Margin="0,10,10,0"
-                            HorizontalAlignment="Right" Width="102" Height="22" VerticalAlignment="Top" Click="btnSaveStaff_Click" />
+                            HorizontalAlignment="Right" Width="102" Height="22" VerticalAlignment="Top"
+                            Click="btnSaveStaff_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="Playbooks">
                 <Grid>
-                    <Button x:Name="btnSavePlaybooks" Content="Save Playbooks" Margin="0,10,10,0" HorizontalAlignment="Right"
+                    <Button x:Name="btnSavePlaybooks" Content="Save Playbooks" Margin="0,10,10,0"
+                            HorizontalAlignment="Right"
                             Width="102" Height="22" VerticalAlignment="Top" Click="btnSavePlaybooks_Click" />
                     <DataGrid x:Name="dgPlaybooks" AutoGenerateColumns="False" Margin="10,10,130,10"
-                              CanUserReorderColumns="False" CanUserSortColumns="False" SelectionUnit="Cell" PreviewKeyDown="dgPlaybooks_PreviewKeyDown"
-                              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" EnableColumnVirtualization="True"
-                              EnableRowVirtualization="True" FrozenColumnCount="1" CanUserAddRows="False" CanUserDeleteRows="False"
-                              ClipboardCopyMode="IncludeHeader" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5"/>
+                              CanUserReorderColumns="False" CanUserSortColumns="False" SelectionUnit="Cell"
+                              PreviewKeyDown="dgPlaybooks_PreviewKeyDown"
+                              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                              EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True" FrozenColumnCount="1" CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              ClipboardCopyMode="IncludeHeader" CellEditEnding="dataGrid_CellEditEnding"
+                              AlternatingRowBackground="#FFE5E5E5" />
                 </Grid>
             </TabItem>
             <TabItem Header="Team Stats">
                 <Grid>
-                    <DataGrid x:Name="dgTeamStats" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
-                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True" EnableRowVirtualization="True"
-                              ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell" AlternatingRowBackground="#FFE5E5E5"
-                              d:DataContext="{d:DesignInstance TeamStats:TeamStatsEntry}" PreviewKeyDown="dgTeamStats_PreviewKeyDown">
+                    <DataGrid x:Name="dgTeamStats" CanUserAddRows="False" CanUserDeleteRows="False"
+                              FrozenColumnCount="2"
+                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
+                              AlternatingRowBackground="#FFE5E5E5"
+                              d:DataContext="{d:DesignInstance TeamStats:TeamStatsEntry}"
+                              PreviewKeyDown="dgTeamStats_PreviewKeyDown">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Wins" Binding="{Binding Wins}" />
@@ -312,15 +364,19 @@
                             <DataGridTextColumn Header="FOUL" Binding="{Binding FOUL}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btnSaveTeamStats" Content="Save Team Stats" Margin="0,10,10,0" HorizontalAlignment="Right"
-                    	Width="102" Height="22" VerticalAlignment="Top" Click="btnSaveTeamStats_Click" />
+                    <Button x:Name="btnSaveTeamStats" Content="Save Team Stats" Margin="0,10,10,0"
+                            HorizontalAlignment="Right"
+                            Width="102" Height="22" VerticalAlignment="Top" Click="btnSaveTeamStats_Click" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabPlayerStats" Header="Player Stats">
                 <Grid>
-                    <DataGrid x:Name="dgPlayerStats" CanUserAddRows="False" CanUserDeleteRows="False" FrozenColumnCount="2"
-                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True" EnableRowVirtualization="True"
-                              ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell" AlternatingRowBackground="#FFE5E5E5"
+                    <DataGrid x:Name="dgPlayerStats" CanUserAddRows="False" CanUserDeleteRows="False"
+                              FrozenColumnCount="2"
+                              Margin="10,10,128,21" AutoGenerateColumns="False" EnableColumnVirtualization="True"
+                              EnableRowVirtualization="True"
+                              ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
+                              AlternatingRowBackground="#FFE5E5E5"
                               d:DataContext="{d:DesignInstance PlayerStats:PlayerStatsEntry}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
@@ -344,15 +400,18 @@
                             <DataGridTextColumn Header="FOUL" Binding="{Binding FOUL}" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBox x:Name="txtExpCount" Height="23" TextWrapping="Wrap" Margin="0,10,10,310" HorizontalAlignment="Right" Width="113"/>
-                    <Button Content="Button" HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+                    <TextBox x:Name="txtExpCount" Height="23" TextWrapping="Wrap" Margin="0,10,10,310"
+                             HorizontalAlignment="Right" Width="113" />
+                    <Button Content="Button" HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top"
+                            Width="75" Click="Button_Click_1" />
                 </Grid>
             </TabItem>
             <TabItem IsEnabled="False" />
             <TabItem Header="Options">
                 <Grid>
                     <DataGrid x:Name="dgOptions" Margin="10,10,112,10" AutoGenerateColumns="False"
-                              CanUserAddRows="False" SelectionUnit="Cell" CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5">
+                              CanUserAddRows="False" SelectionUnit="Cell" CellEditEnding="dataGrid_CellEditEnding"
+                              AlternatingRowBackground="#FFE5E5E5">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Setting" IsReadOnly="True" Binding="{Binding Setting}" />
                             <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
@@ -361,16 +420,21 @@
                     <Button x:Name="btnSaveOptions" Content="Save" Margin="0,10,10,0" HorizontalAlignment="Right"
                             Width="75" Height="22" VerticalAlignment="Top" Click="btnSaveOptions_Click" />
                     <Button x:Name="btnResetOptions" Content="Reset" Margin="0,37,10,0" HorizontalAlignment="Right"
-                    	Width="75" Height="22" VerticalAlignment="Top" Click="btnResetOptions_Click" />
+                            Width="75" Height="22" VerticalAlignment="Top" Click="btnResetOptions_Click" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabFindOffsets" Header="Find Offset">
                 <Grid>
-                    <Label Content="Hex string to find: " Margin="6,6" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <TextBox Name="txtFOHex" Margin="119,10,188,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-                    <Button x:Name="btnFOSearch" Content="Search" HorizontalAlignment="Right" Margin="0,10,108,0" VerticalAlignment="Top" Width="75" Click="btnFOSearch_Click"/>
-                    <ListBox x:Name="lstFOResults" HorizontalAlignment="Stretch" Margin="10,37,10,10" VerticalAlignment="Stretch" />
-                    <Button x:Name="btnFindAllOffsets" Content="Find Offsets" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="93" Click="btnFindAllOffsets_Click"/>
+                    <Label Content="Hex string to find: " Margin="6,6" HorizontalAlignment="Left"
+                           VerticalAlignment="Top" />
+                    <TextBox Name="txtFOHex" Margin="119,10,188,0" HorizontalAlignment="Stretch"
+                             VerticalAlignment="Top" />
+                    <Button x:Name="btnFOSearch" Content="Search" HorizontalAlignment="Right" Margin="0,10,108,0"
+                            VerticalAlignment="Top" Width="75" Click="btnFOSearch_Click" />
+                    <ListBox x:Name="lstFOResults" HorizontalAlignment="Stretch" Margin="10,37,10,10"
+                             VerticalAlignment="Stretch" />
+                    <Button x:Name="btnFindAllOffsets" Content="Find Offsets" HorizontalAlignment="Right"
+                            Margin="0,10,10,0" VerticalAlignment="Top" Width="93" Click="btnFindAllOffsets_Click" />
 
                 </Grid>
             </TabItem>
@@ -379,17 +443,17 @@
                   Width="114">
             <Grid>
                 <RadioButton x:Name="btnModeCustom" Content="Auto PC" HorizontalAlignment="Left" Margin="10,10,0,0"
-                	VerticalAlignment="Top" Checked="btnModeCustom_Checked" />
+                             VerticalAlignment="Top" Checked="btnModeCustom_Checked" />
                 <RadioButton x:Name="btnModeCustom360" Content="Auto 360" HorizontalAlignment="Left" Margin="10,31,0,0"
-                	VerticalAlignment="Top" Checked="btnModeCustom360_Checked" />
+                             VerticalAlignment="Top" Checked="btnModeCustom360_Checked" />
                 <RadioButton x:Name="btnModePC" Content="PC Ret" HorizontalAlignment="Left" Margin="10,139,0,0"
-                	VerticalAlignment="Top" Checked="btnModePC_Checked" />
+                             VerticalAlignment="Top" Checked="btnModePC_Checked" />
                 <RadioButton x:Name="btnMode360" Content="360" HorizontalAlignment="Left" Margin="10,181,0,0"
-                	VerticalAlignment="Top" Checked="btnMode360_Checked" />
+                             VerticalAlignment="Top" Checked="btnMode360_Checked" />
                 <RadioButton x:Name="btnModePCNov" Content="PC Nv10" HorizontalAlignment="Left" Margin="10,160,0,0"
-                	VerticalAlignment="Top" Checked="btnModePCNov_Checked" />
+                             VerticalAlignment="Top" Checked="btnModePCNov_Checked" />
                 <RadioButton x:Name="btnMode360Nov10" Content="360 Nv10" HorizontalAlignment="Left" Margin="10,202,0,0"
-                	VerticalAlignment="Top" Checked="btnMode360Nov10_Checked" />
+                             VerticalAlignment="Top" Checked="btnMode360Nov10_Checked" />
             </Grid>
         </GroupBox>
         <StatusBar HorizontalAlignment="Stretch" Height="25" Margin="0" VerticalAlignment="Bottom">
