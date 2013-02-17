@@ -3797,6 +3797,8 @@ namespace NBA_2K13_Roster_Editor
             mode = Mode.CustomX360;
             chkRecalculateCRC.IsChecked = false;
 
+            SetRegistrySetting("CustomSSOffset", 94164);
+            SetRegistrySetting("CustomSSOffsetBit", 2);
             try
             {
                 ReloadEverything();
@@ -4338,6 +4340,36 @@ namespace NBA_2K13_Roster_Editor
         }
 
         #endregion
+
+        private void btnFixIsFA_Click(object sender, RoutedEventArgs e)
+        {
+            if (
+                MessageBox.Show(
+                    "This function will automatically fix the IsFA property for all players that are in the FA pool. " +
+                    "Players assigned to teams or that are hidden will not be edited.\n\n" + "Are you sure you want to continue?",
+                    "NBA 2K13 Roster Editor", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            List<int> playersInFAPool;
+            try
+            {
+                playersInFAPool = teamsList.Single(te => te.ID == 999).RosterSpots.ToList();
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("The Teams tab doesn't seem to be working. Operation aborted.");
+                return;
+            }
+
+            foreach (var pID in playersInFAPool)
+            {
+                playersList[pID].IsFA = true;
+            }
+
+            updateStatus("IsFA property for players in FA pool corrected.");
+        }
     }
 
     internal class SortStaffOnHeadCoachOf : IComparer

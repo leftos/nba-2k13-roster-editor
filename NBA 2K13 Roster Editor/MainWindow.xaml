@@ -226,6 +226,8 @@
                             Apply Replace<LineBreak />Filters
                         </TextBlock>
                     </Button>
+                    <Button x:Name="btnFixIsFA" Content="Fix IsFA for FAs" Margin="0,146,10,0" HorizontalAlignment="Right"
+                    	Width="102" Height="22" VerticalAlignment="Top" Click="btnFixIsFA_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="Teams">

@@ -1,5 +1,10 @@
 ﻿Version History
 
+	v0.21.1
+		- Changed IsFA* column to IsInFAPool* and included editable IsFA column; this way the tool won't automatically decide on whether to set a player as a Free Agent depending on whether he's assigned to a team or the FA pool
+		- Added "Fix IsFA for FAs" in Players tab; allows you to automatically set IsFA to "true" for all players in the Free Agents pool
+		- Fixed 360 compatibility
+
 	v0.21
 		- Roster Editor will automatically detect the offsets when loading any compatible file, no matter if game mode save or roster
 
