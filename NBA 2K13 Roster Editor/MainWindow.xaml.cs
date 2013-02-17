@@ -4370,6 +4370,31 @@ namespace NBA_2K13_Roster_Editor
 
             updateStatus("IsFA property for players in FA pool corrected.");
         }
+
+        private void btnFixAllIsFA_Click(object sender, RoutedEventArgs e)
+        {
+            if (
+                MessageBox.Show(
+                    "This function will automatically fix the IsFA property for all players. Only players that are in the FA pool will have IsFA set if you continue.\n\n" +
+                    "Are you sure you want to continue?", "NBA 2K13 Roster Editor", MessageBoxButton.YesNo, MessageBoxImage.Question) !=
+                MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            if (teamsList.All(te => te.ID != 999))
+            {
+                MessageBox.Show("The Teams tab doesn't seem to be working. Operation aborted.");
+                return;
+            }
+
+            foreach (var player in playersList)
+            {
+                player.IsFA = player.IsInFAPool;
+            }
+
+            updateStatus("IsFA property for all players corrected.");
+        }
     }
 
     internal class SortStaffOnHeadCoachOf : IComparer
