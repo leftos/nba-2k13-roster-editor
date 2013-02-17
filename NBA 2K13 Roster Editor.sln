@@ -8,6 +8,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBA 2K13 Roster Editor", "N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NonByteAlignedBinaryRW", "NonByteAlignedBinaryRW\NonByteAlignedBinaryRW.csproj", "{8E1B30E3-794C-4B91-8C45-49F1031347AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0D5E21A9-9936-4E84-9FB8-51AA29338F37}"
+	ProjectSection(SolutionItems) = preProject
+		re13version.txt = re13version.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -956,8 +956,8 @@ namespace NBA_2K13_Roster_Editor
                     pe.HotZones = ReadHotZones(i, brOpen);
                     pe.Accessories = ReadGear(i, brOpen);
                     pe.AssignedTo = FindPlayerInTeams(i);
-                    pe.IsFA = teamsList.Count > 0 && teamsList.Single(te => te.ID == 999).RosterSpots.Contains(pe.ID);
-                    pe.IsHidden = (pe.AssignedTo == -1 && !pe.IsFA);
+                    pe.IsInFAPool = teamsList.Count > 0 && teamsList.Single(te => te.ID == 999).RosterSpots.Contains(pe.ID);
+                    pe.IsHidden = (pe.AssignedTo == -1 && !pe.IsInFAPool);
                     playersList.Add(pe);
                 }
             }
@@ -1274,7 +1274,7 @@ namespace NBA_2K13_Roster_Editor
 
             brOpen.MoveStreamToPortraitID(playerID);
             brOpen.MoveStreamPosition(-8, 0);
-            pe.IsFAReal = brOpen.ReadNBAInt16(16) != 266;
+            pe.IsFA = brOpen.ReadNBAInt16(16) != 266;
             brOpen.MoveStreamPosition(1, 0);
             pe.TeamID1 = brOpen.ReadNBAInt32(8);
             brOpen.MoveStreamPosition(261, 0);
@@ -1583,20 +1583,14 @@ namespace NBA_2K13_Roster_Editor
                             brSave.MoveStreamToPortraitID(pe.ID);
                             brSave.MoveStreamPosition(-8, 0);
                             SyncBWwithBR(ref bw, brSave);
-                            if (teamsList.Any(te => te.ID == 999))
-                                WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
-                            else
-                                brSave.MoveStreamPosition(2, 0);
+                            WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
                             brSave.MoveStreamPosition(1, 0);
                             SyncBWwithBR(ref bw, brSave);
                             bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID1), brSave.ReadBytes(2));
                             SyncBRwithBW(ref brSave, bw);
                             brSave.MoveStreamPosition(258, 0);
                             SyncBWwithBR(ref bw, brSave);
-                            if (teamsList.Any(te => te.ID == 999))
-                                WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
-                            else
-                                brSave.MoveStreamPosition(2, 0);
+                            WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
                             brSave.MoveStreamPosition(1, 0);
                             SyncBWwithBR(ref bw, brSave);
                             bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID2), brSave.ReadBytes(2));

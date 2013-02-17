@@ -68,8 +68,8 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         private int _id;
         private short _injuryDays;
         private ushort _injuryType;
+        private bool _isInFAPool;
         private bool _isFA;
-        private bool _isFAReal;
         private bool _isHidden;
         private byte _layupPkg;
         private MuscleTone _muscleTone;
@@ -188,13 +188,13 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        public bool IsFA
+        public bool IsInFAPool
         {
-            get { return _isFA; }
+            get { return _isInFAPool; }
             set
             {
-                _isFA = value;
-                OnPropertyChanged("IsFA");
+                _isInFAPool = value;
+                OnPropertyChanged("IsInFAPool");
             }
         }
 
@@ -828,13 +828,13 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        public bool IsFAReal
+        public bool IsFA
         {
-            get { return _isFAReal; }
+            get { return _isFA; }
             set
             {
-                _isFAReal = value;
-                OnPropertyChanged("IsFAReal");
+                _isFA = value;
+                OnPropertyChanged("IsFA");
             }
         }
 
