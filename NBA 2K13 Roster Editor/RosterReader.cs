@@ -189,7 +189,7 @@ namespace NBA_2K13_Roster_Editor
                 BaseStream.Position += 16384;
             }
 
-            int playerBits = 477*8 + 5;
+            const int playerBits = 477*8 + 5;
             int totalBits = playerBits*playerID;
             MoveStreamPosition(totalBits/8, totalBits%8);
         }

@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,12 @@ namespace NonByteAlignedBinaryRW
 
         public void WriteNonByteAlignedByte(byte b, byte[] originalBytes = null)
         {
+            /*
+            if (BaseStream.Position == 645073)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+            */
             if (_inBytePosition == 0)
             {
                 Write(b);
@@ -83,13 +90,15 @@ namespace NonByteAlignedBinaryRW
             }
         }
 
-        public void WriteNonByteAlignedBits(string s, byte[] originalBytes)
+        public void WriteNonByteAlignedBits(string s, IEnumerable<byte> originalBytes)
         {
-            string r = "";
-            foreach (var b in originalBytes)
+            /*
+            if (BaseStream.Position == 645073)
             {
-                r += Convert.ToString(b, 2).PadLeft(8, '0');
+                System.Diagnostics.Debugger.Break();
             }
+            */
+            string r = originalBytes.Aggregate("", (current, b) => current + Convert.ToString(b, 2).PadLeft(8, '0'));
             char[] rca = r.ToCharArray();
             char[] oca = s.ToCharArray();
             int endPosition = _inBytePosition + oca.Length;

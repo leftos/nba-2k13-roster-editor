@@ -685,6 +685,19 @@ namespace NBA_2K13_Roster_Editor
                                           }
                                   });
 
+#if DEBUG
+            dgPlayers.Columns.Add(new DataGridTextColumn
+                                  {
+                                      Header = string.Format("Offset"),
+                                      Binding =
+                                          new Binding
+                                          {
+                                              Path = new PropertyPath(string.Format("Offset")),
+                                              Mode = BindingMode.TwoWay
+                                          }
+                                  });
+#endif
+
             playersList = new ObservableCollection<PlayerEntry>();
             dgPlayers.ItemsSource = playersList;
         }
@@ -1247,6 +1260,7 @@ namespace NBA_2K13_Roster_Editor
             int playerID = pe.ID;
 
             brOpen.MoveStreamToPortraitID(playerID); // 40616
+            pe.Offset = brOpen.BaseStream.Position;
 
             byte[] por = brOpen.ReadNonByteAlignedBytes(2);
 
@@ -1274,11 +1288,18 @@ namespace NBA_2K13_Roster_Editor
 
             brOpen.MoveStreamToPortraitID(playerID);
             brOpen.MoveStreamPosition(-8, 0);
-            pe.IsFA = brOpen.ReadNBAInt16(16) != 266;
+            pe.IsFAPar1 = brOpen.ReadNBAInt16(16);
+            pe.IsFA1 = pe.IsFAPar1 != 266;
             brOpen.MoveStreamPosition(1, 0);
             pe.TeamID1 = brOpen.ReadNBAInt32(8);
-            brOpen.MoveStreamPosition(261, 0);
+            brOpen.MoveStreamPosition(258, 0);
+            pe.IsFAPar2 = brOpen.ReadNBAInt16(16);
+            pe.IsFA2 = pe.IsFAPar2 != 266;
+            brOpen.MoveStreamPosition(1, 0);
             pe.TeamID2 = brOpen.ReadNBAInt32(8);
+            brOpen.MoveStreamPosition(15, 4);
+            pe.IsFAPar3 = brOpen.ReadNBAByte(1);
+            pe.RFA = pe.IsFAPar3 == 1;
 
             brOpen.MoveStreamToPortraitID(playerID);
             brOpen.MoveStreamPosition(-16, 0);
@@ -1583,21 +1604,21 @@ namespace NBA_2K13_Roster_Editor
                             brSave.MoveStreamToPortraitID(pe.ID);
                             brSave.MoveStreamPosition(-8, 0);
                             SyncBWwithBR(ref bw, brSave);
-                            WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
+                            WriteUInt16(bw, (ushort) (pe.IsFA1 ? 0 : 266), 16, ref brSave);
                             brSave.MoveStreamPosition(1, 0);
                             SyncBWwithBR(ref bw, brSave);
                             bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID1), brSave.ReadBytes(2));
                             SyncBRwithBW(ref brSave, bw);
                             brSave.MoveStreamPosition(258, 0);
                             SyncBWwithBR(ref bw, brSave);
-                            WriteUInt16(bw, (ushort) (pe.IsFA ? 0 : 266), 16, ref brSave);
+                            WriteUInt16(bw, (ushort) (pe.IsFA2 ? 0 : 266), 16, ref brSave);
                             brSave.MoveStreamPosition(1, 0);
                             SyncBWwithBR(ref bw, brSave);
                             bw.WriteNonByteAlignedByte(Convert.ToByte(pe.TeamID2), brSave.ReadBytes(2));
                             SyncBRwithBW(ref brSave, bw);
                             brSave.MoveStreamPosition(15, 4);
                             SyncBWwithBR(ref bw, brSave);
-                            bw.WriteNonByteAlignedBits(pe.IsFA ? "0" : "1", brSave.ReadBytes(1));
+                            WriteByte((byte) (pe.RFA ? 1 : 0), 1, bw, ref brSave);
 
                             // Play Style
                             brSave.MoveStreamToPortraitID(pe.ID);
@@ -3736,6 +3757,8 @@ namespace NBA_2K13_Roster_Editor
             mode = Mode.Custom;
             chkRecalculateCRC.IsChecked = true;
 
+            SetRegistrySetting("CustomSSOffset", 40916);
+            SetRegistrySetting("CustomSSOffsetBit", 2);
             try
             {
                 ReloadEverything();
@@ -4365,7 +4388,8 @@ namespace NBA_2K13_Roster_Editor
 
             foreach (var pID in playersInFAPool)
             {
-                playersList[pID].IsFA = true;
+                playersList[pID].IsFA1 = true;
+                playersList[pID].IsFA2 = true;
             }
 
             updateStatus("IsFA property for players in FA pool corrected.");
@@ -4390,7 +4414,8 @@ namespace NBA_2K13_Roster_Editor
 
             foreach (var player in playersList)
             {
-                player.IsFA = player.IsInFAPool;
+                player.IsFA1 = player.IsInFAPool;
+                player.IsFA2 = player.IsInFAPool;
             }
 
             updateStatus("IsFA property for all players corrected.");

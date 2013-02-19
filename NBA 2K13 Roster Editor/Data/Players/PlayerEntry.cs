@@ -69,7 +69,7 @@ namespace NBA_2K13_Roster_Editor.Data.Players
         private short _injuryDays;
         private ushort _injuryType;
         private bool _isInFAPool;
-        private bool _isFA;
+        private bool _isFA1;
         private bool _isHidden;
         private byte _layupPkg;
         private MuscleTone _muscleTone;
@@ -117,6 +117,54 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             SeasonStats = new ObservableCollection<short>();
             Accessories = new ObservableCollection<byte>();
         }
+
+        public long Offset
+        {
+            get { return _offset; }
+            set
+            {
+                _offset = value;
+                OnPropertyChanged("Offset");
+            }
+        }
+
+        private long _offset;
+
+        public byte IsFAPar3
+        {
+            get { return _isFAPar3; }
+            set
+            {
+                _isFAPar3 = value;
+                OnPropertyChanged("IsFAPar3");
+            }
+        }
+
+        private byte _isFAPar3;
+
+        public int IsFAPar1
+        {
+            get { return _isFAPar1; }
+            set
+            {
+                _isFAPar1 = value;
+                OnPropertyChanged("IsFAPar1");
+            }
+        }
+
+        private int _isFAPar1;
+
+        public int IsFAPar2
+        {
+            get { return _isFAPar2; }
+            set
+            {
+                _isFAPar2 = value;
+                OnPropertyChanged("IsFAPar2");
+            }
+        }
+
+        private int _isFAPar2;
 
         public string Name
         {
@@ -828,15 +876,39 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             }
         }
 
-        public bool IsFA
+        public bool IsFA1
         {
-            get { return _isFA; }
+            get { return _isFA1; }
             set
             {
-                _isFA = value;
-                OnPropertyChanged("IsFA");
+                _isFA1 = value;
+                OnPropertyChanged("IsFA1");
             }
         }
+
+        public bool IsFA2
+        {
+            get { return _isFA2; }
+            set
+            {
+                _isFA2 = value;
+                OnPropertyChanged("IsFA2");
+            }
+        }
+
+        private bool _isFA2;
+
+        public bool RFA
+        {
+            get { return _rFA; }
+            set
+            {
+                _rFA = value;
+                OnPropertyChanged("RFA");
+            }
+        }
+
+        private bool _rFA;
 
         #region INotifyPropertyChanged Members
 

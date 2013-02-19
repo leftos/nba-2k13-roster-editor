@@ -105,7 +105,7 @@ namespace NonByteAlignedBinaryRW
         {
             if (count <= 0)
                 throw new ArgumentOutOfRangeException("count");
-
+            
             string s = "";
             int bytesToRead = count/8;
             if (bytesToRead > 0)

@@ -1,5 +1,11 @@
 ﻿Version History
 
+	v0.22
+		- IsFA column is now IsFA1, added second IsFA parameter as IsFA2; don't know what their difference is, they're the same in most players in the Players table
+		- Added RFA column which determines whether a player will be an RFA when they go into free agency
+		- Fixed bug which would alter the value of whether a player would become a restricted or unrestricted free agent incorrectly; if your Upcoming FA shows all players as restricted, your save has been corrupted, and you'll need to copy over the RFA values from a previous, uncorrupted one
+		- Fixed the Players table not showing up correctly when switching back from the Auto 360 profile to Auto PC
+
 	v0.21.2
 		- Added "Fix ALL IsFA" in Players tab; allows you to automatically set the IsFA flag to true for players in the FA pool, and to false for everyone else
 
