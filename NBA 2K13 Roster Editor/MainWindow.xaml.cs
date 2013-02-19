@@ -4420,6 +4420,28 @@ namespace NBA_2K13_Roster_Editor
 
             updateStatus("IsFA property for all players corrected.");
         }
+
+        private void btnFixWaivedRFAs_Click(object sender, RoutedEventArgs e)
+        {
+            if (
+                MessageBox.Show(
+                    "This function will automatically fix the RFA property for players that are currently free agents. This MUST NOT be used during the off-season.\n\n" +
+                    "Are you sure you want to continue?", "NBA 2K13 Roster Editor", MessageBoxButton.YesNo, MessageBoxImage.Question) !=
+                MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            foreach (var player in playersList)
+            {
+                if (player.IsFA1)
+                {
+                    player.RFA = false;
+                }
+
+            updateStatus("RFA property corrected.");
+        }
+        }
     }
 
     internal class SortStaffOnHeadCoachOf : IComparer

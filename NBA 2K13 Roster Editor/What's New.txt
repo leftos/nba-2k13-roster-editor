@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.22.1
+		- Added "Fix Waived RFAs" in Players tab; allows you to unset the RFA flag in players that are currently free-agents (meant to only be used outside of the off-season)
+
 	v0.22
 		- IsFA column is now IsFA1, added second IsFA parameter as IsFA2; don't know what their difference is, they're the same in most players in the Players table
 		- Added RFA column which determines whether a player will be an RFA when they go into free agency

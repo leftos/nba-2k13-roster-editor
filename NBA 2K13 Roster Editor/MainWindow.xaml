@@ -234,6 +234,8 @@
                     	Width="102" Height="22" VerticalAlignment="Top" Click="btnFixIsFA_Click" />
                     <Button x:Name="btnFixAllIsFA" Content="Fix ALL IsFA" Margin="0,173,10,0" HorizontalAlignment="Right"
                     	Width="102" Height="22" VerticalAlignment="Top" Click="btnFixAllIsFA_Click" />
+                    <Button x:Name="btnFixWaivedRFAs" Content="Fix Waived RFAs" Margin="0,200,10,0" HorizontalAlignment="Right"
+                    	Width="102" Height="22" VerticalAlignment="Top" Click="btnFixWaivedRFAs_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="Teams">

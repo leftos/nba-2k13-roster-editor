@@ -1,10 +1,11 @@
-0.21.2.0
+0.22.1.0
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-	v0.21.2
-		- Added "Fix ALL IsFA" in Players tab; allows you to automatically set the IsFA flag to true for players in the FA pool, and to false for everyone else
+	v0.22.1
+		- Added "Fix Waived RFAs" in Players tab; allows you to unset the RFA flag in players that are currently free-agents (meant to only be used outside of the off-season)
 
-	v0.21.1
-		- Changed IsFA* column to IsInFAPool* and included editable IsFA column; this way the tool won't automatically decide on whether to set a player as a Free Agent depending on whether he's assigned to a team or the FA pool
-		- Added "Fix IsFA for FAs" in Players tab; allows you to automatically set IsFA to "true" for all players in the Free Agents pool
-		- Fixed 360 compatibility
+	v0.22
+		- IsFA column is now IsFA1, added second IsFA parameter as IsFA2; don't know what their difference is, they're the same in most players in the Players table
+		- Added RFA column which determines whether a player will be an RFA when they go into free agency
+		- Fixed bug which would alter the value of whether a player would become a restricted or unrestricted free agent incorrectly; if your Upcoming FA shows all players as restricted, your save has been corrupted, and you'll need to copy over the RFA values from a previous, uncorrupted one
+		- Fixed the Players table not showing up correctly when switching back from the Auto 360 profile to Auto PC
