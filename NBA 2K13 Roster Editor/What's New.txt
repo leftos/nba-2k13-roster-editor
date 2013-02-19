@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.22.2
+		- Added "ContYBefOpt" (Contract Years Before Option) parameter in Players tab; will be automatically calculated upon save, no need to edit it manually
+
 	v0.22.1
 		- Added "Fix Waived RFAs" in Players tab; allows you to unset the RFA flag in players that are currently free-agents (meant to only be used outside of the off-season)
 

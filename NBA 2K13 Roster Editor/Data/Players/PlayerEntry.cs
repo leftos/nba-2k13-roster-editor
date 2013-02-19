@@ -910,6 +910,18 @@ namespace NBA_2K13_Roster_Editor.Data.Players
 
         private bool _rFA;
 
+        public byte ContYBefOpt
+        {
+            get { return _contYBefOpt; }
+            set
+            {
+                _contYBefOpt = value;
+                OnPropertyChanged("ContYBefOpt");
+            }
+        }
+
+        private byte _contYBefOpt;
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

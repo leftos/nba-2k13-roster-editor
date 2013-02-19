@@ -57,14 +57,17 @@ namespace NonByteAlignedBinaryRW
             }
         }
 
+        private readonly List<long> _positionsToWatch = new List<long> {58920, 58921, 58922};
+        private const bool WatchPositions = false;
+
         public void WriteNonByteAlignedByte(byte b, byte[] originalBytes = null)
         {
-            /*
-            if (BaseStream.Position == 645073)
+#if DEBUG
+            if (WatchPositions && _positionsToWatch.Contains(BaseStream.Position))
             {
                 System.Diagnostics.Debugger.Break();
             }
-            */
+#endif   
             if (_inBytePosition == 0)
             {
                 Write(b);
@@ -92,12 +95,12 @@ namespace NonByteAlignedBinaryRW
 
         public void WriteNonByteAlignedBits(string s, IEnumerable<byte> originalBytes)
         {
-            /*
-            if (BaseStream.Position == 645073)
+#if DEBUG
+            if (WatchPositions && _positionsToWatch.Contains(BaseStream.Position))
             {
                 System.Diagnostics.Debugger.Break();
             }
-            */
+#endif   
             string r = originalBytes.Aggregate("", (current, b) => current + Convert.ToString(b, 2).PadLeft(8, '0'));
             char[] rca = r.ToCharArray();
             char[] oca = s.ToCharArray();

@@ -509,6 +509,17 @@ namespace NBA_2K13_Roster_Editor
                 });
             }
             */
+            dgPlayers.Columns.Add(new DataGridTextColumn
+                                  {
+                                      Header = "ContYBefOpt",
+                                      Binding =
+                                          new Binding
+                                          {
+                                              Path = new PropertyPath("ContYBefOpt"),
+                                              Mode = BindingMode.TwoWay
+                                          }
+                                  });
+
             dgPlayers.Columns.Add(new DataGridComboBoxColumn
                                   {
                                       Header = "ContractOpt",
@@ -1397,6 +1408,9 @@ namespace NBA_2K13_Roster_Editor
             var eyes = (EyeColor) Enum.Parse(typeof (EyeColor), Convert.ToByte(brOpen.ReadNonByteAlignedBits(3), 2).ToString());
             //
 
+            brOpen.MoveStreamToPortraitID(playerID);
+            brOpen.MoveStreamPosition(88, 3);
+            pe.ContYBefOpt = brOpen.ReadNBAByte(3);
 
             brOpen.MoveStreamToPortraitID(playerID);
             brOpen.MoveStreamPosition(154, 0);
@@ -1848,6 +1862,40 @@ namespace NBA_2K13_Roster_Editor
                             }
 
                             #region Contracts
+
+                            if (pe.ContYBefOpt == 0 && pe.ContractY1 == 1 && pe.ContractY2 == 0)
+                            {
+                                pe.ContractY1 = 0;
+                            }
+
+                            pe.ContYBefOpt = 7;
+                            for (int j = 1; j <= 7; j++)
+                            {
+                                if (Convert.ToInt32(typeof (PlayerEntry).GetProperty("ContractY" + j).GetValue(pe, null)) == 0)
+                                {
+                                    switch (pe.ContractOpt)
+                                    {
+                                        case ContractOption.None:
+                                            pe.ContYBefOpt = (byte)(j - 1);
+                                            break;
+                                        case ContractOption.Team:
+                                        case ContractOption.Player:
+                                            pe.ContYBefOpt = (byte)(j - 2);
+                                            break;
+                                        case ContractOption.Team2Yr:
+                                            pe.ContYBefOpt = (byte)(j - 3);
+                                            break;
+                                        default:
+                                            throw new ArgumentOutOfRangeException();
+                                    }
+                                    break;
+                                }
+                            }
+                            
+                            brSave.MoveStreamToPortraitID(pe.ID);
+                            brSave.MoveStreamPosition(88, 3);
+                            SyncBWwithBR(ref bw, brSave);
+                            WriteByte(pe.ContYBefOpt, 3, bw, ref brSave);
 
                             brSave.MoveStreamToPortraitID(pe.ID);
                             brSave.MoveStreamPosition(154, 0);

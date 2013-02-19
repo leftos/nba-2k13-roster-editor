@@ -12,7 +12,12 @@
 
 			
 	Known Issues
-		- (X360) Editing Signature Skills of player with Player ID 1364 doesn't work for now
+		- (360) Editing Signature Skills of player with Player ID 1364 doesn't work for now
+		- (360) MyCareer files compatibility is ...well, not that good
+		
+		
+	Disclaimer
+		As with any editing tool, you should always keep backups of any files you edit. There might be bugs I am not aware of, and new features might bring new bugs of their own. So always, always keep backups. I will not be held responsible for any corruption caused to your saves.
 
 
 	Development Credits
