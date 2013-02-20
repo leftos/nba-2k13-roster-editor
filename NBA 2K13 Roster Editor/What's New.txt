@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.22.3
+		- Jerseys table will now begin with the training jerseys which are earlier in the roster file
+
 	v0.22.2
 		- Added "ContYBefOpt" (Contract Years Before Option) parameter in Players tab; will be automatically calculated upon save, no need to edit it manually
 

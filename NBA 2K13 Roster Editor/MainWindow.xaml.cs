@@ -896,7 +896,7 @@ namespace NBA_2K13_Roster_Editor
             RosterReader brOpen;
             using (brOpen = new RosterReader(new MemoryStream(File.ReadAllBytes(currentFile))))
             {
-                for (int i = 0; i <= 20000; i++)
+                for (int i = 0; i <= 2000; i++)
                 {
                     brOpen.MoveStreamToFirstJersey();
                     brOpen.MoveStreamPosition(68*i, 0);
@@ -907,15 +907,16 @@ namespace NBA_2K13_Roster_Editor
                     if (!Enum.IsDefined(typeof (JerseyType), gid))
                     {
                         /*
-                        MessageBox.Show("GID with decimal value " + gid +
-                                        " isn't in the Roster Editor's database. The jersey table will have to stop at ID " + (i-1) + ".\n\n" +
-                                        "Please contact the developer and inform him of this error.");
+                        Console.WriteLine("Unknown GID: " + gid);
+                        je.GID = JerseyType.Unknown;
                         */
                         optionsList.Single(o => o.Setting == "LastJerseyID").Value = i - 1;
-                        //btnSaveOptions_Click(null, null);
                         break;
                     }
-                    je.GID = (JerseyType) Enum.Parse(typeof (JerseyType), gid.ToString());
+                    else
+                    {
+                        je.GID = (JerseyType) Enum.Parse(typeof (JerseyType), gid.ToString());
+                    }
 
                     brOpen.MoveStreamPosition(0, 6);
                     je.Neck = (NeckType) Enum.Parse(typeof (NeckType), Convert.ToByte(brOpen.ReadNonByteAlignedBits(3), 2).ToString());
@@ -4108,7 +4109,7 @@ namespace NBA_2K13_Roster_Editor
             var list = new List<OffsetThingy>
                        {
                            new OffsetThingy("CustomRosterOffset", "657F9098010A0000", 8, 0, 860000, 0),
-                           new OffsetThingy("CustomJerseyOffset", "0000020D0440096E", 0, 0, 1486000, 0),
+                           new OffsetThingy("CustomJerseyOffset", "0000020D0440096E", -4080, 0, 1486000, 0),
                            new OffsetThingy("CustomPlaybookOffset", "BEF53E7D", 0, 0, 1099000, 0),
                            new OffsetThingy("CustomStaffPlaybookIDOffset", "7e013bf0", -7, 0, 991000, 0),
                            new OffsetThingy("CustomTeamStatsOffset", "231F0C6F", 0, 0, 1434000, 0)

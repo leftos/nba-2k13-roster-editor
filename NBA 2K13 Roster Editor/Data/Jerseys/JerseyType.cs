@@ -229,6 +229,7 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
         Custom9A = 7428,
         Custom10A = 7436,
         CustomUnknown1A = 7444,
-        CustomUnknown2A = 7452
+        CustomUnknown2A = 7452,
+        Unknown
     }
 }
