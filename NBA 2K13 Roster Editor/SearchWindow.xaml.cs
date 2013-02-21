@@ -231,16 +231,10 @@ namespace NBA_2K13_Roster_Editor
         {
             string s = "";
             s += String.Format("Find\n");
-            foreach (var item in lstFind.Items.Cast<string>())
-            {
-                s += item + "\n";
-            }
+            s = lstFind.Items.Cast<string>().Aggregate(s, (current, item) => current + (item + "\n"));
             s += "FindEND\n";
             s += String.Format("Replace\n");
-            foreach (var item in lstReplace.Items.Cast<string>())
-            {
-                s += item + "\n";
-            }
+            s = lstReplace.Items.Cast<string>().Aggregate(s, (current, item) => current + (item + "\n"));
             s += "ReplaceEND\n";
 
             if (!Directory.Exists(folder))

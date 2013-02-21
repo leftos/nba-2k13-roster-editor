@@ -1,17 +1,5 @@
-0.22.3.0
+0.22.3.1
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
-	v0.22.3
-		- Jerseys table will now begin with the training jerseys which are earlier in the roster file
-
-	v0.22.2
-		- Added "ContYBefOpt" (Contract Years Before Option) parameter in Players tab; will be automatically calculated upon save, no need to edit it manually
-
-	v0.22.1
-		- Added "Fix Waived RFAs" in Players tab; allows you to unset the RFA flag in players that are currently free-agents (meant to only be used outside of the off-season)
-
-	v0.22
-		- IsFA column is now IsFA1, added second IsFA parameter as IsFA2; don't know what their difference is, they're the same in most players in the Players table
-		- Added RFA column which determines whether a player will be an RFA when they go into free agency
-		- Fixed bug which would alter the value of whether a player would become a restricted or unrestricted free agent incorrectly; if your Upcoming FA shows all players as restricted, your save has been corrupted, and you'll need to copy over the RFA values from a previous, uncorrupted one
-		- Fixed the Players table not showing up correctly when switching back from the Auto 360 profile to Auto PC
+		- Fixed Free Agents entry for all save types
+		- Disabled Team Stats editing for MyCareer saves as the offset can't be automatically determined for now

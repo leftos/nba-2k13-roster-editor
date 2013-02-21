@@ -36,37 +36,43 @@ namespace NBA_2K13_Roster_Editor
     {
         private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            // Add code to output the exception details to a message box/event log/log file,   etc.
-            // Be sure to include details about any inner exceptions
+            var exceptionString = e.Exception.ToString();
+            var innerExceptionString = e.Exception.InnerException == null
+                                           ? "No inner exception information."
+                                           : e.Exception.InnerException.Message;
+            var versionString = "Version " + Assembly.GetExecutingAssembly().GetName().Version;
+
             try
             {
-                var f = new StreamWriter(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
+                var errorReportPath = NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"errorlog_unh.txt";
+                var f = new StreamWriter(errorReportPath);
 
-                f.WriteLine("Unhandled Exception Error Report for NBA 2K13 Roster Editor");
-                f.WriteLine("Version " + Assembly.GetExecutingAssembly().GetName().Version);
+                f.WriteLine("Unhandled Exception Error Report for NBA Stats Tracker");
+                f.WriteLine(versionString);
                 f.WriteLine();
-                f.Write(e.Exception.ToString());
-                f.WriteLine();
-                f.WriteLine();
-                f.Write(e.Exception.InnerException == null ? "None" : e.Exception.InnerException.Message);
+                f.WriteLine("Exception information:");
+                f.Write(exceptionString);
                 f.WriteLine();
                 f.WriteLine();
+                f.WriteLine("Inner Exception information:");
+                f.Write(innerExceptionString);
                 f.Close();
+
+                MessageBox.Show(
+                    "NBA Stats Tracker encountered a critical error and will be terminated.\n\n" + "An Error Log has been saved at \n" +
+                    errorReportPath, "NBA Stats Tracker Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                Process.Start(errorReportPath);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Can't create errorlog!\n\n" + ex + "\n\n" + ex.InnerException);
-            }
-
-            MessageBox.Show(
-                "NBA 2K13 Roster Editor encountered a critical error and will be terminated.\n\nAn Error Log has been saved at " +
-                NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
-            try
-            {
-                Process.Start(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt");
-            }
-            catch (Exception)
-            {
+                string s = "Can't create errorlog!\nException: " + ex;
+                s += ex.InnerException != null ? "\nInner Exception: " + ex.InnerException : "";
+                s += "\n\n";
+                s += versionString;
+                s += "Exception Information:\n" + exceptionString + "\n\n";
+                s += "Inner Exception Information:\n" + innerExceptionString;
+                MessageBox.Show(s, "NBA Stats Tracker Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             // Prevent default unhandled exception processing
@@ -104,12 +110,15 @@ namespace NBA_2K13_Roster_Editor
 
             Trace.Listeners.Clear();
 
-            var twtl = new TextWriterTraceListener(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\tracelog.txt");
-            twtl.Name = "TextLogger";
-            twtl.TraceOutputOptions = TraceOptions.ThreadId | TraceOptions.DateTime;
+            var twtl = new TextWriterTraceListener(NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\tracelog.txt")
+                       {
+                           Name = "TextLogger",
+                           TraceOutputOptions =
+                               TraceOptions.ThreadId |
+                               TraceOptions.DateTime
+                       };
 
-            var ctl = new ConsoleTraceListener(false);
-            ctl.TraceOutputOptions = TraceOptions.DateTime;
+            var ctl = new ConsoleTraceListener(false) {TraceOutputOptions = TraceOptions.DateTime};
 
             Trace.Listeners.Add(twtl);
             Trace.Listeners.Add(ctl);

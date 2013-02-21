@@ -1,90 +1,88 @@
 ﻿<Window x:Class="NBA_2K13_Roster_Editor.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:NBA_2K13_Roster_Editor="clr-namespace:NBA_2K13_Roster_Editor"
-        xmlns:Data="clr-namespace:NBA_2K13_Roster_Editor.Data"
-        xmlns:Parameters="clr-namespace:NBA_2K13_Roster_Editor.Data.Players.Parameters"
-        xmlns:Jerseys="clr-namespace:NBA_2K13_Roster_Editor.Data.Jerseys"
+        xmlns:parameters="clr-namespace:NBA_2K13_Roster_Editor.Data.Players.Parameters"
+        xmlns:jerseys="clr-namespace:NBA_2K13_Roster_Editor.Data.Jerseys"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:staff="clr-namespace:NBA_2K13_Roster_Editor.Data.Staff"
-        xmlns:TeamStats="clr-namespace:NBA_2K13_Roster_Editor.Data.TeamStats"
-        xmlns:PlayerStats="clr-namespace:NBA_2K13_Roster_Editor.Data.PlayerStats"
+        xmlns:teamStats="clr-namespace:NBA_2K13_Roster_Editor.Data.TeamStats"
+        xmlns:playerStats="clr-namespace:NBA_2K13_Roster_Editor.Data.PlayerStats"
         xmlns:players="clr-namespace:NBA_2K13_Roster_Editor.Data.Players" mc:Ignorable="d"
         Title="NBA 2K13 Roster Editor"
         Height="477" Width="902" Closing="Window_Closing_1" Icon="pack://siteoforigin:,,,/NLSC.ico"
         Loaded="Window_Loaded_1">
     <Window.Resources>
         <ObjectDataProvider x:Key="SignatureSkillsList" MethodName="GetValues"
-                            ObjectType="{x:Type Parameters:SignatureSkill}">
+                            ObjectType="{x:Type parameters:SignatureSkill}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:SignatureSkill" />
+                <x:Type TypeName="parameters:SignatureSkill" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="ShoeBrandsList" MethodName="GetValues" ObjectType="{x:Type Parameters:ShoeBrand}">
+        <ObjectDataProvider x:Key="ShoeBrandsList" MethodName="GetValues" ObjectType="{x:Type parameters:ShoeBrand}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:ShoeBrand" />
+                <x:Type TypeName="parameters:ShoeBrand" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <ObjectDataProvider x:Key="CAPHairTypesList" MethodName="GetValues"
-                            ObjectType="{x:Type Parameters:CAPHairType}">
+                            ObjectType="{x:Type parameters:CAPHairType}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:CAPHairType" />
+                <x:Type TypeName="parameters:CAPHairType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="EyeColorsList" MethodName="GetValues" ObjectType="{x:Type Parameters:EyeColor}">
+        <ObjectDataProvider x:Key="EyeColorsList" MethodName="GetValues" ObjectType="{x:Type parameters:EyeColor}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:EyeColor" />
+                <x:Type TypeName="parameters:EyeColor" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="MuscleTonesList" MethodName="GetValues" ObjectType="{x:Type Parameters:MuscleTone}">
+        <ObjectDataProvider x:Key="MuscleTonesList" MethodName="GetValues" ObjectType="{x:Type parameters:MuscleTone}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:MuscleTone" />
+                <x:Type TypeName="parameters:MuscleTone" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="BodyTypesList" MethodName="GetValues" ObjectType="{x:Type Parameters:BodyType}">
+        <ObjectDataProvider x:Key="BodyTypesList" MethodName="GetValues" ObjectType="{x:Type parameters:BodyType}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:BodyType" />
+                <x:Type TypeName="parameters:BodyType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="PositionsList" MethodName="GetValues" ObjectType="{x:Type Parameters:Position}">
+        <ObjectDataProvider x:Key="PositionsList" MethodName="GetValues" ObjectType="{x:Type parameters:Position}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:Position" />
+                <x:Type TypeName="parameters:Position" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="HairColorsList" MethodName="GetValues" ObjectType="{x:Type Parameters:HairColor}">
+        <ObjectDataProvider x:Key="HairColorsList" MethodName="GetValues" ObjectType="{x:Type parameters:HairColor}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:HairColor" />
+                <x:Type TypeName="parameters:HairColor" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="JerseyTypesList" MethodName="GetValues" ObjectType="{x:Type Jerseys:JerseyType}">
+        <ObjectDataProvider x:Key="JerseyTypesList" MethodName="GetValues" ObjectType="{x:Type jerseys:JerseyType}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Jerseys:JerseyType" />
+                <x:Type TypeName="jerseys:JerseyType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="JerseyNamesList" MethodName="GetValues" ObjectType="{x:Type Jerseys:JerseyName}">
+        <ObjectDataProvider x:Key="JerseyNamesList" MethodName="GetValues" ObjectType="{x:Type jerseys:JerseyName}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Jerseys:JerseyName" />
+                <x:Type TypeName="jerseys:JerseyName" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="NeckTypesList" MethodName="GetValues" ObjectType="{x:Type Jerseys:NeckType}">
+        <ObjectDataProvider x:Key="NeckTypesList" MethodName="GetValues" ObjectType="{x:Type jerseys:NeckType}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Jerseys:NeckType" />
+                <x:Type TypeName="jerseys:NeckType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="SockColorsList" MethodName="GetValues" ObjectType="{x:Type Jerseys:SockColor}">
+        <ObjectDataProvider x:Key="SockColorsList" MethodName="GetValues" ObjectType="{x:Type jerseys:SockColor}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Jerseys:SockColor" />
+                <x:Type TypeName="jerseys:SockColor" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="PlayTypesList" MethodName="GetValues" ObjectType="{x:Type Parameters:PlayType}">
+        <ObjectDataProvider x:Key="PlayTypesList" MethodName="GetValues" ObjectType="{x:Type parameters:PlayType}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:PlayType" />
+                <x:Type TypeName="parameters:PlayType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
         <ObjectDataProvider x:Key="ClothesTypesList" MethodName="GetValues"
-                            ObjectType="{x:Type Parameters:ClothesType}">
+                            ObjectType="{x:Type parameters:ClothesType}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Parameters:ClothesType" />
+                <x:Type TypeName="parameters:ClothesType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
@@ -273,7 +271,7 @@
                               PreviewKeyDown="dgJerseys_PreviewKeyDown"
                               SelectedCellsChanged="dgJerseys_SelectedCellsChanged"
                               CellEditEnding="dataGrid_CellEditEnding" AlternatingRowBackground="#FFE5E5E5"
-                              d:DataContext="{d:DesignInstance Jerseys:JerseyEntry}">
+                              d:DataContext="{d:DesignInstance jerseys:JerseyEntry}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
                             <DataGridComboBoxColumn Header="GID"
@@ -343,7 +341,7 @@
                               AlternatingRowBackground="#FFE5E5E5" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Team Stats">
+            <TabItem x:Name="tabTeamStats" Header="Team Stats">
                 <Grid>
                     <DataGrid x:Name="dgTeamStats" CanUserAddRows="False" CanUserDeleteRows="False"
                               FrozenColumnCount="2"
@@ -351,7 +349,7 @@
                               EnableRowVirtualization="True"
                               ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
                               AlternatingRowBackground="#FFE5E5E5"
-                              d:DataContext="{d:DesignInstance TeamStats:TeamStatsEntry}"
+                              d:DataContext="{d:DesignInstance teamStats:TeamStatsEntry}"
                               PreviewKeyDown="dgTeamStats_PreviewKeyDown">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
@@ -387,7 +385,7 @@
                               EnableRowVirtualization="True"
                               ClipboardCopyMode="IncludeHeader" SelectionUnit="Cell"
                               AlternatingRowBackground="#FFE5E5E5"
-                              d:DataContext="{d:DesignInstance PlayerStats:PlayerStatsEntry}">
+                              d:DataContext="{d:DesignInstance playerStats:PlayerStatsEntry}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
                             <DataGridTextColumn Header="TeamSta" Binding="{Binding TeamSta}" />

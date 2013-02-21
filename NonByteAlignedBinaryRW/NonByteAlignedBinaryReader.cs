@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -176,14 +177,9 @@ namespace NonByteAlignedBinaryRW
             return ba;
         }
 
-        public static string ByteArrayToBitString(byte[] bytes)
+        public static string ByteArrayToBitString(IEnumerable<byte> bytes)
         {
-            string s = "";
-            foreach (var b in bytes)
-            {
-                s += ByteToBitString(b);
-            }
-            return s;
+            return bytes.Aggregate("", (current, b) => current + ByteToBitString(b));
         }
 
         public static byte[] BitArrayToByteArray(BitArray bits)

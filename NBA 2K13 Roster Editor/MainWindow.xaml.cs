@@ -747,44 +747,137 @@ namespace NBA_2K13_Roster_Editor
 
         private void ReloadOptions()
         {
-            optionsList = new ObservableCollection<Option>();
-            optionsList.Add(new Option {Setting = "FirstSSOffset", Value = GetRegistrySetting("FirstSSOffset", 40916)});
-            optionsList.Add(new Option {Setting = "FirstSSOffsetBit", Value = GetRegistrySetting("FirstSSOffsetBIt", 2)});
-            optionsList.Add(new Option {Setting = "LastPlayerID", Value = GetRegistrySetting("LastPlayerID", 1514)});
-            optionsList.Add(new Option {Setting = "LastTeamID", Value = GetRegistrySetting("LastTeamID", 90)});
-            optionsList.Add(new Option {Setting = "LastJerseyID", Value = GetRegistrySetting("LastJerseyID", 425)});
-            optionsList.Add(new Option {Setting = "LastStaffID", Value = GetRegistrySetting("LastStaffID", 725)});
-            optionsList.Add(new Option {Setting = "LastPlaybookID", Value = GetRegistrySetting("LastPlaybookID", 69)});
-            optionsList.Add(new Option {Setting = "NamesFile", Value = GetRegistrySetting("NamesFile", "CFnames.txt")});
-            optionsList.Add(new Option {Setting = "ChooseNameBy", Value = GetRegistrySetting("ChooseNameBy", "CFID")});
-            optionsList.Add(new Option {Setting = "DoPlayersPasteBy", Value = GetRegistrySetting("DoPlayersPasteBy", "ID")});
+            optionsList = new ObservableCollection<Option>
+                          {
+                              new Option
+                              {
+                                  Setting = "FirstSSOffset",
+                                  Value = GetRegistrySetting("FirstSSOffset", 40916)
+                              },
+                              new Option
+                              {
+                                  Setting = "FirstSSOffsetBit",
+                                  Value = GetRegistrySetting("FirstSSOffsetBIt", 2)
+                              },
+                              new Option
+                              {
+                                  Setting = "LastPlayerID",
+                                  Value = GetRegistrySetting("LastPlayerID", 1514)
+                              },
+                              new Option
+                              {
+                                  Setting = "LastTeamID",
+                                  Value = GetRegistrySetting("LastTeamID", 90)
+                              },
+                              new Option
+                              {
+                                  Setting = "LastJerseyID",
+                                  Value = GetRegistrySetting("LastJerseyID", 425)
+                              },
+                              new Option
+                              {
+                                  Setting = "LastStaffID",
+                                  Value = GetRegistrySetting("LastStaffID", 725)
+                              },
+                              new Option
+                              {
+                                  Setting = "LastPlaybookID",
+                                  Value = GetRegistrySetting("LastPlaybookID", 69)
+                              },
+                              new Option
+                              {
+                                  Setting = "NamesFile",
+                                  Value = GetRegistrySetting("NamesFile", "CFnames.txt")
+                              },
+                              new Option
+                              {
+                                  Setting = "ChooseNameBy",
+                                  Value = GetRegistrySetting("ChooseNameBy", "CFID")
+                              },
+                              new Option
+                              {
+                                  Setting = "DoPlayersPasteBy",
+                                  Value = GetRegistrySetting("DoPlayersPasteBy", "ID")
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomSSOffset",
+                                  Value = GetRegistrySetting("CustomSSOffset", 40916)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomSSOffsetBit",
+                                  Value = GetRegistrySetting("CustomSSOffsetBIt", 2)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomRosterOffset",
+                                  Value = GetRegistrySetting("CustomRosterOffset", 862911)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomRosterOffsetBit",
+                                  Value = GetRegistrySetting("CustomRosterOffsetBIt", 6)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomJerseyOffset",
+                                  Value = GetRegistrySetting("CustomJerseyOffset", 1486997)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomJerseyOffsetBit",
+                                  Value = GetRegistrySetting("CustomJerseyOffsetBIt", 0)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomPlaybookOffset",
+                                  Value = GetRegistrySetting("CustomPlaybookOffset", 1099333)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomPlaybookOffsetBit",
+                                  Value = GetRegistrySetting("CustomPlaybookOffsetBit", 3)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomStaffPlaybookIDOffset",
+                                  Value = GetRegistrySetting("CustomStaffPlaybookIDOffset", 991131)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomStaffPlaybookIDOffsetBit",
+                                  Value = GetRegistrySetting("CustomStaffPlaybookIDOffsetBit", 6)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomTeamStatsOffset",
+                                  Value = GetRegistrySetting("CustomTeamStatsOffset", 1434425)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomTeamStatsOffsetBit",
+                                  Value = GetRegistrySetting("CustomTeamStatsOffsetBit", 5)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomPlayerStatsOffset",
+                                  Value = GetRegistrySetting("CustomPlayerStatsOffset", 1475604)
+                              },
+                              new Option
+                              {
+                                  Setting = "CustomPlayerStatsOffsetBit",
+                                  Value = GetRegistrySetting("CustomPlayerStatsOffsetBit", 0)
+                              },
+                              new Option
+                              {
+                                  Setting = "DumbPasting",
+                                  Value = GetRegistrySetting("DumbPasting", "False")
+                              }
+                          };
 
-            optionsList.Add(new Option {Setting = "CustomSSOffset", Value = GetRegistrySetting("CustomSSOffset", 40916)});
-            optionsList.Add(new Option {Setting = "CustomSSOffsetBit", Value = GetRegistrySetting("CustomSSOffsetBIt", 2)});
-            optionsList.Add(new Option {Setting = "CustomRosterOffset", Value = GetRegistrySetting("CustomRosterOffset", 862911)});
-            optionsList.Add(new Option {Setting = "CustomRosterOffsetBit", Value = GetRegistrySetting("CustomRosterOffsetBIt", 6)});
-            optionsList.Add(new Option {Setting = "CustomJerseyOffset", Value = GetRegistrySetting("CustomJerseyOffset", 1486997)});
-            optionsList.Add(new Option {Setting = "CustomJerseyOffsetBit", Value = GetRegistrySetting("CustomJerseyOffsetBIt", 0)});
-            optionsList.Add(new Option {Setting = "CustomPlaybookOffset", Value = GetRegistrySetting("CustomPlaybookOffset", 1099333)});
-            optionsList.Add(new Option {Setting = "CustomPlaybookOffsetBit", Value = GetRegistrySetting("CustomPlaybookOffsetBit", 3)});
-            optionsList.Add(new Option
-                            {
-                                Setting = "CustomStaffPlaybookIDOffset",
-                                Value = GetRegistrySetting("CustomStaffPlaybookIDOffset", 991131)
-                            });
-            optionsList.Add(new Option
-                            {
-                                Setting = "CustomStaffPlaybookIDOffsetBit",
-                                Value = GetRegistrySetting("CustomStaffPlaybookIDOffsetBit", 6)
-                            });
-            optionsList.Add(new Option {Setting = "CustomTeamStatsOffset", Value = GetRegistrySetting("CustomTeamStatsOffset", 1434425)});
-            optionsList.Add(new Option {Setting = "CustomTeamStatsOffsetBit", Value = GetRegistrySetting("CustomTeamStatsOffsetBit", 5)});
 #if DEBUG
-            optionsList.Add(new Option {Setting = "CustomPlayerStatsOffset", Value = GetRegistrySetting("CustomPlayerStatsOffset", 1475604)});
-            optionsList.Add(new Option {Setting = "CustomPlayerStatsOffsetBit", Value = GetRegistrySetting("CustomPlayerStatsOffsetBit", 0)});
 #endif
-
-            optionsList.Add(new Option {Setting = "DumbPasting", Value = GetRegistrySetting("DumbPasting", "False")});
 
             if (GetOption("DumbPasting").ToString() == "True")
             {
@@ -863,6 +956,8 @@ namespace NBA_2K13_Roster_Editor
                     break;
             }
 
+            tabTeamStats.IsEnabled = saveType != SaveType.MyCareer;
+
             if (mode == Mode.Custom || mode == Mode.CustomX360)
             {
                 FindAllOffsets();
@@ -901,8 +996,7 @@ namespace NBA_2K13_Roster_Editor
                     brOpen.MoveStreamToFirstJersey();
                     brOpen.MoveStreamPosition(68*i, 0);
 
-                    var je = new JerseyEntry();
-                    je.ID = i;
+                    var je = new JerseyEntry {ID = i};
                     ushort gid = BitConverter.ToUInt16(brOpen.ReadNonByteAlignedBytes(2).Reverse().ToArray(), 0);
                     if (!Enum.IsDefined(typeof (JerseyType), gid))
                     {
@@ -1118,8 +1212,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 for (int i = Convert.ToInt32(GetOption("LastTeamID")); i >= 0; i--)
                 {
-                    te = new TeamEntry();
-                    te.ID = i;
+                    te = new TeamEntry {ID = i};
                     try
                     {
                         te.Name = teamNames[i];
@@ -1163,29 +1256,10 @@ namespace NBA_2K13_Roster_Editor
                 teamsList = new ObservableCollection<TeamEntry>(temp);
 
                 // Free Agents
-                te = new TeamEntry();
-                te.ID = 999;
-                te.Name = "Free Agents";
-
-                brOpen.BaseStream.Position = 853505;
-                brOpen.InBytePosition = 6;
-
-                if (mode == Mode.X360)
-                {
-                    brOpen.BaseStream.Position += 69632;
-                }
-                else if (mode == Mode.PCNov10 || mode == Mode.X360Nov10)
-                {
-                    brOpen.BaseStream.Position += 1911;
-                    brOpen.InBytePosition = 2;
-                }
-                else if (mode == Mode.Custom || mode == Mode.CustomX360)
-                {
-                    brOpen.MoveStreamToFirstRoster();
-                    brOpen.BaseStream.Position -= 9406;
-                }
-
-                brOpen.MoveStreamForSaveType();
+                te = new TeamEntry {ID = 999, Name = "Free Agents"};
+                
+                brOpen.MoveStreamToFirstRoster();
+                brOpen.BaseStream.Position -= 9406;
 
                 PopulateRosterRow(512, ref te, brOpen, true);
                 //
@@ -1206,10 +1280,7 @@ namespace NBA_2K13_Roster_Editor
             brOpen.BaseStream.Position = startOfRoster;
             brOpen.InBytePosition = startOfRosterBit;
 
-            if (!isFArow)
-                brOpen.MoveStreamPosition(125, 0);
-            else
-                brOpen.MoveStreamPosition(4001, 0);
+            brOpen.MoveStreamPosition(!isFArow ? 125 : 4001, 0);
 
             brOpen.MoveStreamPosition(0, -1);
 
@@ -2239,10 +2310,7 @@ namespace NBA_2K13_Roster_Editor
                 brSave.BaseStream.Position = startOfRoster;
                 brSave.InBytePosition = startOfRosterBit;
 
-                if (!isFArow)
-                    brSave.MoveStreamPosition(125, 0);
-                else
-                    brSave.MoveStreamPosition(4001, 0);
+                brSave.MoveStreamPosition(!isFArow ? 125 : 4001, 0);
                 brSave.MoveStreamPosition(0, -1);
 
                 SyncBWwithBR(ref bw, brSave);
@@ -2497,8 +2565,7 @@ namespace NBA_2K13_Roster_Editor
             {
                 for (int i = 0; i < 200; i++)
                 {
-                    var pse = new PlayerStatsEntry();
-                    pse.ID = i;
+                    var pse = new PlayerStatsEntry {ID = i};
 
                     brOpen.MoveStreamRelativeToPlayerStatsEntry(i, 0, 1);
                     pse.GP = brOpen.ReadUInt16(7);
@@ -2539,8 +2606,7 @@ namespace NBA_2K13_Roster_Editor
                 {
                     brOpen.MoveStreamToStaffPlaybookID(i);
 
-                    var se = new StaffEntry();
-                    se.ID = i;
+                    var se = new StaffEntry {ID = i};
 
                     try
                     {
@@ -2600,8 +2666,7 @@ namespace NBA_2K13_Roster_Editor
                 {
                     brOpen.MoveStreamToPlaybook(i);
 
-                    var pb = new PlaybookEntry();
-                    pb.ID = i;
+                    var pb = new PlaybookEntry {ID = i};
 
                     for (int j = 0; j < 50; j++)
                     {
@@ -2713,32 +2778,31 @@ namespace NBA_2K13_Roster_Editor
 
         private void FixPlNumAndOrder()
         {
-            for (int i = 0; i < teamsList.Count; i++)
+            foreach (TeamEntry t in teamsList)
             {
-                //if (i == teamsList.Count - 1) System.Diagnostics.Debugger.Break();
+//if (i == teamsList.Count - 1) System.Diagnostics.Debugger.Break();
 
-                int spotsCount = teamsList[i].RosterSpots.Count;
+                int spotsCount = t.RosterSpots.Count;
                 for (int j = 0; j < spotsCount; j++)
                 {
-                    int curCell = teamsList[i].RosterSpots[j];
-                    if (curCell == -1) // || String.IsNullOrWhiteSpace(curCell))
+                    int curCell = t.RosterSpots[j];
+                    if (curCell != -1)
+                        continue;
+                    for (int k = spotsCount - 1; k > j; k--)
                     {
-                        for (int k = spotsCount - 1; k > j; k--)
+                        int subCell = t.RosterSpots[k];
+                        if (subCell != -1) // || String.IsNullOrWhiteSpace(subCell)))
                         {
-                            int subCell = teamsList[i].RosterSpots[k];
-                            if (subCell != -1) // || String.IsNullOrWhiteSpace(subCell)))
-                            {
-                                teamsList[i].RosterSpots[j] = subCell;
-                                teamsList[i].RosterSpots[k] = -1;
-                                break;
-                            }
+                            t.RosterSpots[j] = subCell;
+                            t.RosterSpots[k] = -1;
+                            break;
                         }
                     }
                 }
                 int count = 0;
                 for (int j = 0; j < spotsCount; j++)
                 {
-                    int curCell = teamsList[i].RosterSpots[j];
+                    int curCell = t.RosterSpots[j];
                     if (curCell != -1) // || String.IsNullOrWhiteSpace(curCell))
                     {
                         count++;
@@ -2748,7 +2812,7 @@ namespace NBA_2K13_Roster_Editor
                         break;
                     }
                 }
-                teamsList[i].PlNum = count;
+                t.PlNum = count;
             }
 
             updateStatus("Player order and PlNum entries fixed.");
@@ -2794,16 +2858,17 @@ namespace NBA_2K13_Roster_Editor
 
                     foreach (var dict in dictList)
                     {
+                        var myDict = dict;
                         List<int> matchingIDs =
-                            playersList.Where(pl => pl.GetType().GetProperty(doPasteBy).GetValue(pl, null).ToString() == dict[doPasteBy])
+                            playersList.Where(pl => pl.GetType().GetProperty(doPasteBy).GetValue(pl, null).ToString() == myDict[doPasteBy])
                                        .Select(pl => pl.ID)
                                        .ToList();
-                        for (int i = 0; i < matchingIDs.Count; i++)
+                        foreach (int t in matchingIDs)
                         {
-                            PlayerEntry pe = playersList[matchingIDs[i]];
-                            if (!TryParsePlayerDictionaryList(ref pe, dict))
+                            PlayerEntry pe = playersList[t];
+                            if (!TryParsePlayerDictionaryList(ref pe, myDict))
                                 noErrors = false;
-                            playersList[matchingIDs[i]] = pe;
+                            playersList[t] = pe;
                         }
                     }
                     dgPlayers.ItemsSource = null;
@@ -2873,7 +2938,7 @@ namespace NBA_2K13_Roster_Editor
 
                 PropertyInfo propertyInfo = typeof (T).GetProperty(key);
                 Type pType = propertyInfo.PropertyType;
-                object convertedValue = null;
+                object convertedValue;
                 try
                 {
                     convertedValue = Convert.ChangeType(dict[key], pType);
@@ -3121,8 +3186,8 @@ namespace NBA_2K13_Roster_Editor
         {
             if (sender is DataGrid && (e == null || e.MouseDevice.DirectlyOver is DataGridCell || e.MouseDevice.DirectlyOver is TextBox))
             {
-                var grid = sender as DataGrid;
-                if (grid != null && grid.CurrentItem != null)
+                var grid = (DataGrid) sender;
+                if (grid.CurrentItem != null)
                 {
                     DataGridCellInfo dgci = grid.CurrentCell;
 
@@ -3193,7 +3258,7 @@ namespace NBA_2K13_Roster_Editor
 
         private void AnyRect_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender == rctJerseyColor)
+            if (Equals(sender, rctJerseyColor))
             {
                 if (dgJerseys.SelectedCells.Count == 1)
                 {
@@ -3204,7 +3269,7 @@ namespace NBA_2K13_Roster_Editor
                     }
                 }
             }
-            else if (sender == rctPlayerColor)
+            else if (Equals(sender, rctPlayerColor))
             {
                 if (dgPlayers.SelectedCells.Count == 1)
                 {
@@ -3322,6 +3387,11 @@ namespace NBA_2K13_Roster_Editor
                                 if (isArray)
                                 {
                                     var p = propertyInfo.GetValue(playersList[id], null) as IList;
+                                    if (p == null)
+                                    {
+                                        continue;
+                                    }
+
                                     Type type = p.GetType().GetGenericArguments()[0];
                                     try
                                     {
@@ -3377,7 +3447,8 @@ namespace NBA_2K13_Roster_Editor
                                             if (parts[1] == "=Rand")
                                             {
                                                 string[] limits = parts[2].Split(';');
-                                                toReplaceS = random.Next(Convert.ToInt32(limits[0]), Convert.ToInt32(limits[1])).ToString();
+                                                toReplaceS =
+                                                    random.Next(Convert.ToInt32(limits[0]), Convert.ToInt32(limits[1])).ToString();
                                             }
                                             p[index] = Enum.Parse(type, toReplaceS);
                                         }
@@ -3525,7 +3596,7 @@ namespace NBA_2K13_Roster_Editor
                 {
                     double test;
                     bool isNumeric = double.TryParse(parts[2], out test);
-                    object val = null;
+                    object val;
 
                     if (isArray)
                     {
@@ -4120,11 +4191,15 @@ namespace NBA_2K13_Roster_Editor
 
                                 for (int i = 0; i < list.Count; i++)
                                 {
-                                    OffsetThingy thingy = list[i];
-                                    br.BaseStream.Position = thingy.InitialPosition;
-                                    br.InBytePosition = thingy.InitialInBytePosition;
+                                    var offsetThingy = list[i];
+                                    if (offsetThingy.Option == "CustomTeamStatsOffset" && saveType == SaveType.MyCareer)
+                                    {
+                                        continue;
+                                    }
+                                    br.BaseStream.Position = offsetThingy.InitialPosition;
+                                    br.InBytePosition = offsetThingy.InitialInBytePosition;
                                     br.MoveStreamForSaveType();
-                                    string s = thingy.S;
+                                    string s = offsetThingy.S;
                                     char[] ca = s.ToUpperInvariant().ToCharArray();
                                     string valid = "0123456789ABCDEF";
                                     foreach (char c in ca)
@@ -4178,9 +4253,9 @@ namespace NBA_2K13_Roster_Editor
                                         }
                                         if (br.ReadNonByteAlignedBytes(s.Length/2).SequenceEqual(sba))
                                         {
-                                            thingy.FinalPosition = br.BaseStream.Position;
-                                            thingy.FinalInBytePosition = br.InBytePosition;
-                                            bgwrk.ReportProgress(0, thingy);
+                                            offsetThingy.FinalPosition = br.BaseStream.Position;
+                                            offsetThingy.FinalInBytePosition = br.InBytePosition;
+                                            bgwrk.ReportProgress(0, offsetThingy);
                                             break;
                                         }
                                         else
@@ -4214,14 +4289,9 @@ namespace NBA_2K13_Roster_Editor
 
             bgwrk.RunWorkerCompleted += delegate
                                         {
-                                            if (!found)
-                                            {
-                                                lstFOResults.Items.Add("Hex string not found after last occurrence, if any.");
-                                            }
-                                            else
-                                            {
-                                                lstFOResults.Items.Add("Done! Select the Custom profile to edit the roster!");
-                                            }
+                                            lstFOResults.Items.Add(!found
+                                                                       ? "Hex string not found after last occurrence, if any."
+                                                                       : "Done! Select the Custom profile to edit the roster!");
                                             btnFOSearch.IsEnabled = true;
                                             btnFindAllOffsets.IsEnabled = true;
                                             btnSaveOptions_Click(null, null);
@@ -4317,17 +4387,10 @@ namespace NBA_2K13_Roster_Editor
                                 }
                             };
 
-            bgwrk.ProgressChanged += delegate(object o, ProgressChangedEventArgs args)
-                                     {
-                                         if (args.UserState == null)
-                                         {
-                                             lstFOResults.Items.Add(String.Format("Searching ({0}%)...", args.ProgressPercentage));
-                                         }
-                                         else
-                                         {
-                                             lstFOResults.Items.Add(args.UserState.ToString());
-                                         }
-                                     };
+            bgwrk.ProgressChanged += (o, args) =>
+                lstFOResults.Items.Add(args.UserState == null
+                                           ? String.Format("Searching ({0}%)...", args.ProgressPercentage)
+                                           : args.UserState.ToString());
 
             bgwrk.RunWorkerCompleted += delegate
                                         {

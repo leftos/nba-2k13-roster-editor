@@ -108,8 +108,8 @@ namespace NBA_2K13_Roster_Editor
 
         public void MoveStreamToFirstRoster()
         {
-            long firstRosterOffset = 862911;
-            int firstRosterOffsetBit = 6;
+            const long firstRosterOffset = 862911;
+            const int firstRosterOffsetBit = 6;
             BaseStream.Position = firstRosterOffset;
             InBytePosition = firstRosterOffsetBit;
 
@@ -133,8 +133,8 @@ namespace NBA_2K13_Roster_Editor
 
         public void MoveStreamToPlaybook(int i)
         {
-            long firstPlaybookOffset = 1099333;
-            int firstPlaybookOffsetBit = 3;
+            const long firstPlaybookOffset = 1099333;
+            const int firstPlaybookOffsetBit = 3;
 
             BaseStream.Position = firstPlaybookOffset;
             InBytePosition = firstPlaybookOffsetBit;
