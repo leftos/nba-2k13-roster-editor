@@ -12,7 +12,7 @@
 
 			
 	Known Issues
-		- (360) Editing Signature Skills of player with Player ID 1364 doesn't work for now
+		- (360) Editing any player that is in the spot with ID 1364 won't work; some of the information shown may be incorrect as well
 		- (360) MyCareer files compatibility is ...well, not that good
 		
 		

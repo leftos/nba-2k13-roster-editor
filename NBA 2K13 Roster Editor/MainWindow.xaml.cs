@@ -1648,6 +1648,10 @@ namespace NBA_2K13_Roster_Editor
                         {
                             //Console.WriteLine("Saving Player " + i);
                             PlayerEntry pe = playersList[i];
+                            if (mode == Mode.CustomX360 && pe.ID == 1364)
+                            {
+                                continue;
+                            }
                             brSave.MoveStreamToFirstSS(pe.ID);
                             bw.BaseStream.Position = brSave.BaseStream.Position;
                             bw.InBytePosition = brSave.InBytePosition;

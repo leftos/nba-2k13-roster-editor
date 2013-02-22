@@ -1,5 +1,9 @@
-0.22.3.1
+0.22.3.2
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
+	v0.22.3.2
+		- Player with ID 1364 will be skipped when saving the Players tab while using the 360 profile; editing the player in that spot doesn't work, and that's a known issue, so this will make sure the tool doesn't try to save him and thus doesn't show a message about an error during save
+
+	v0.22.3.1
 		- Fixed Free Agents entry for all save types
 		- Disabled Team Stats editing for MyCareer saves as the offset can't be automatically determined for now
