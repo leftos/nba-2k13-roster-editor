@@ -34,7 +34,7 @@ namespace NBA_2K13_Roster_Editor
     /// </summary>
     public partial class App : Application
     {
-        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        private void app_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             var exceptionString = e.Exception.ToString();
             var innerExceptionString = e.Exception.InnerException == null
@@ -47,7 +47,7 @@ namespace NBA_2K13_Roster_Editor
                 var errorReportPath = NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"errorlog_unh.txt";
                 var f = new StreamWriter(errorReportPath);
 
-                f.WriteLine("Unhandled Exception Error Report for NBA Stats Tracker");
+                f.WriteLine("Unhandled Exception Error Report for NBA 2K13 Roster Editor");
                 f.WriteLine(versionString);
                 f.WriteLine();
                 f.WriteLine("Exception information:");
@@ -59,8 +59,8 @@ namespace NBA_2K13_Roster_Editor
                 f.Close();
 
                 MessageBox.Show(
-                    "NBA Stats Tracker encountered a critical error and will be terminated.\n\n" + "An Error Log has been saved at \n" +
-                    errorReportPath, "NBA Stats Tracker Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    "NBA 2K13 Roster Editor encountered a critical error and will be terminated.\n\n" + "An Error Log has been saved at \n" +
+                    errorReportPath, "NBA 2K13 Roster Editor Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 Process.Start(errorReportPath);
             }
@@ -72,7 +72,7 @@ namespace NBA_2K13_Roster_Editor
                 s += versionString;
                 s += "Exception Information:\n" + exceptionString + "\n\n";
                 s += "Inner Exception Information:\n" + innerExceptionString;
-                MessageBox.Show(s, "NBA Stats Tracker Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(s, "NBA 2K13 Roster Editor Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             // Prevent default unhandled exception processing
