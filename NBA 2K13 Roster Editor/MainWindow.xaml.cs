@@ -2259,26 +2259,10 @@ namespace NBA_2K13_Roster_Editor
                 }
 
                 // Free Agents
-                int faRow = 999;
-                brSave.BaseStream.Position = 853505;
-                brSave.InBytePosition = 6;
+                const int faRow = 999;
 
-                if (mode == Mode.X360)
-                {
-                    brSave.BaseStream.Position = 923137;
-                }
-                else if (mode == Mode.PCNov10 || mode == Mode.X360Nov10)
-                {
-                    brSave.BaseStream.Position += 1911;
-                    brSave.InBytePosition = 2;
-                }
-                else if (mode == Mode.Custom || mode == Mode.CustomX360)
-                {
-                    brSave.MoveStreamToFirstRoster();
-                    brSave.BaseStream.Position -= 9406;
-                }
-
-                brSave.MoveStreamForSaveType();
+                brSave.MoveStreamToFirstRoster();
+                brSave.BaseStream.Position -= 9406;
 
                 WriteRosterRow(faRow, 512, brSave, true);
                 //

@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.22.3.3
+		- Fixed saving Free Agents
+
 	v0.22.3.2
 		- Player with ID 1364 will be skipped when saving the Players tab while using the 360 profile; editing the player in that spot doesn't work, and that's a known issue, so this will make sure the tool doesn't try to save him and thus doesn't show a message about an error during save
 
