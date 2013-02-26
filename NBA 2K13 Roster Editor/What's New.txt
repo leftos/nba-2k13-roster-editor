@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.22.4
+		- Added Shoe Trim parameters to Players (code contribution of TUSS11 from OperationSports)
+
 	v0.22.3.3
 		- Fixed saving Free Agents
 
