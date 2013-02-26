@@ -652,10 +652,14 @@ namespace NBA_2K13_Roster_Editor
                                 {33, 29},
                                 {34, 15},
                                 {35, 34},
-                                {36, 14}
+                                {36, 14},
+                                {37, 37},
+                                {38, 38},
+                                {39, 39},
+                                {40, 40}
                             };
 
-            for (int i = 0; i < 37; i++)
+            for (int i = 0; i < 41; i++)
             {
                 dgPlayers.Columns.Add(new DataGridTextColumn
                                       {
@@ -1122,6 +1126,29 @@ namespace NBA_2K13_Roster_Editor
             brOpen.MoveStreamPosition(152, 0);
             gear.Add(brOpen.ReadNBAByte(3));
             gear.Add(brOpen.ReadNBAByte(3));
+
+            // TUSS11 code for shoe trim
+            brOpen.MoveStreamPosition(-175, -6);
+            gear.Add(brOpen.ReadNBAByte(4)); // Home trim 1
+            var h2 = brOpen.ReadNBAByte(4);
+            var HShoeTrim2 = (byte)(h2 / 2);
+            gear.Add(HShoeTrim2); // Home trim 2
+
+            var a1 = brOpen.ReadNBAByte(4);
+            var AShoeTrim1 = (byte)(a1 / 4);
+            gear.Add(AShoeTrim1); // Away trim 1
+            var a2 = brOpen.ReadNBAByte(4);
+            var AShoeTrim2 = a2;
+            if (a1 % 2 == 0)
+            {
+                AShoeTrim2 = (byte)(a2 / 8);
+            }
+            else
+            {
+                AShoeTrim2 = (byte)((a2 / 8) + 2);
+            }
+            gear.Add(AShoeTrim2); // Away trim 2
+            //
             return gear;
         }
 
@@ -1590,26 +1617,10 @@ namespace NBA_2K13_Roster_Editor
                 MessageBox.Show("Couldn't save changed setting.");
             }
         }
-
-        public static int GetRegistrySetting(string setting, int defaultValue)
+        
+        public static T GetRegistrySetting<T>(string setting, T defaultValue)
         {
-            RegistryKey rk = Registry.CurrentUser;
-            int settingValue = defaultValue;
-            try
-            {
-                if (rk == null)
-                    throw new Exception();
-
-                rk = rk.OpenSubKey(@"SOFTWARE\Lefteris Aslanoglou\NBA 2K13 Roster Editor");
-                if (rk != null)
-                    settingValue = Convert.ToInt32(rk.GetValue(setting, defaultValue));
-            }
-            catch
-            {
-                settingValue = defaultValue;
-            }
-
-            return settingValue;
+            return (T)Convert.ChangeType(GetRegistrySetting(setting, defaultValue.ToString()), typeof(T));
         }
 
         public static string GetRegistrySetting(string setting, string defaultValue)
@@ -2142,6 +2153,33 @@ namespace NBA_2K13_Roster_Editor
                             WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
                             WriteByte(pe.Accessories[k++], 3, bw, ref brSave);
                             //
+                            brSave.MoveStreamPosition(-175, -6); // Shoe trim colors
+                            SyncBWwithBR(ref bw, brSave);
+                            byte homeShoeByte;
+                            try
+                            {
+                                homeShoeByte = (byte)((pe.Accessories[37] * 16) + (pe.Accessories[38] * 2));
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("Problem with Player ID " + pe.ID + ", HomeShoeTrim1 and HomeShoeTrim2 " + "\nWill try to continue.");
+                                continue;
+                            }
+                            bw.WriteNonByteAlignedByte(homeShoeByte, brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+
+                            byte awayShoeByte;
+                            try
+                            {
+                                awayShoeByte = (byte)((pe.Accessories[39] * 64) + (pe.Accessories[40] * 8));
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("Problem with Player ID " + pe.ID + ", AwayShoeTrim1 and AwayShoeTrim2 " + "\nWill try to continue.");
+                                continue;
+                            }
+                            bw.WriteNonByteAlignedByte(awayShoeByte, brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
                         }
                         catch (Exception ex)
                         {

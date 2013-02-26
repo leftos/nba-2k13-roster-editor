@@ -56,6 +56,10 @@ namespace NBA_2K13_Roster_Editor.Data.Players.Parameters
         LeftAnkleColor = 33,
         RightAnkleColor = 34,
         LeftArm = 35,
-        RightArm = 36
+        RightArm = 36,
+        HomeShoeTrim1 = 37,
+        HomeShoeTrim2 = 38,
+        AwayShoeTrim1 = 39,
+        AwayShoeTrim2 = 40
     }
 }
