@@ -80,6 +80,7 @@
     <Compile Include="Data\Staff\Parameters\CPSetting.cs" />
     <Compile Include="Data\Staff\StaffEntry.cs" />
     <Compile Include="Data\TeamStats\TeamStatsEntry.cs" />
+    <Compile Include="Data\Players\PlayerReader.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RosterReader.cs" />
     <Compile Include="SearchWindow.xaml.cs">

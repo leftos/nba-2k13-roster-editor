@@ -107,6 +107,12 @@
                               CellEditEnding="dataGrid_CellEditEnding"
                               AlternatingRowBackground="#FFE5E5E5"
                               d:DataContext="{d:DesignInstance players:PlayerEntry}">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="Control">
+                                <Setter Property="FontFamily" Value="Arial Narrow"/>
+                                <Setter Property="FontSize" Value="12"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" />
