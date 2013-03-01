@@ -216,7 +216,7 @@ namespace NBA_2K13_Roster_Editor
 
             mw = this;
 
-            Title += " v" + Assembly.GetExecutingAssembly().GetName().Version;
+            Title += " v" + Assembly.GetExecutingAssembly().GetName().Version + " - by Lefteris \"Leftos\" Aslanoglou";
 
             if (Directory.Exists(DocsPath) == false)
             {
@@ -2355,7 +2355,9 @@ namespace NBA_2K13_Roster_Editor
                     string[] lines = Tools.SplitLinesToArray(text);
                     if (!lines[0].StartsWith("ID\t") && !lines[0].Contains("\tID\t"))
                     {
-                        MessageBox.Show("The pasted data must have the column headers in the first row.");
+                        MessageBox.Show(
+                            "The pasted data must have the column headers in the first row, or you didn't include the ID column " +
+                            "when copying.");
                         return;
                     }
                     List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSVString(text);
@@ -2487,7 +2489,9 @@ namespace NBA_2K13_Roster_Editor
                     string doPasteBy = GetOption("DoPlayersPasteBy").ToString();
                     if (!lines[0].StartsWith(string.Format("{0}\t", doPasteBy)) && !lines[0].Contains(string.Format("\t{0}\t", doPasteBy)))
                     {
-                        MessageBox.Show("The pasted data must have the column headers in the first row.");
+                        MessageBox.Show(
+                            "The pasted data must have the column headers in the first row, or you didn't include the ID column " +
+                            "when copying.");
                         return;
                     }
                     List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSVString(text);
@@ -2764,7 +2768,9 @@ namespace NBA_2K13_Roster_Editor
                     string[] lines = Tools.SplitLinesToArray(text);
                     if (!lines[0].StartsWith("ID\t") && !lines[0].Contains("\tID\t"))
                     {
-                        MessageBox.Show("The pasted data must have the column headers in the first row.");
+                        MessageBox.Show(
+                            "The pasted data must have the column headers in the first row, or you didn't include the ID column " +
+                            "when copying.");
                         return;
                     }
                     List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSVString(text);
