@@ -2489,9 +2489,8 @@ namespace NBA_2K13_Roster_Editor
                     string doPasteBy = GetOption("DoPlayersPasteBy").ToString();
                     if (!lines[0].StartsWith(string.Format("{0}\t", doPasteBy)) && !lines[0].Contains(string.Format("\t{0}\t", doPasteBy)))
                     {
-                        MessageBox.Show(
-                            "The pasted data must have the column headers in the first row, or you didn't include the ID column " +
-                            "when copying.");
+                        MessageBox.Show("The pasted data must have the column headers in the first row, or you didn't include the " +
+                                        doPasteBy + " column when copying.");
                         return;
                     }
                     List<Dictionary<string, string>> dictList = CSV.DictionaryListFromTSVString(text);
