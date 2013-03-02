@@ -9,7 +9,7 @@
         xmlns:playerStats="clr-namespace:NBA_2K13_Roster_Editor.Data.PlayerStats"
         xmlns:players="clr-namespace:NBA_2K13_Roster_Editor.Data.Players" mc:Ignorable="d"
         Title="NBA 2K13 Roster Editor"
-        Height="477" Width="902" Closing="Window_Closing_1" Icon="pack://siteoforigin:,,,/NLSC.ico"
+        Height="477" Width="902" Closing="Window_Closing_1"
         Loaded="Window_Loaded_1">
     <Window.Resources>
         <ObjectDataProvider x:Key="SignatureSkillsList" MethodName="GetValues"
