@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.22.4.3
+		- Fixed crash in very rare occurrences related to window icon
+
 	v0.22.4.2
 		- Fixed the tool crashing on startup in some occurrences when a registry setting was saved in the wrong format
 
