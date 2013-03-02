@@ -44,7 +44,7 @@ namespace NBA_2K13_Roster_Editor
 
             try
             {
-                var errorReportPath = NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"errorlog_unh.txt";
+                var errorReportPath = NBA_2K13_Roster_Editor.MainWindow.DocsPath + @"\errorlog_unh.txt";
                 var f = new StreamWriter(errorReportPath);
 
                 f.WriteLine("Unhandled Exception Error Report for NBA 2K13 Roster Editor");

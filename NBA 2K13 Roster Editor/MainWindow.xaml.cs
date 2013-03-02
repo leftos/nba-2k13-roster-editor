@@ -210,6 +210,9 @@ namespace NBA_2K13_Roster_Editor
         {
             InitializeComponent();
 
+            Tools.AppName = "NBA 2K13 Roster Editor";
+            Tools.AppRegistryKey = @"SOFTWARE\Lefteris Aslanoglou\NBA 2K13 Roster Editor";    
+
             random = new Random();
 
             btnMode360Nov10.Visibility = Visibility.Collapsed; //
@@ -1225,56 +1228,12 @@ namespace NBA_2K13_Roster_Editor
 
         public static void SetRegistrySetting<T>(string setting, T value)
         {
-            RegistryKey rk = Registry.CurrentUser;
-            try
-            {
-                try
-                {
-                    rk = rk.OpenSubKey(@"SOFTWARE\Lefteris Aslanoglou\NBA 2K13 Roster Editor", true);
-                    if (rk == null)
-                        throw new Exception();
-                }
-                catch (Exception)
-                {
-                    rk = Registry.CurrentUser;
-                    rk.CreateSubKey(@"SOFTWARE\Lefteris Aslanoglou\NBA 2K13 Roster Editor");
-                    rk = rk.OpenSubKey(@"SOFTWARE\Lefteris Aslanoglou\NBA 2K13 Roster Editor", true);
-                    if (rk == null)
-                        throw new Exception();
-                }
-
-                rk.SetValue(setting, value);
-            }
-            catch
-            {
-                MessageBox.Show("Couldn't save changed setting.");
-            }
+            Tools.SetRegistrySetting(setting, value);
         }
         
         public static T GetRegistrySetting<T>(string setting, T defaultValue)
         {
-            return (T)Convert.ChangeType(GetRegistrySetting(setting, defaultValue.ToString()), typeof(T));
-        }
-
-        public static string GetRegistrySetting(string setting, string defaultValue)
-        {
-            RegistryKey rk = Registry.CurrentUser;
-            string settingValue = defaultValue;
-            try
-            {
-                if (rk == null)
-                    throw new Exception();
-
-                rk = rk.OpenSubKey(@"SOFTWARE\Lefteris Aslanoglou\NBA 2K13 Roster Editor");
-                if (rk != null)
-                    settingValue = rk.GetValue(setting, defaultValue).ToString();
-            }
-            catch
-            {
-                settingValue = defaultValue;
-            }
-
-            return settingValue;
+            return Tools.GetRegistrySetting(setting, defaultValue);
         }
 
         private void btnSavePlayers_Click(object sender, RoutedEventArgs e)

@@ -1,0 +1,881 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LeftosCommonLibrary</name>
+    </assembly>
+    <members>
+        <member name="T:LeftosCommonLibrary.CommonDialogs.CopyableMessageWindow">
+            <summary>
+                Implements a window to display a message to the user that can be copied to the clipboard.
+                Window size adjusts depending on the contents.
+            </summary>
+            <summary>
+            CopyableMessageWindow
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.CopyableMessageWindow.#ctor(System.String,System.String,System.Windows.TextAlignment,System.Boolean)">
+            <summary>
+                Initializes a new instance of the <see cref="T:LeftosCommonLibrary.CommonDialogs.CopyableMessageWindow"/> class.
+            </summary>
+            <param name="msg">The message to display.</param>
+            <param name="title">The title of the window. If left blank, the Tools.AppName field will be used.</param>
+            <param name="alignment">The text alignment to be used for the message.</param>
+            <param name="beep">If true, the system sound Beep will be played after the window is loaded.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.CopyableMessageWindow.btnCopyToClip_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+                Handles the Click event of the btnCopyToClip control.
+                Copies the message displayed to the clipboard.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">
+                The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.
+            </param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.CopyableMessageWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:LeftosCommonLibrary.CommonDialogs.InputBoxWindow">
+            <summary>
+                Implements a general-purpose Input-box Window.
+            </summary>
+            <summary>
+            InputBoxWindow
+            </summary>
+        </member>
+        <member name="F:LeftosCommonLibrary.CommonDialogs.InputBoxWindow.UserInput">
+            <summary>
+                Contains the user input if the user clicked OK, or an empty string if the user clicked Cancel.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.InputBoxWindow.#ctor(System.String,System.String,System.String)">
+            <summary>
+                Initializes a new instance of the <see cref="T:LeftosCommonLibrary.CommonDialogs.InputBoxWindow"/> class.
+            </summary>
+            <param name="message">The prompt to display.</param>
+            <param name="title">The title.</param>
+            <param name="defaultValue">The default value.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.InputBoxWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:LeftosCommonLibrary.CommonDialogs.ProgressWindow">
+            <summary>
+                Interaction logic for ProgressWindow.xaml
+            </summary>
+            <summary>
+            ProgressWindow
+            </summary>
+        </member>
+        <member name="F:LeftosCommonLibrary.CommonDialogs.ProgressWindow.PwInstance">
+            <summary>
+                A static copy of the ProgressWindow instance to be used while the window is opened.
+            </summary>
+        </member>
+        <member name="F:LeftosCommonLibrary.CommonDialogs.ProgressWindow.CanClose">
+            <summary>
+                Whether the window can be closed either by code or by user input.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.ProgressWindow.#ctor">
+            <summary>
+                Initializes a new instance of the <see cref="T:LeftosCommonLibrary.CommonDialogs.ProgressWindow"/> class.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.ProgressWindow.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+                Initializes a new instance of the <see cref="T:LeftosCommonLibrary.CommonDialogs.ProgressWindow"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="pbVisible">
+                if set to <c>true</c>, the progress bar is visible.
+            </param>
+            <param name="updateTitleOnPBValueChange">
+                if set to <c>true</c>, the window title is updated to include the progress bar value when the latter one is changed.
+            </param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.ProgressWindow.SetProgressBarValue``1(``0)">
+            <summary>
+                Sets the progress bar value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.ProgressWindow.SetMessage(System.String)">
+            <summary>
+                Sets the message.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.ProgressWindow.SetState``1(System.String,``0)">
+            <summary>
+                Sets the state (i.e. message shown, progress bar value, etc.)
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="message">The message.</param>
+            <param name="value">The progress bar value.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CommonDialogs.ProgressWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:LeftosCommonLibrary.ParseCell">
+            <summary>
+                Methods to parse a DataRowCell into common data-types.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.ParseCell.GetUInt16(System.Data.DataRow,System.String)">
+            <summary>
+                Gets an unsigned 16-bit integer from the specified column of the given DataRow.
+            </summary>
+            <param name="r">The row.</param>
+            <param name="columnName">Name of the column.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.ParseCell.GetUInt32(System.Data.DataRow,System.String)">
+            <summary>
+                Gets an unsigned 32-bit integer from the specified column of the given DataRow.
+            </summary>
+            <param name="r">The row.</param>
+            <param name="columnName">Name of the column.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.ParseCell.GetInt32(System.Data.DataRow,System.String)">
+            <summary>
+                Gets a signed 32-bit integer from the specified column of the given DataRow.
+            </summary>
+            <param name="r">The row.</param>
+            <param name="columnName">Name of the column.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.ParseCell.GetBoolean(System.Data.DataRow,System.String)">
+            <summary>
+                Gets a boolean from the specified column of the given DataRow.
+            </summary>
+            <param name="r">The row.</param>
+            <param name="columnName">Name of the column.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.ParseCell.GetString(System.Data.DataRow,System.String)">
+            <summary>
+                Gets a string from the specified column of the given DataRow.
+            </summary>
+            <param name="r">The row.</param>
+            <param name="columnName">Name of the column.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.ParseCell.GetFloat(System.Data.DataRow,System.String)">
+            <summary>
+                Gets a float from the specified column of the given DataRow.
+            </summary>
+            <param name="r">The row.</param>
+            <param name="columnName">Name of the column.</param>
+            <returns></returns>
+        </member>
+        <member name="T:LeftosCommonLibrary.BeTimvwFramework.PropertyComparer`1">
+            <summary>
+                IComparer to compare two properties and thus sort a list.
+            </summary>
+            <typeparam name="T">Type of property.</typeparam>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.PropertyComparer`1.#ctor(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+                Initializes a new instance of the <see cref="T:LeftosCommonLibrary.BeTimvwFramework.PropertyComparer`1"/> class.
+            </summary>
+            <param name="property">The property.</param>
+            <param name="direction">The sorting direction.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.PropertyComparer`1.Compare(`0,`0)">
+            <summary>
+                Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+            </summary>
+            <param name="x">The first object to compare.</param>
+            <param name="y">The second object to compare.</param>
+            <returns>
+                Value Condition Less than zero<paramref name="x" /> is less than <paramref name="y" />.Zero<paramref name="x" /> equals
+                <paramref
+                    name="y" />
+                .Greater than zero<paramref name="x" /> is greater than <paramref name="y" />.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.PropertyComparer`1.SetPropertyAndDirection(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+                Sets the property descriptor and sorting direction.
+            </summary>
+            <param name="descriptor">The property descriptor.</param>
+            <param name="direction">The sorting direction.</param>
+        </member>
+        <member name="T:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1">
+            <summary>
+                An extension of the binding list that allows sorting.
+            </summary>
+            <typeparam name="T">The type of objects this list can contain.</typeparam>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.#ctor">
+            <summary>
+                Initializes a new instance of the <see cref="T:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1"/> class.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+                Initializes a new instance of the <see cref="T:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1"/> class containing a copy of the objects in the enumeration.
+            </summary>
+            <param name="enumeration">The enumeration to initialize the list with.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.ApplySortCore(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+                Applies the sort.
+            </summary>
+            <param name="property">The property descriptor.</param>
+            <param name="direction">The sorting direction.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.RemoveSortCore">
+            <summary>
+                Removes the sort.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.FindCore(System.ComponentModel.PropertyDescriptor,System.Object)">
+            <summary>
+                Finds an item.
+            </summary>
+            <param name="property">The property descriptor.</param>
+            <param name="key">The key to find.</param>
+            <returns></returns>
+        </member>
+        <member name="P:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.SupportsSortingCore">
+            <summary>
+                Gets a value indicating whether this list supports sorting.
+            </summary>
+            <value>
+                <c>true</c> if it supports sorting; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.IsSortedCore">
+            <summary>
+                Gets a value indicating whether the list is sorted.
+            </summary>
+            <value>
+                <c>true</c> if the list is sorted; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.SortPropertyCore">
+            <summary>
+                Gets the sorting property descriptor.
+            </summary>
+            <value>
+                The sorting property descriptor.
+            </value>
+        </member>
+        <member name="P:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.SortDirectionCore">
+            <summary>
+                Gets the sorting direction.
+            </summary>
+            <value>
+                The sorting direction.
+            </value>
+        </member>
+        <member name="P:LeftosCommonLibrary.BeTimvwFramework.SortableBindingList`1.SupportsSearchingCore">
+            <summary>
+                Gets a value indicating whether the list supports searching.
+            </summary>
+            <value>
+                <c>true</c> if the list supports searching; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:LeftosCommonLibrary.Crc32">
+            <summary>
+                Provides methods to calculate CRC32 (32-bit cyclic redundancy check) hashes of byte arrays.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.#ctor">
+            <summary>
+                Default constructor for the Crc32 class, using the default polynomial and seed.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.#ctor(System.UInt32,System.UInt32)">
+            <summary>
+                Constructor for the Crc32 class, with user-set polynomial and seed.
+            </summary>
+            <param name="polynomial">The polynomial used to initialize the table.</param>
+            <param name="seed">The seed used to calculate the hash.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.Initialize">
+            <summary>
+                Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.HashCore(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+                When overridden in a derived class, routes data written to the object into the hash algorithm for computing the hash.
+            </summary>
+            <param name="array">The input to compute the hash code for. </param>
+            <param name="ibStart">The offset into the byte array from which to begin using data. </param>
+            <param name="cbSize">The number of bytes in the byte array to use as data. </param>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.HashFinal">
+            <summary>
+                When overridden in a derived class, finalizes the hash computation after the last data is processed by the cryptographic stream object.
+            </summary>
+            <returns>
+                The computed hash code.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.Compute(System.Byte[])">
+            <summary>
+                Computes the hash of the specified buffer.
+            </summary>
+            <param name="buffer">The buffer.</param>
+            <returns>The hash of the buffer.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.Compute(System.UInt32,System.Byte[])">
+            <summary>
+                Computes the hash of the specified buffer.
+            </summary>
+            <param name="seed">The seed to use.</param>
+            <param name="buffer">The buffer.</param>
+            <returns>The hash of the buffer.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.Compute(System.UInt32,System.UInt32,System.Byte[])">
+            <summary>
+                Computes the hash of the specified buffer.
+            </summary>
+            <param name="polynomial">The polynomial to initialize the table with.</param>
+            <param name="seed">The seed to use.</param>
+            <param name="buffer">The buffer.</param>
+            <returns>The hash of the buffer.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.CalculateCRC(System.String,System.Boolean)">
+            <summary>
+                Calculates the CRC32 of a specified file.
+            </summary>
+            <param name="path">The path of the file.</param>
+            <param name="ignoreFirst4Bytes">Whether to ignore the first 4 bytes of the file; should be used when the those bytes are the CRC itself.</param>
+            <returns>A hex string representation of the CRC32 hash.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Crc32.CalculateCRC(System.Byte[])">
+            <summary>
+                Calculates the CRC32 of a specified byte array.
+            </summary>
+            <param name="ba">The byte array of which to calculate the CRC32 hash.</param>
+            <returns>A hex string representation of the CRC32 hash.</returns>
+        </member>
+        <member name="P:LeftosCommonLibrary.Crc32.HashSize">
+            <summary>
+                Overriden property; returns 32 because of the 32-bit implementation.
+            </summary>
+        </member>
+        <member name="T:LeftosCommonLibrary.CSV">
+            <summary>
+                Provides methods to convert from and to CSV data.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.DictionaryListFromCSVFile(System.String,System.Boolean)">
+            <summary>
+                Converts CSV data from a file into a list of dictionaries.
+            </summary>
+            <param name="path">The path of the CSV file.</param>
+            <param name="useCultureSeparator">
+                If <c>true</c>, the method uses the current culture's list separator.
+                If <c>false</c>, it tries to automatically detect it.
+            </param>
+            <returns>
+                A list of dictionaries, where each dictionary is a record, and the key-value pairs are the column header and
+                corresponding value.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.DictionaryListFromCSVString(System.String,System.Boolean)">
+            <summary>
+                Converts CSV data from a string into a list of dictionaries.
+            </summary>
+            <param name="text">The CSV data.</param>
+            <param name="useCultureSeparator">
+                If <c>true</c>, the method uses the current culture's list separator.
+                If <c>false</c>, it tries to automatically detect it.
+            </param>
+            <returns>
+                A list of dictionaries, where each dictionary is a record, and the key-value pairs are the column header and
+                corresponding value.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.ArrayListFromCSVFile(System.String,System.Boolean,System.Boolean)">
+            <summary>
+                Converts CSV data from a file into a list of string arrays.
+            </summary>
+            <param name="path">The path to the file.</param>
+            <param name="hasHeaders">
+                if set to <c>true</c>, the file is assumed to have headers in the first row.
+            </param>
+            <param name="useCultureSeparator">
+                If <c>true</c>, the method uses the current culture's list separator.
+                If <c>false</c>, it tries to automatically detect it.
+            </param>
+            <returns>A list of string arrays containing the CSV data.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.ArrayListFromCSVString(System.String,System.Boolean,System.Boolean)">
+            <summary>
+                Converts CSV data from a string into a list of string arrays.
+            </summary>
+            <param name="text">The CSV data.</param>
+            <param name="hasHeaders">
+                if set to <c>true</c>, the file is assumed to have headers in the first row.
+            </param>
+            <param name="useCultureSeparator">
+                If <c>true</c>, the method uses the current culture's list separator.
+                If <c>false</c>, it tries to automatically detect it.
+            </param>
+            <returns>A list of string arrays containing the CSV data.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.CSVFromDictionaryList(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.String}},System.String,System.String)">
+            <summary>
+                Converts a dictionary list into CSV data and writes it to a file.
+            </summary>
+            <param name="dList">The dictionary list. All dictionaries should have the same format. Each dictionary should be a record, and the key-value pairs should be the column header and corresponding value.</param>
+            <param name="path">The path of the file where the data should be written to.</param>
+            <param name="separator">
+                The separator to use; should be a single-character string. If <c>null</c>, the current culture's separator will be used.
+            </param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.TSVFromDictionaryList(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.String}},System.String)">
+            <summary>
+                Converts a dictionary list into TSV data and writes it to a file.
+            </summary>
+            <param name="dList">The dictionary list. All dictionaries should have the same format. Each dictionary should be a record, and the key-value pairs should be the column header and corresponding value.</param>
+            <param name="path">The path of the file where the data should be written to.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.DictionaryListFromTSVFile(System.String)">
+            <summary>
+                Converts TSV data from a file into a list of dictionaries.
+            </summary>
+            <param name="path">The path of the TSV file.</param>
+            <returns>A list of dictionaries. Each dictionary is a record, and the key-value pairs are the column header and corresponding value.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.DictionaryListFromTSVString(System.String)">
+            <summary>
+                Converts TSV data from a string into a list of dictionaries.
+            </summary>
+            <param name="text">The TSV data.</param>
+            <returns>A list of dictionaries. Each dictionary is a record, and the key-value pairs are the column header and corresponding value.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.ArrayListFromTSVFile(System.String,System.Boolean)">
+            <summary>
+                Converts TSV data from a file into a list of dictionaries.
+            </summary>
+            <param name="path">The path of the TSV file.</param>
+            <param name="hasHeaders">
+                If <c>true</c>, the file is assumed to include headers in the first row.
+            </param>
+            <returns>A list of string arrays containing the TSV data.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.ArrayListFromTSVString(System.String,System.Boolean)">
+            <summary>
+                Converts TSV data from a file into a list of dictionaries.
+            </summary>
+            <param name="text">The TSV data.</param>
+            <param name="hasHeaders">
+                If <c>true</c>, the file is assumed to include headers in the first row.
+            </param>
+            <returns>A list of string arrays containing the TSV data.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.dictionaryListFromTSV(System.String[])">
+            <summary>
+                Converts TSV data from an array of strings into a list of dictionaries.
+            </summary>
+            <param name="lines">
+                The array of strings to be converted. First string should be the tab-separated column headers.
+                Each following string should be a tab-separated record.
+            </param>
+            <returns>A list of dictionaries. Each dictionary is a record, and the key-value pairs are the column header and corresponding value.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.escape(System.String)">
+            <summary>
+                Adds quotes to a string if it needs to be escaped.
+            </summary>
+            <param name="s">The string to be escaped.</param>
+            <returns>The escaped string.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.Unescape(System.String)">
+            <summary>
+                Unescapes (removes the quotes from) the specified string.
+            </summary>
+            <param name="s">The string to be unescaped.</param>
+            <returns>The unescaped string.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.DetectSeparator(System.IO.TextReader,System.Int32,System.Collections.Generic.IList{System.Char})">
+            <summary>
+                Detects the list separator.
+            </summary>
+            <param name="reader">The TextReader instance.</param>
+            <param name="rowCount">The row count.</param>
+            <param name="separators">The list of separator candidates.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.CSV.ParseClipboardData">
+            <summary>
+                Parses the clipboard data.
+            </summary>
+            <returns>A list of string arrays containing the parsed CSV/TSV data.</returns>
+        </member>
+        <member name="T:LeftosCommonLibrary.GenericEventHandlers">
+            <summary>
+                Implements event handlers that improve the behavior WPF controls.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericEventHandlers.OnExecutedPaste(System.Object,System.Windows.Input.ExecutedRoutedEventArgs)">
+            <summary>
+                Handles pasting the data into a data-bound DataGrid.
+            </summary>
+            <param name="sender">The DataGrid instance to paste into.</param>
+            <param name="args">The ExecutedRoutedEventArgs instance.</param>
+            <returns>Whether the operation completed without errors.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericEventHandlers.WPFDataGrid_RowEditEnding_GoToNewRowOnTab(System.Object,System.Windows.Controls.DataGridRowEditEndingEventArgs)">
+            <summary>
+                When added to the RowEditEnding event of a WPF DataGrid, if the user presses Tab while on the last cell of a row, the focus
+                is switched to the first cell of the next row, instead of another control altogether.
+                <see cref="M:LeftosCommonLibrary.GenericEventHandlers.Any_PreviewKeyDown_CheckTab(System.Object,System.Windows.Input.KeyEventArgs)"/> and <see cref="M:LeftosCommonLibrary.GenericEventHandlers.Any_PreviewKeyUp_CheckTab(System.Object,System.Windows.Input.KeyEventArgs)"/> should also be added as event handlers to the control.
+            </summary>
+            <param name="sender">The WPF DataGrid (or compatible) control from which the event was raised..</param>
+            <param name="e">
+                The <see cref="T:System.Windows.Controls.DataGridRowEditEndingEventArgs"/> instance containing the event data.
+            </param>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericEventHandlers.Any_PreviewKeyDown_CheckTab(System.Object,System.Windows.Input.KeyEventArgs)">
+            <summary>
+                When added to the PreviewKeyDown event of any control, it checks whether the key pressed was Tab.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">
+                The <see cref="T:System.Windows.Input.KeyEventArgs"/> instance containing the event data.
+            </param>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericEventHandlers.Any_PreviewKeyUp_CheckTab(System.Object,System.Windows.Input.KeyEventArgs)">
+            <summary>
+                When added to the PreviewKeyUp event of any control, it checks whether the key pressed was Tab.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">
+                The <see cref="T:System.Windows.Input.KeyEventArgs"/> instance containing the event data.
+            </param>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericEventHandlers.Any_ShowToolTip(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+                Handles the ShowToolTip event of any control, placing and showing a tooltip under the control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">
+                The <see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
+            </param>
+        </member>
+        <member name="T:LeftosCommonLibrary.GenericExtensions">
+            <summary>
+                Implements generic extension methods.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.TryChangeValue(System.Data.DataRow,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Type)">
+            <summary>
+                Tries to the change the value of specific DataRow entry by using the corresponding value of a dictionary entry,
+                after converting it to the specified <c>type</c>.
+            </summary>
+            <param name="row">The DataRow containing the entry of which we want to try and change the value</param>
+            <param name="dict">The dictionary containing the value we're trying to set.</param>
+            <param name="key">The key representing both the DataRow column as well as the Dictionary key.</param>
+            <param name="type">The type to convert to.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.TryChangeValue(System.Data.DataRow,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Type,System.String)">
+            <summary>
+                Tries to the change the value of specific DataRow entry by using the corresponding value of a dictionary entry.
+                Operation will succeed only if all parts of the dictionary entry, after the latter is split at each
+                <c>splitCharacter</c>, can be converted into the specified <c>type</c>.
+            </summary>
+            <param name="row">The DataRow containing the entry of which we want to try and change the value.</param>
+            <param name="dict">The dictionary containing the value we're trying to set.</param>
+            <param name="key">The key representing both the DataRow column as well as the Dictionary key.</param>
+            <param name="type">The type to attempt to convert all parts of the dictionary entry to.</param>
+            <param name="splitCharacter">The character used to split the dictionary entry at.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.TrySetValue``1(``0,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Boolean)">
+            <summary>
+                Tries to the set the value of a variable using a user-specified dictionary entry.
+            </summary>
+            <typeparam name="T">The type of the variable.</typeparam>
+            <param name="variable">The variable.</param>
+            <param name="dict">The dictionary.</param>
+            <param name="key">The dictionary key.</param>
+            <param name="onErrorRemain">
+                If <c>true</c>, if the method is unsuccessful, the value returned is the previous one;
+                otherwise, the default value for the type is returned.
+            </param>
+            <returns>
+                The value that the variable should be set to if the operation succeeds.
+                If the cast is invalid, it returns the default value of the type.
+                If the key isn't found, it returns the original value of the variable.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.TrySetValue``1(``0,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Type,System.Boolean)">
+            <summary>
+                Tries to the set the value of a variable using a user-specified dictionary entry, after converting it to the specified
+                <c>type</c>.
+            </summary>
+            <typeparam name="T">The type of the variable.</typeparam>
+            <param name="variable">The variable.</param>
+            <param name="dict">The dictionary.</param>
+            <param name="key">The dictionary key.</param>
+            <param name="type">The type.</param>
+            <param name="onErrorRemain">
+                If <c>true</c>, if the method is unsuccessful, the value returned is the previous one;
+                otherwise, the default value for the type is returned.
+            </param>
+            <returns>
+                The value that the variable should be set to if the operation succeeds.
+                If the cast is invalid, it returns the default value of the type.
+                If the key isn't found, it returns the original value of the variable.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.TrySetValue``1(``0,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Type,System.String,System.Boolean)">
+            <summary>
+                Tries to the set the value of a variable by using the corresponding value of a dictionary entry.
+                Operation will succeed only if all parts of the dictionary entry, after the latter is split at each
+                <c>splitCharacter</c>, can be converted into the specified <c>type</c>.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="variable">The variable.</param>
+            <param name="dict">The dictionary containing the value we're trying to set.</param>
+            <param name="key">The key representing both the DataRow column as well as the Dictionary key.</param>
+            <param name="type">The type to attempt to convert all parts of the dictionary entry to.</param>
+            <param name="splitCharacter">The character used to split the dictionary entry at.</param>
+            <param name="onErrorRemain">
+                If <c>true</c>, if the method is unsuccessful, the value returned is the previous one;
+                otherwise, the default value for the type is returned.
+            </param>
+            <returns>
+                The value that the variable should be set to if the operation succeeds.
+                If the cast is invalid, it returns the default value of the type.
+                If the key isn't found, it returns the original value of the variable.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.DeepClone``1(``0,System.Object[])">
+            <summary>
+                Creates a deep-cloned copy of an object.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+            <param name="original">The original object.</param>
+            <param name="args">The arguments to pass to the constructor of the new object.</param>
+            <returns>The copy of the object.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.deepClone``1(``0,System.Collections.Generic.Dictionary{System.Object,System.Object},System.Object[])">
+            <summary>
+                Creates a deep-cloned copy of an object.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+            <param name="original">The original object.</param>
+            <param name="copies">A dictionary containing the copies of the object.</param>
+            <param name="args">The arguments to pass to the constructor of the new object.</param>
+            <returns>
+                The copy of the object.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.Clone``1(``0)">
+            <summary>
+                Creates a deep-cloned copy of an object using serialization.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+            <param name="realObject">The original object.</param>
+            <returns>The deep-cloned copy of the object.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.Shuffle``1(System.Collections.Generic.IList{``0})">
+            <summary>
+                Randomizes the list.
+            </summary>
+            <typeparam name="T">The type of the list's items.</typeparam>
+            <param name="list">The list to shuffle.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.ToInt32``1(``0)">
+            <summary>
+                Converts the object to an Int32.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+            <param name="o">The source object.</param>
+            <returns>The converted Int32.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.ToDouble``1(``0)">
+            <summary>
+                Converts the object to a Double.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+            <param name="o">The soutce object.</param>
+            <returns>The converted Double.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.GenericExtensions.Pop``1(System.Collections.Generic.List{``0})">
+            <summary>
+                Gets the first item from a list and then removes it, similar to the Stack/Queue Pop() function.
+            </summary>
+            <typeparam name="T">The type of the object.</typeparam>
+            <param name="list">The source list.</param>
+            <returns>
+                The first object of the list.
+            </returns>
+            <exception cref="T:System.InvalidOperationException">List is empty.</exception>
+        </member>
+        <member name="T:LeftosCommonLibrary.Tools">
+            <summary>
+                Various miscellaneous tools.
+            </summary>
+        </member>
+        <member name="F:LeftosCommonLibrary.Tools.AppName">
+            <summary>
+                The application name; used as default title in various dialogs.
+            </summary>
+        </member>
+        <member name="F:LeftosCommonLibrary.Tools.AppRegistryKey">
+            <summary>
+                The application's registry key; used by GetRegistrySetting and SetRegistrySetting for example.
+            </summary>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.SetRegistrySetting``1(System.String,``0)">
+            <summary>
+                Sets a registry setting using the AppRegistryKey field as the key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="setting">The setting.</param>
+            <param name="value">The value.</param>
+            <exception cref="T:System.Exception">
+                Couldn't access or create application's registry key.
+            </exception>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetRegistrySetting``1(System.String,``0)">
+            <summary>
+                Gets a registry setting using the AppRegistryKey field as the key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="setting">The setting.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns>The registry setting's value.</returns>
+            <exception cref="T:System.Exception">The application doesn't have access to HKEY_CURRENT_USER.</exception>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetExtension(System.String)">
+            <summary>
+                Gets the extension of a specified file.
+            </summary>
+            <param name="path">The path to the file.</param>
+            <returns>The extension of the file.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetSafeFilename(System.String)">
+            <summary>
+                Gets the filename part of a path to a file.
+            </summary>
+            <param name="f">The path to the file.</param>
+            <returns>The safe filename of the file.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetFullPathWithoutExtension(System.String)">
+            <summary>
+                Gets the full path of the file without its extension.
+            </summary>
+            <param name="f">The path to the file.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetCRC(System.String)">
+            <summary>
+                Gets the CRC32 of a specified file.
+            </summary>
+            <param name="filename">The path to the file.</param>
+            <returns>The hex representation of the CRC32 of the file.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.ReverseByteOrder(System.Byte[],System.Int32)">
+            <summary>
+                Reverses the byte order of (part of) an array of bytes.
+            </summary>
+            <param name="original">The original.</param>
+            <param name="length">The amount of bytes that should be reversed and returned, counting from the start of the array.</param>
+            <returns>The reversed byte array.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.HexStringToByteArray(System.String)">
+            <summary>
+                Converts a hex representation string to a byte array of corresponding values.
+            </summary>
+            <param name="hex">The hex representation.</param>
+            <returns>The corresponding byte array.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.ByteArrayToHexString(System.Byte[])">
+            <summary>
+                Converts a byte array to the equivalent hex string representation.
+            </summary>
+            <param name="ba">The byte array.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetMD5(System.String)">
+            <summary>
+                Gets the MD5 hash of a string.
+            </summary>
+            <param name="s">The string.</param>
+            <returns>The MD5 hash.</returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetCell(System.Windows.Controls.DataGrid,System.Int32,System.Int32)">
+            <summary>
+                Gets a cell of a WPF DataGrid at the specified row and column.
+            </summary>
+            <param name="dataGrid">The data grid.</param>
+            <param name="row">The row.</param>
+            <param name="col">The column.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.SplitLinesToArray(System.String)">
+            <summary>
+                Splits a multi-line string to an array of its lines.
+            </summary>
+            <param name="text">The text.</param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.SplitLinesToList(System.String,System.Boolean)">
+            <summary>
+                Splits a multi-line string to a list of its lines.
+            </summary>
+            <param name="text">The text.</param>
+            <param name="keepDuplicates">
+                if set to <c>true</c> [keep duplicates].
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.WriteToTrace(System.String)">
+            <summary>
+                Writes a message to the trace listeners including a date and time stamp.
+            </summary>
+            <param name="msg">The message.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.WriteToTraceWithException(System.String,System.Exception)">
+            <summary>
+                Writes a message to the trace listeners including a date and time stamp and information about the exception.
+            </summary>
+            <param name="msg">The message.</param>
+            <param name="ex">The exception.</param>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.IsNumericType(System.Type)">
+            <summary>
+                Determines if a type is numeric.  Nullable numeric types are considered numeric.
+            </summary>
+            <remarks>
+                Boolean is not considered numeric.
+            </remarks>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.IsNumeric(System.String)">
+            <summary>
+                Determines whether the specified string is numeric.
+            </summary>
+            <param name="s">The source string.</param>
+            <returns>
+                <c>true</c> if the specified string is numeric; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.CheckForBalancedBracketing(System.String)">
+            <summary>
+                Checks for balanced bracketing.
+            </summary>
+            <param name="incomingString">The source string.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
