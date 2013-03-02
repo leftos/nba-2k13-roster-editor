@@ -59,11 +59,11 @@ namespace NBA_2K13_Roster_Editor
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string NBA2K13SavesPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                                                @"\2K Sports\NBA 2K13\Saves";
+        public static readonly string NBA2K13SavesPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                                @"\2K Sports\NBA 2K13\Saves\";
 
-        public static string DocsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NBA 2K13 Roster Editor";
-        public static string AppPath = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
+        public static readonly string DocsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\NBA 2K13 Roster Editor\";
+        public static readonly string AppPath = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
         public static MainWindow mw;
         public static Mode mode;
         public static SaveType saveType;
