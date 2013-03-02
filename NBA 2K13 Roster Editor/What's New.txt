@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.22.4.2
+		- Fixed the tool crashing on startup in some occurrences when a registry setting was saved in the wrong format
+
 	v0.22.4.1
 		- Made the "missing column headers" message a bit more helpful
 
