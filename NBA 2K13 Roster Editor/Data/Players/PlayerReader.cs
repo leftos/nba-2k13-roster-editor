@@ -253,11 +253,11 @@ namespace NBA_2K13_Roster_Editor.Data.Players
             ba = brOpen.ReadNonByteAlignedBytes(4);
             pe.ShHomeBase = ba.Aggregate("#", (current, b) => current + Convert.ToString(b, 16).PadLeft(2, '0')).ToUpperInvariant();
             ba = brOpen.ReadNonByteAlignedBytes(4);
-            pe.ShAwayBase = ba.Aggregate("#", (current, b) => current + Convert.ToString(b, 16).PadLeft(2, '0')).ToUpperInvariant();
+            pe.ShAwayTeam1 = ba.Aggregate("#", (current, b) => current + Convert.ToString(b, 16).PadLeft(2, '0')).ToUpperInvariant();
             ba = brOpen.ReadNonByteAlignedBytes(4);
             pe.ShAwayTeam2 = ba.Aggregate("#", (current, b) => current + Convert.ToString(b, 16).PadLeft(2, '0')).ToUpperInvariant();
             ba = brOpen.ReadNonByteAlignedBytes(4);
-            pe.ShAwayTeam1 = ba.Aggregate("#", (current, b) => current + Convert.ToString(b, 16).PadLeft(2, '0')).ToUpperInvariant();
+            pe.ShAwayBase = ba.Aggregate("#", (current, b) => current + Convert.ToString(b, 16).PadLeft(2, '0')).ToUpperInvariant();
             brOpen.MoveStreamPosition(3, 5);
             pe.ShCustomClr = brOpen.ReadNonByteAlignedBits(1) == "1";
             //

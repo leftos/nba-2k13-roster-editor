@@ -1409,11 +1409,11 @@ namespace NBA_2K13_Roster_Editor
                             SyncBRwithBW(ref brSave, bw);
                             bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShHomeBase.Substring(1)), brSave.ReadBytes(5));
                             SyncBRwithBW(ref brSave, bw);
-                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayBase.Substring(1)), brSave.ReadBytes(5));
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayTeam1.Substring(1)), brSave.ReadBytes(5));
                             SyncBRwithBW(ref brSave, bw);
                             bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayTeam2.Substring(1)), brSave.ReadBytes(5));
                             SyncBRwithBW(ref brSave, bw);
-                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayTeam1.Substring(1)), brSave.ReadBytes(5));
+                            bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(pe.ShAwayBase.Substring(1)), brSave.ReadBytes(5));
                             SyncBRwithBW(ref brSave, bw);
 
                             brSave.MoveStreamPosition(3, 5);
