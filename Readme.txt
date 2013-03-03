@@ -10,8 +10,15 @@
 
 		If you're having issues with pasting into the tables, read the included "Pasting into the tables Tutorial.pdf" file.
 
+
+	Contributions by TUSS11
+		- added ability to change the jersey art (for the purpose of duplicating jerseys to have alternate accessory colors). Current teams only.
+		- added "Practice" to jersey names
+		- added a fix to jersey names so the name shows up at the team select screen if you change it in Roster Editor
+
 			
 	Known Issues
+		- IMPORTANT: do not change the Art for the first jersey. It needs to be the Sixer's home practice jersey. The program calculates the values of all jerseys based on it's value.
 		- (360) Editing any player that is in the spot with ID 1364 won't work; some of the information shown may be incorrect as well
 		- (360) MyCareer files compatibility is ...well, not that good
 		
