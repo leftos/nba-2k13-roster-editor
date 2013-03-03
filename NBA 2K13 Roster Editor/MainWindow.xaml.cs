@@ -104,6 +104,7 @@ namespace NBA_2K13_Roster_Editor
         private int expCount;
         private List<int> foundIDList = new List<int>();
         private Dictionary<string, string> names;
+        private int firstJerseyArt; // The art code for Sixer's home practice jersey. Needs to be read since it changes depending on roster file
 
         #region Team Names
 
@@ -998,6 +999,10 @@ namespace NBA_2K13_Roster_Editor
             RosterReader brOpen;
             using (brOpen = new RosterReader(new MemoryStream(File.ReadAllBytes(currentFile))))
             {
+                brOpen.MoveStreamToFirstJersey();
+                brOpen.MoveStreamPosition(8, 0);
+                firstJerseyArt = BitConverter.ToUInt16(brOpen.ReadNonByteAlignedBytes(2).Reverse().ToArray(), 0);
+
                 for (int i = 0; i <= 2000; i++)
                 {
                     brOpen.MoveStreamToFirstJersey();
@@ -1035,6 +1040,21 @@ namespace NBA_2K13_Roster_Editor
                     {
                         Console.WriteLine(hexName);
                     }
+
+                    brOpen.MoveStreamPosition(-10, 0);
+                    int art = BitConverter.ToUInt16(brOpen.ReadNonByteAlignedBytes(2).Reverse().ToArray(), 0);
+                    int artOffset = art - firstJerseyArt;
+                    if (!Enum.IsDefined(typeof(JerseyArt), (ushort) artOffset))
+                    {
+                        je.Art = JerseyArt.Other;
+                    }
+                    else
+                    {
+                        je.Art = (JerseyArt)Enum.Parse(typeof(JerseyArt), ((ushort) artOffset).ToString());
+                    }
+
+                    brOpen.MoveStreamPosition(8, 0);
+
                     brOpen.MoveStreamPosition(3, 5);
                     byte[] ba = brOpen.ReadNonByteAlignedBytes(4);
                     je.TeamColor1 = ba.Aggregate("#", (current, b) => current + Convert.ToString(b, 16).PadLeft(2, '0')).ToUpperInvariant();
@@ -2630,6 +2650,41 @@ namespace NBA_2K13_Roster_Editor
                             NonByteAlignedBinaryReader.ByteArrayToBitString(
                                 Tools.HexStringToByteArray(JerseyEntry.JerseyNames[je.Name.ToString()])), brSave.ReadBytes(5));
                         SyncBRwithBW(ref brSave, bw);
+
+                        brSave.MoveStreamPosition(-10, 0);
+                        SyncBWwithBR(ref bw, brSave);
+                        ushort artOffSet = (ushort)Enum.Parse(typeof(JerseyArt), je.Art.ToString());
+                        int artCode = artOffSet + (ushort)firstJerseyArt;
+                        if (artOffSet <= (ushort)Enum.Parse(typeof(JerseyArt), "WAS_ClassicAwayIVAlt")) // Last jersey for current teams
+                        {
+                            bw.WriteNonByteAlignedBits(Convert.ToString(artCode, 2).PadLeft(16, '0'), brSave.ReadBytes(3));
+                            SyncBRwithBW(ref brSave, bw);
+                        }
+                        else // Ingore classic and special teams' jerseys
+                        {
+                            brSave.MoveStreamPosition(2, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                        }
+
+                        brSave.MoveStreamPosition(3, 0);
+                        SyncBWwithBR(ref bw, brSave);
+
+                        // Makes sure jersey names are displayed at team select screen
+                        if (JerseyEntry.JerseyNameDisplay.ContainsKey(je.Name.ToString()))
+                        {
+                            bw.WriteNonByteAlignedBits(
+                                NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                    Tools.HexStringToByteArray(JerseyEntry.JerseyNameDisplay[je.Name.ToString()])), brSave.ReadBytes(2));
+                            SyncBRwithBW(ref brSave, bw);
+                        }
+                        else
+                        {
+                            brSave.MoveStreamPosition(1, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                        }
+
+                        brSave.MoveStreamPosition(4, 0);
+                        SyncBWwithBR(ref bw, brSave);
 
                         brSave.MoveStreamPosition(3, 5);
                         SyncBWwithBR(ref bw, brSave);

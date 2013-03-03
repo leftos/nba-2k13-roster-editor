@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Jerseys\JerseyArt.cs" />
     <Compile Include="Data\PlayerStats\PlayerStatsEntry.cs" />
     <Compile Include="Data\Jerseys\JerseyName.cs" />
     <Compile Include="Data\Jerseys\NeckType.cs" />

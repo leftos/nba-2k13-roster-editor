@@ -29,6 +29,7 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
     {
         public static readonly Dictionary<string, string> JerseyNames = new Dictionary<string, string>
                                                                         {
+                                                                            {"Practice", "47CA3480"},
                                                                             {"Home", "BF4718D0"},
                                                                             {"Away", "A2B39EF0"},
                                                                             {"Alternate", "CCBB71E8"},
@@ -92,10 +93,50 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
                                                                             {"j1994", "F2AC2AD8"},
                                                                             {"CAT", "00000000"},
                                                                         };
+        // This makes sure jersey name show up in-game after a change
+        public static readonly Dictionary<string, string> JerseyNameDisplay = new Dictionary<string, string>
+                                                                            {
+                                                                                {"Practice", "01"},
+                                                                                {"Home", "05"},
+                                                                                {"Away", "07"},
+                                                                                {"Alternate", "01"},
+                                                                                {"BackInBlack", "03"},
+                                                                                {"Cavfanatic", "06"},
+                                                                                {"Christmas", "01"},
+                                                                                {"LatinNights", "04"},
+                                                                                {"MardiGras", "03"},
+                                                                                {"MilitaryNight", "06"},
+                                                                                {"NBAGreen", "05"},
+                                                                                {"Racing", "04"},
+                                                                                {"RipCity", "04"},
+                                                                                {"StPatricks", "01"},
+                                                                                {"WhiteHot", "07"},
+                                                                                {"ClassicHomeI", "00"},
+                                                                                {"ClassicAwayI", "02"},
+                                                                                {"ClassAwayIAlt", "00"},
+                                                                                {"ClassicHomeII", "01"},
+                                                                                {"ClassicAwayII", "07"},
+                                                                                {"ClassicAwayIIAlt", "07"},
+                                                                                {"ClassicHomeIII", "02"},
+                                                                                {"ClassicAwayIII", "06"},
+                                                                                {"ClassicAwayIIIAtl", "06"},
+                                                                                {"ClassicHomeIV", "00"},
+                                                                                {"ClassicAwayIV", "06"},
+                                                                                {"ClassicAwayIVAlt", "01"},
+                                                                                {"ClassicHomeV", "01"},
+                                                                                {"ClassicAwayV", "03"},
+                                                                                {"ClassicAwayVAlt", "06"},
+                                                                                {"ClassicHomeVI", "07"},
+                                                                                {"ClassicAwayVI", "01"},
+                                                                                {"ClassicAwayVIAlt", "04"},
+                                                                                {"ClassicHomeVII", "03"},
+                                                                                {"ClassicAwayVII", "07"},
+                                                                            };
 
         private JerseyType _gid;
         private int _id;
         private JerseyName _name;
+        private JerseyArt _art;
         private NeckType _neck;
         private SockColor _sockClr;
         private string _teamColor1;
@@ -213,6 +254,16 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
             {
                 _name = value;
                 OnPropertyChanged("Name");
+            }
+        }
+
+        public JerseyArt Art
+        {
+            get { return _art; }
+            set
+            {
+                _art = value;
+                OnPropertyChanged("Art");
             }
         }
 
