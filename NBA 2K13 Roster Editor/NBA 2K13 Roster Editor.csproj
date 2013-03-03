@@ -37,7 +37,8 @@
     <ApplicationIcon>NLSC.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy "Readme.txt" "$(SolutionDir)\Readme.txt"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)Readme.txt" "$(SolutionDir)Readme.txt"
+copy "$(ProjectDir)LICENSE" "$(SolutionDir)LICENSE"</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LeftosCommonLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
