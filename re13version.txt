@@ -1,5 +1,8 @@
-0.23.0.0
+0.23.0.1
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
+
+	v0.23.0.1
+		- Fixed ShAwayTeam1 and ShAwayBase that were switched
 
 	v0.23 (contributed by TUSS11)
 		- added ability to change the jersey art (for the purpose of duplicating jerseys to have alternate accessory colors). Current teams only.
