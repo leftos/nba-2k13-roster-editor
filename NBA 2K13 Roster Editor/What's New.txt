@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.23.0.2
+		- Fixed pasting skipping any lines that started with #
+
 	v0.23.0.1
 		- Fixed ShAwayTeam1 and ShAwayBase that were switched
 
