@@ -64,6 +64,11 @@
                 <x:Type TypeName="jerseys:JerseyName" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="JerseyArtsList" MethodName="GetValues" ObjectType="{x:Type jerseys:JerseyArt}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="jerseys:JerseyArt" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <ObjectDataProvider x:Key="NeckTypesList" MethodName="GetValues" ObjectType="{x:Type jerseys:NeckType}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="jerseys:NeckType" />
@@ -286,6 +291,9 @@
                             <DataGridComboBoxColumn Header="Name"
                                                     SelectedValueBinding="{Binding Name, Mode=TwoWay}"
                                                     ItemsSource="{Binding Source={StaticResource JerseyNamesList}}" />
+                            <DataGridComboBoxColumn Header="Art"
+                                                    SelectedValueBinding="{Binding Art, Mode=TwoWay}"
+                                                    ItemsSource="{Binding Source={StaticResource JerseyArtsList}}" />
                             <DataGridComboBoxColumn Header="Neck"
                                                     SelectedValueBinding="{Binding Neck, Mode=TwoWay}"
                                                     ItemsSource="{Binding Source={StaticResource NeckTypesList}}" />

@@ -20,6 +20,7 @@ namespace NBA_2K13_Roster_Editor.Data.Jerseys
 {
     public enum JerseyName
     {
+        Practice,
         Home,
         Away,
         Alternate,
