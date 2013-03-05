@@ -57,7 +57,7 @@ namespace NonByteAlignedBinaryRW
             }
         }
 
-        private readonly List<long> _positionsToWatch = new List<long> {58920, 58921, 58922};
+        private readonly List<long> _positionsToWatch = new List<long> { 1490000, 1490001, 1490002, 1490003 };
         private const bool WatchPositions = false;
 
         public void WriteNonByteAlignedByte(byte b, byte[] originalBytes = null)
