@@ -1,5 +1,8 @@
 ﻿Version History
 
+	v0.23.0.3
+		- Temporarily disabled buggy Jersey name saving feature
+
 	v0.23.0.2
 		- Fixed pasting skipping any lines that started with #
 

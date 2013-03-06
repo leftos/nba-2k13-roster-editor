@@ -2669,6 +2669,7 @@ namespace NBA_2K13_Roster_Editor
                         brSave.MoveStreamPosition(2, 0);
                         SyncBWwithBR(ref bw, brSave);
 
+                        // !!!!!!!!!! PROBLEM AREA
                         // Makes sure jersey names are displayed at team select screen
                         if (JerseyEntry.JerseyNameDisplay.ContainsKey(je.Art.ToString()))
                         {
@@ -2682,7 +2683,12 @@ namespace NBA_2K13_Roster_Editor
                             brSave.MoveStreamPosition(2, 0);
                             SyncBWwithBR(ref bw, brSave);
                         }
-
+                        // !!!!!!!!!!! END PROBLEM AREA
+                        // TUSS11: If the above is fixed, remove the 2 lines below
+                        //brSave.MoveStreamPosition(1, 0);
+                        //SyncBWwithBR(ref bw, brSave);
+                        // 
+                        
                         brSave.MoveStreamPosition(4, 0);
                         SyncBWwithBR(ref bw, brSave);
 
