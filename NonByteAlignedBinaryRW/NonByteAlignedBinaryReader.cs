@@ -118,18 +118,28 @@ namespace NonByteAlignedBinaryRW
             int bitsToRead = (count%8);
             if (bitsToRead > 0)
             {
+                var newStart = 0;
+                if (BaseStream.Length == BaseStream.Position + 1)
+                {
+                    if (count <= 8 - _inBytePosition)
+                    {
+                        newStart = _inBytePosition;
+                        //bitsToRead = 8;
+                        _inBytePosition = 0;
+                    }
+                }
                 byte rem = ReadNonByteAlignedByte();
                 _inBytePosition += bitsToRead;
                 if (_inBytePosition >= 8)
                 {
                     _inBytePosition = _inBytePosition%8;
                 }
-                else
+                else if (count + newStart != 8)
                 {
                     BaseStream.Position -= 1;
                 }
 
-                s += ByteToBitString(rem, bitsToRead);
+                s += ByteToBitString(rem, bitsToRead, newStart);
             }
 
             return s;
@@ -140,6 +150,7 @@ namespace NonByteAlignedBinaryRW
             if (length + offset > 8)
                 throw new ArgumentOutOfRangeException();
 
+            /*
             var ba = new BitArray(new[] {b});
             string s = "";
             for (int i = 7 - offset; i > 7 - length; i--)
@@ -149,6 +160,8 @@ namespace NonByteAlignedBinaryRW
                 else
                     s += "0";
             }
+            */
+            var s = Convert.ToString(b, 2).PadLeft(8, '0').Substring(offset, length);
             return s;
         }
 
