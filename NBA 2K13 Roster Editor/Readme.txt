@@ -14,7 +14,7 @@
 	Contributions by TUSS11
 		- added ability to change the jersey art (for the purpose of duplicating jerseys to have alternate accessory colors). Current teams only.
 		- added "Practice" to jersey names
-		- added a fix to jersey names so the name shows up at the team select screen if you change it in Roster Editor
+		- for jersey names to show up in team select screen, match the name with the corresponding art in Roster Editor
 
 			
 	Known Issues

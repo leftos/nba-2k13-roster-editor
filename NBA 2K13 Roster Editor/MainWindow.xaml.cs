@@ -2666,20 +2666,20 @@ namespace NBA_2K13_Roster_Editor
                             SyncBWwithBR(ref bw, brSave);
                         }
 
-                        brSave.MoveStreamPosition(3, 0);
+                        brSave.MoveStreamPosition(2, 0);
                         SyncBWwithBR(ref bw, brSave);
 
                         // Makes sure jersey names are displayed at team select screen
-                        if (JerseyEntry.JerseyNameDisplay.ContainsKey(je.Name.ToString()))
+                        if (JerseyEntry.JerseyNameDisplay.ContainsKey(je.Art.ToString()))
                         {
                             bw.WriteNonByteAlignedBits(
                                 NonByteAlignedBinaryReader.ByteArrayToBitString(
-                                    Tools.HexStringToByteArray(JerseyEntry.JerseyNameDisplay[je.Name.ToString()])), brSave.ReadBytes(2));
+                                    Tools.HexStringToByteArray(JerseyEntry.JerseyNameDisplay[je.Art.ToString()])), brSave.ReadBytes(3));
                             SyncBRwithBW(ref brSave, bw);
                         }
                         else
                         {
-                            brSave.MoveStreamPosition(1, 0);
+                            brSave.MoveStreamPosition(2, 0);
                             SyncBWwithBR(ref bw, brSave);
                         }
 
