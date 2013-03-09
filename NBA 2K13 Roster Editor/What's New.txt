@@ -1,5 +1,9 @@
 ﻿Version History
 
+	v0.23.0.4 (contributed by TUSS11)
+		- Fixed scoreboard glitch
+		- Fixed number colors for jerseys that use special number colors (eg. Hornets Mardi Gras, Warriors Home and Away)
+
 	v0.23.0.3
 		- Temporarily disabled buggy Jersey name saving feature
 
