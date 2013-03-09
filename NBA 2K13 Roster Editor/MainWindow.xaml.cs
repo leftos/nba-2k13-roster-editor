@@ -105,6 +105,7 @@ namespace NBA_2K13_Roster_Editor
         private List<int> foundIDList = new List<int>();
         private Dictionary<string, string> names;
         private int firstJerseyArt; // The art code for Sixer's home practice jersey. Needs to be read since it changes depending on roster file
+        private int firstJerseyNameDisplay;
 
         #region Team Names
 
@@ -1002,6 +1003,9 @@ namespace NBA_2K13_Roster_Editor
                 brOpen.MoveStreamToFirstJersey();
                 brOpen.MoveStreamPosition(8, 0);
                 firstJerseyArt = BitConverter.ToUInt16(brOpen.ReadNonByteAlignedBytes(2).Reverse().ToArray(), 0);
+
+                brOpen.MoveStreamPosition(2, 0);
+                firstJerseyNameDisplay = BitConverter.ToUInt16(brOpen.ReadNonByteAlignedBytes(2).Reverse().ToArray(), 0);
 
                 for (int i = 0; i <= 2000; i++)
                 {
@@ -2651,48 +2655,95 @@ namespace NBA_2K13_Roster_Editor
                                 Tools.HexStringToByteArray(JerseyEntry.JerseyNames[je.Name.ToString()])), brSave.ReadBytes(5));
                         SyncBRwithBW(ref brSave, bw);
 
-                        brSave.MoveStreamPosition(-10, 0);
-                        SyncBWwithBR(ref bw, brSave);
                         ushort artOffSet = (ushort)Enum.Parse(typeof(JerseyArt), je.Art.ToString());
                         int artCode = artOffSet + (ushort)firstJerseyArt;
+
                         if (artOffSet <= (ushort)Enum.Parse(typeof(JerseyArt), "WAS_ClassicAwayIVAlt")) // Last jersey for current teams
                         {
+                            brSave.MoveStreamPosition(-15, 0);
+                            SyncBWwithBR(ref bw, brSave);
+
+                            brSave.MoveStreamPosition(0, 1);
+                            SyncBWwithBR(ref bw, brSave);
+
+                            // Turns on/off custom jersey number color
+                            if ((artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "NOH_MardiGras")) ||
+                                (artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "DEN_ClassicHomeIII")) ||
+                                (artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "GSW_Home")) ||
+                                (artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "GSW_Away")))
+                            {
+                                bw.WriteNonByteAlignedBits("01", brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+                            else
+                            {
+                                bw.WriteNonByteAlignedBits("00", brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+
+                            brSave.MoveStreamPosition(0, 5);
+                            SyncBWwithBR(ref bw, brSave);
+
+                            // Logo at team select screen (NBA, Hardwood Classics, or Latin Nights)
+                            if (je.Art.ToString().Contains("_Class") || je.Art.ToString().Contains("_Cavfanatic") || je.Art.ToString().Contains("_RipCity"))
+                            {
+                                bw.WriteNonByteAlignedBits(
+                                    NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                        Tools.HexStringToByteArray("10")), brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+                            else if (je.Art.ToString().Contains("_LatinNights"))
+                            {
+                                bw.WriteNonByteAlignedBits(
+                                    NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                        Tools.HexStringToByteArray("0C")), brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+                            else
+                            {
+                                bw.WriteNonByteAlignedBits(
+                                    NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                        Tools.HexStringToByteArray("04")), brSave.ReadBytes(2));
+                                SyncBRwithBW(ref brSave, bw);
+                            }
+
+                            brSave.MoveStreamPosition(3, 0);
+                            SyncBWwithBR(ref bw, brSave);
+
                             bw.WriteNonByteAlignedBits(Convert.ToString(artCode, 2).PadLeft(16, '0'), brSave.ReadBytes(3));
                             SyncBRwithBW(ref brSave, bw);
-                        }
-                        else // Ingore classic and special teams' jerseys
-                        {
+
                             brSave.MoveStreamPosition(2, 0);
                             SyncBWwithBR(ref bw, brSave);
-                        }
 
-                        brSave.MoveStreamPosition(2, 0);
-                        SyncBWwithBR(ref bw, brSave);
+                            ushort nameDisplayOffset;
+                            // Default roster uses NameDisplayDefault, everything else uses NameDisplay
+                            if(((Convert.ToInt64(MainWindow.GetOption("CustomJerseyOffset")) == 1482917) && (MainWindow.mode == Mode.Custom)) ||
+                                ((Convert.ToInt64(MainWindow.GetOption("CustomJerseyOffset")) == 1560741) && (MainWindow.mode == Mode.CustomX360)))
 
-                        // !!!!!!!!!! PROBLEM AREA
-                        // Makes sure jersey names are displayed at team select screen
-                        if (JerseyEntry.JerseyNameDisplay.ContainsKey(je.Art.ToString()))
-                        {
-                            bw.WriteNonByteAlignedBits(
-                                NonByteAlignedBinaryReader.ByteArrayToBitString(
-                                    Tools.HexStringToByteArray(JerseyEntry.JerseyNameDisplay[je.Art.ToString()])), brSave.ReadBytes(3));
+                            {
+                                nameDisplayOffset = (ushort)Enum.Parse(typeof(JerseyEntry.NameDisplayDefault), je.Art.ToString());
+                            }
+                            else
+                            {
+                                nameDisplayOffset = (ushort)Enum.Parse(typeof(JerseyEntry.NameDisplay), je.Art.ToString());
+                            }
+                            int nameDisplayCode = nameDisplayOffset + (ushort)firstJerseyNameDisplay;
+                            bw.WriteNonByteAlignedBits(Convert.ToString(nameDisplayCode, 2).PadLeft(16, '0'), brSave.ReadBytes(3));
                             SyncBRwithBW(ref brSave, bw);
-                        }
-                        else
-                        {
-                            brSave.MoveStreamPosition(2, 0);
-                            SyncBWwithBR(ref bw, brSave);
-                        }
-                        // !!!!!!!!!!! END PROBLEM AREA
-                        // TUSS11: If the above is fixed, remove the 2 lines below
-                        //brSave.MoveStreamPosition(1, 0);
                         //SyncBWwithBR(ref bw, brSave);
                         // 
                         
-                        brSave.MoveStreamPosition(4, 0);
-                        SyncBWwithBR(ref bw, brSave);
+                            brSave.MoveStreamPosition(7, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                        }
+                        else // Ingore classic and special teams' jerseys
+                        {
+                            brSave.MoveStreamPosition(3, 0);
+                            SyncBWwithBR(ref bw, brSave);
+                        }
 
-                        brSave.MoveStreamPosition(3, 5);
+                        brSave.MoveStreamPosition(0, 5);
                         SyncBWwithBR(ref bw, brSave);
 
                         bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(je.TeamColor1.Substring(1)), brSave.ReadBytes(5));
@@ -2707,6 +2758,39 @@ namespace NBA_2K13_Roster_Editor
                         SyncBRwithBW(ref brSave, bw);
                         bw.WriteNonByteAlignedBits(ConvertHexColorStringToBinaryString(je.TeamColor6.Substring(1)), brSave.ReadBytes(5));
                         SyncBRwithBW(ref brSave, bw);
+
+                        brSave.MoveStreamPosition(4 , 3);
+                        SyncBWwithBR(ref bw, brSave);
+
+                        // Adjusts custom jersey number color
+                        if(artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "NOH_MardiGras"))
+                        {
+                            bw.WriteNonByteAlignedBits(
+                                NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                    Tools.HexStringToByteArray("874B8A")), brSave.ReadBytes(4));
+                            SyncBRwithBW(ref brSave, bw);
+                        }
+                        else if(artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "DEN_ClassicHomeIII"))
+                        {
+                            bw.WriteNonByteAlignedBits(
+                                NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                    Tools.HexStringToByteArray("B6EB4A")), brSave.ReadBytes(4));
+                            SyncBRwithBW(ref brSave, bw);
+                        }
+                        else if((artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "GSW_Home")) || (artOffSet == (ushort)Enum.Parse(typeof(JerseyArt), "GSW_Away")))
+                        {
+                            bw.WriteNonByteAlignedBits(
+                                NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                    Tools.HexStringToByteArray("B6ED8A")), brSave.ReadBytes(4));
+                            SyncBRwithBW(ref brSave, bw);
+                        }
+                        else if (artOffSet <= (ushort)Enum.Parse(typeof(JerseyArt), "WAS_ClassicAwayIVAlt"))
+                        {
+                            bw.WriteNonByteAlignedBits(
+                                NonByteAlignedBinaryReader.ByteArrayToBitString(
+                                    Tools.HexStringToByteArray("00000A")), brSave.ReadBytes(4));
+                            SyncBRwithBW(ref brSave, bw);
+                        }
                     }
                 }
             }
