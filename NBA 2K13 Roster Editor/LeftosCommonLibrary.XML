@@ -608,7 +608,15 @@
             <typeparam name="T"></typeparam>
             <param name="setting">The setting.</param>
             <param name="value">The value.</param>
-            <exception cref="T:System.Exception">Couldn't access or create application's registry key.</exception>
+            <exception cref="T:System.Exception">KeyCreateError: Thrown if the key could neither be opened nor created.</exception>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.SetRegistrySetting``1(System.String,System.String,``0)">
+            <summary>Sets a registry setting using a user-defined key.</summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">The key.</param>
+            <param name="setting">The setting.</param>
+            <param name="value">The value.</param>
+            <exception cref="T:System.Exception">KeyCreateError: Thrown if the key could neither be opened nor created.</exception>
         </member>
         <member name="M:LeftosCommonLibrary.Tools.GetRegistrySetting``1(System.String,``0)">
             <summary>Gets a registry setting using the AppRegistryKey field as the key.</summary>
@@ -616,7 +624,16 @@
             <param name="setting">The setting.</param>
             <param name="defaultValue">The default value.</param>
             <returns>The registry setting's value.</returns>
-            <exception cref="T:System.Exception">The application doesn't have access to HKEY_CURRENT_USER.</exception>
+            <exception cref="T:System.Exception">KeyOpenError: Thrown if the key couldn't be opened.</exception>
+        </member>
+        <member name="M:LeftosCommonLibrary.Tools.GetRegistrySetting``1(System.String,System.String,``0)">
+            <summary>Gets a registry setting using the AppRegistryKey field as the key.</summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">The key.</param>
+            <param name="setting">The setting.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns>The registry setting's value.</returns>
+            <exception cref="T:System.Exception">KeyOpenError: Thrown if the key couldn't be opened.</exception>
         </member>
         <member name="M:LeftosCommonLibrary.Tools.GetExtension(System.String)">
             <summary>Gets the extension of a specified file.</summary>
