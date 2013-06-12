@@ -1,3 +1,6 @@
 0.23.0.4
 http://forums.nba-live.com/downloads.php?view=detail&df_id=3615
 
+	v0.23.0.4 (contributed by TUSS11)
+		- Fixed scoreboard glitch
+		- Fixed number colors for jerseys that use special number colors (eg. Hornets Mardi Gras, Warriors Home and Away)
